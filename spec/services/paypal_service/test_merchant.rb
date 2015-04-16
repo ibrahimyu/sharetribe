@@ -63,6 +63,7 @@ module PaypalService
       payment = @payments_by_order_id[order_id]
       raise "No order with order id: #{order_id}" if payment.nil?
       raise "Cannot authorize more than order_total" if authorization_total.cents > payment[:order_total].cents
+      raise "Cannot authorize already authorized payment" if payment[:pending_reason] != "order"
 
       auth_id = SecureRandom.uuid
       auth_payment = payment.merge({
@@ -211,14 +212,26 @@ module PaypalService
 
             if (!token.nil?)
               payment = @fake_pal.create_and_save_payment(token)
-              DataTypes::Merchant.create_do_express_checkout_payment_response(
-                {
-                  order_date: payment[:order_date],
-                  payment_status: payment[:payment_status],
-                  pending_reason: payment[:pending_reason],
-                  order_id: payment[:order_id],
-                  order_total: payment[:order_total]
-                })
+
+              if token[:payment_action] == :order
+                DataTypes::Merchant.create_do_express_checkout_payment_response(
+                  {
+                    order_date: payment[:order_date],
+                    payment_status: payment[:payment_status],
+                    pending_reason: payment[:pending_reason],
+                    order_id: payment[:order_id],
+                    order_total: payment[:order_total]
+                  })
+              else
+                DataTypes::Merchant.create_do_express_checkout_payment_response(
+                  {
+                    order_date: payment[:order_date],
+                    payment_status: payment[:payment_status],
+                    pending_reason: payment[:pending_reason],
+                    authorization_id: payment[:order_id],
+                    authorization_total: payment[:order_total]
+                  })
+              end
             else
               PaypalService::DataTypes::FailureResponse.call()
             end
