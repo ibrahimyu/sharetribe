@@ -1,41 +1,33 @@
 module ListingViewUtils
+  extend MoneyRails::ActionViewExtension
+
+  Unit = EntityUtils.define_builder(
+    [:type, :to_symbol, one_of: [:hour, :day, :night, :week, :month, :custom]],
+    [:name_tr_key, :string, :optional],
+    [:kind, :mandatory, :to_symbol],
+    [:selector_tr_key, :string, :optional],
+    [:quantity_selector, :to_symbol, one_of: ["".to_sym, :none, :number, :day]] # in the future include :hour, :week:, :night ,:month etc.
+  )
 
   module_function
 
   # parameters:
   # - units, array from shape[:units]
-  # - selected, hash of {type, quantity_selector, translation_key}
-  # units => [
-  #   ['day', {type: 'day', quantity_selector: 'day'}, false]
-  #   ['hour', {type: 'hour', quantity_selector: 'number'}, false]
-  #   ['three hours', {type: 'custom', quantity_selector: 'number', translation_key: 'abcd-1231-12332-accc}, false]
-  # ]
+  # - selected, symbol of unit type
+  #
   def unit_options(units, selected_unit = nil)
-    units.map { |unit|
-      value = encode_unit(unit)
-      is_selected = unit == selected_unit
 
-      {
-        display: translate_unit(unit[:type], unit[:translation_key]),
-        value: value,
-        selected: is_selected
+    units
+      .map { |u| HashUtils.compact(u) }
+      .map { |unit|
+        renamed = HashUtils.rename_keys({name_tr_key: :unit_tr_key, selector_tr_key: :unit_selector_tr_key}, unit)
+        {
+          display: translate_unit(unit[:type], unit[:name_tr_key]),
+          value: Unit.serialize(unit),
+          kind: unit[:kind],
+          selected: selected_unit.present? && HashUtils.sub_eq(renamed, selected_unit, :type, :unit_tr_key, :unit_selector_tr_key)
+        }
       }
-    }
-  end
-
-  def encode_unit(unit)
-    HashUtils.compact(unit).to_json
-  end
-
-  def decode_unit(unit)
-    json = JSON.parse(unit)
-
-    HashUtils.compact(
-      {
-        type: json["type"].to_sym,
-        quantity_selector: json["quantity_selector"].to_sym,
-        translation_key: json["translation_key"]
-      })
   end
 
   def translate_unit(type, tr_key)
@@ -57,7 +49,10 @@ module ListingViewUtils
     end
   end
 
-  def translate_quantity(type)
+  # FIXME I feel that this is not quite right.
+  # Instead of unit type, the first parameter should be selector type (number, day)
+  # and that should affect how we should the information
+  def translate_quantity(type, tr_key = nil)
     case type
     when :hour
       I18n.translate("listings.quantity.hour")
@@ -70,9 +65,25 @@ module ListingViewUtils
     when :month
       I18n.translate("listings.quantity.month")
     when :custom
-      I18n.translate("listings.quantity.custom")
+      if (tr_key)
+        I18n.translate(tr_key)
+      else
+        I18n.translate("listings.quantity.custom")
+      end
     else
       raise ArgumentError.new("No translation for unit quantity: #{type}")
+    end
+  end
+
+  def shipping_info(shipping_type, shipping_price, shipping_price_additional)
+    if shipping_type == :shipping && shipping_price_additional.present?
+      I18n.translate("listings.show.shipping_price_additional", price: humanized_money_with_symbol(shipping_price), shipping_price_additional: humanized_money_with_symbol(shipping_price_additional))
+    elsif shipping_type == :shipping
+      I18n.translate("listings.show.shipping", price: humanized_money_with_symbol(shipping_price))
+    elsif shipping_type == :pickup
+      I18n.translate("listings.show.pickup", price: humanized_money_with_symbol(shipping_price))
+    else
+      raise ArgumentError.new("Delivery type not supported")
     end
   end
 end

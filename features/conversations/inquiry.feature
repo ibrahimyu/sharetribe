@@ -15,9 +15,9 @@ Feature: Inquiry
     And there is a listing with title "Test message" from "kassi_testperson1" with category "Free message" and with listing shape "Inquiry"
     And I am logged in as "kassi_testperson2"
     When I follow "Test message"
-    Then I should not see "Contact"
+    Then I should see "Contact"
     When I press "Inquire"
-    And I fill in "Message" with "Test content"
+    And I fill in "message" with "Test content"
     And I press "Send message"
     And I log out
     And I log in as "kassi_testperson1"

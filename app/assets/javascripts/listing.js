@@ -37,4 +37,29 @@ window.ST = window.ST || {};
     });
   };
 
+  module.initializeShippingPriceTotal = function(quantityInputSelector, shippingPriceSelector, decimalMark){
+    var $quantityInput = $(quantityInputSelector);
+    var $shippingPriceElements = $(shippingPriceSelector);
+
+    var updateShippingPrice = function() {
+      $shippingPriceElements.each(function(index, shippingPriceElement) {
+        var $priceEl = $(shippingPriceElement);
+        var shippingPriceCents = $priceEl.data('shipping-price') || 0;
+        var perAdditionalCents = $priceEl.data('per-additional') || 0;
+        var quantity = parseInt($quantityInput.val() || 0);
+        var additionalCount = Math.max(0, quantity - 1);
+
+        // To avoid floating point issues, do calculations in cents
+        var newShippingPrice = shippingPriceCents + perAdditionalCents * additionalCount;
+        var priceText = (newShippingPrice / 100).toFixed(2) + "";
+        var priceTextWithDecimalMark = priceText.replace(".", decimalMark);
+
+        $priceEl.text(priceTextWithDecimalMark);
+      });
+    };
+
+    $quantityInput.on("keyup change", updateShippingPrice); // change for up and down arrows
+    updateShippingPrice();
+  };
+
 })(window.ST);

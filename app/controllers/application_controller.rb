@@ -16,19 +16,23 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   layout 'application'
 
-  before_filter :force_ssl,
-    :check_auth_token,
-    :fetch_logged_in_user,
+  before_filter :check_auth_token,
     :fetch_community,
-    :redirect_to_marketplace_domain,
+    :perform_redirect,
+    :fetch_logged_in_user,
+    :save_current_host_with_port,
     :fetch_community_membership,
+    :redirect_removed_locale,
     :set_locale,
+    :redirect_locale_param,
     :generate_event_id,
     :set_default_url_for_mailer,
     :fetch_chargebee_plan_data,
     :fetch_community_admin_status,
     :fetch_community_plan_expiration_status,
-    :warn_about_missing_payment_info
+    :warn_about_missing_payment_info,
+    :set_homepage_path,
+    :report_queue_size
   before_filter :cannot_access_without_joining, :except => [ :confirmation_pending, :check_email_availability]
   before_filter :can_access_only_organizations_communities
   before_filter :check_email_confirmation, :except => [ :confirmation_pending, :check_email_availability_and_validity]
@@ -43,18 +47,11 @@ class ApplicationController < ActionController::Base
 
   helper_method :root, :logged_in?, :current_user?
 
-  def select_locale(user_locale, locale_param, community_locales, community_default_locale)
-
-    # Use user locale, if community supports it
-    user = Maybe(user_locale).select { |locale| community_locales.include?(locale) }.or_else(nil)
-
-    # Use locale from URL param, if community supports it
-    param = Maybe(locale_param).select { |locale| community_locales.include?(locale) }.or_else(nil)
-
-    # Use community detauls locale
-    community = community_default_locale
-
-    user || param || community
+  def redirect_removed_locale
+    if params[:locale] && Kassi::Application.config.REMOVED_LOCALES.include?(params[:locale])
+      fallback = Kassi::Application.config.REMOVED_LOCALE_FALLBACKS[params[:locale]]
+      redirect_to_locale(fallback, :moved_permanently)
+    end
   end
 
   def set_locale
@@ -76,7 +73,7 @@ class ApplicationController < ActionController::Base
 
     # Load translations from TranslationService
     if community_id
-      community_backend.set_community!(community_id)
+      community_backend.set_community!(community_id, community_locales.map(&:to_sym))
       community_translations = TranslationService::API::Api.translations.get(community_id)[:data]
       TranslationServiceHelper.community_translations_for_i18n_backend(community_translations).each { |locale, data|
         # Store community translations to I18n backend.
@@ -89,11 +86,18 @@ class ApplicationController < ActionController::Base
 
     # We should fix this -- END
 
-    locale = select_locale(user_locale, params[:locale], community_locales, community_default_locale)
+    locale = I18nHelper.select_locale(
+      user_locale: user_locale,
+      param_locale: params[:locale],
+      community_locales: community_locales,
+      community_default: community_default_locale,
+      all_locales: Sharetribe::AVAILABLE_LOCALES
+    )
 
     raise ArgumentError.new("Locale #{locale} not available. Check your community settings") unless available_locales.collect { |l| l[1] }.include?(locale)
 
     I18n.locale = locale
+    @facebook_locale_code = I18nHelper.facebook_locale_code(Sharetribe::AVAILABLE_LOCALES, locale)
 
     # Store to thread the service_name used by current community, so that it can be included in all translations
     ApplicationHelper.store_community_service_name_to_thread(service_name)
@@ -110,6 +114,50 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  def set_homepage_path
+    present = ->(x) { x.present? }
+
+    @homepage_path =
+      case [@current_community, @current_user, params[:locale]]
+      when matches([nil, __, __])
+        # FIXME We still have controllers that inherit application controller even though
+        # they do not have @current_community
+        #
+        # Return nil, do nothing, but don't break
+        nil
+
+      when matches([present, nil, present])
+        # We don't have @current_user.
+        # Take the locale from URL param, and keep it in the URL if the locale
+        # differs from community default
+        if params[:locale] != @current_community.default_locale.to_s
+          homepage_with_locale_path
+        else
+          homepage_without_locale_path(locale: nil)
+        end
+
+      else
+        homepage_without_locale_path(locale: nil)
+      end
+  end
+
+
+  # If URL contains locale parameter that doesn't match with the selected locale,
+  # redirect to the selected locale
+  def redirect_locale_param
+    param_locale_not_selected = params[:locale].present? && params[:locale] != I18n.locale.to_s
+
+    redirect_to_locale(I18n.locale, :temporary_redirect) if param_locale_not_selected
+  end
+
+  def redirect_to_locale(new_locale, status)
+    if @current_community.default_locale == new_locale.to_s
+      redirect_to url_for(params.except(:locale).merge(only_path: true)), :status => status
+    else
+      redirect_to url_for(params.merge(locale: new_locale, only_path: true)), :status => status
+    end
+  end
+
   #Creates a URL for root path (i18n breaks root_path helper)
   def root
     "#{request.protocol}#{request.host_with_port}/#{params[:locale]}"
@@ -118,6 +166,7 @@ class ApplicationController < ActionController::Base
   def fetch_logged_in_user
     if person_signed_in?
       @current_user = current_person
+      setup_logger!(user_id: @current_user.id, username: @current_user.username)
     end
   end
 
@@ -155,93 +204,130 @@ class ApplicationController < ActionController::Base
     session[:return_to_content] = request.fullpath
   end
 
-  # Before filter to get the current community
-  def fetch_community_by_strategy(&block)
-    # Pick the community according to the given strategy
-    @current_community = block.call
-
-    unless @current_community
-      # No community found with the strategy, so redirecting to redirect url, or error page.
-      redirect_to Maybe(APP_CONFIG).community_not_found_redirect.or_else {
-        no_communities = Community.count == 0
-
-        if no_communities
-          new_community_path
-        else
-          :community_not_found
-        end
-      }
-    end
+  def save_current_host_with_port
+    # store the host of the current request (as sometimes needed in views)
+    @current_host_with_port = request.host_with_port
   end
 
   # Before filter to get the current community
   def fetch_community
-    # store the host of the current request (as sometimes needed in views)
-    @current_host_with_port = request.host_with_port
+    @current_community = ApplicationController.find_community(community_identifiers)
 
-    fetch_community_by_strategy {
-      ApplicationController.default_community_fetch_strategy(request.host)
+    m_community = Maybe(@current_community)
+    setup_logger!(marketplace_id: m_community.id.or_else(nil), marketplace_ident: m_community.ident.or_else(nil))
+
+    # Save :found or :not_found to community status
+    # This is needed because we need to distinguish to cases
+    # where community is nil
+    #
+    # 1. Community is nil because it was not found
+    # 2. Community is nil beucase fetch_community filter was skipped
+    @community_search_status = @current_community ? :found : :not_found
+  end
+
+  def community_search_status
+    @community_search_status || :skipped
+  end
+
+  # Performs redirect to correct URL, if needed.
+  # Note: This filter is safe to run even if :fetch_community
+  # filter is skipped
+  def perform_redirect
+    community = Maybe(@current_community).map { |c|
+      {
+        ident: c.ident,
+        domain: c.domain,
+        deleted: c.deleted?,
+        use_domain: c.use_domain?,
+        domain_verification_file: c.dv_test_file_name
+      }
+    }.or_else(nil)
+
+    paths = {
+      community_not_found: Maybe(APP_CONFIG).community_not_found_redirect.map { |url| {url: url} }.or_else({route_name: :community_not_found_path}),
+      new_community: {route_name: :new_community_path}
+    }
+
+    configs = {
+      always_use_ssl: Maybe(APP_CONFIG).always_use_ssl.map { |v| v == true || v.to_s.downcase == "true" }.or_else(false), # value can be string if it comes from ENV
+      app_domain: URLUtils.strip_port_from_host(APP_CONFIG.domain),
+    }
+
+    other = {
+      no_communities: Community.count == 0,
+      community_search_status: community_search_status,
+    }
+
+    MarketplaceRouter.needs_redirect(
+      request: request_hash,
+      community: community,
+      paths: paths,
+      configs: configs,
+      other: other) { |redirect_dest|
+      url = redirect_dest[:url] || send(redirect_dest[:route_name], protocol: redirect_dest[:protocol])
+
+      redirect_to(url, status: redirect_dest[:status])
     }
   end
 
-  def redirect_to_marketplace_domain
-    return unless @current_community
-
-    host = request.host
-    domain = @current_community.domain
-
-    if needs_redirect?(host, domain)
-      redirect_to "#{request.protocol}#{domain}#{request.fullpath}", status: :moved_permanently
-    end
-  end
-
-  def needs_redirect?(host, domain)
-    domain.present? && host != domain
-  end
-
-  # Fetch community
+  # Returns a hash that contains identifiers which can be used to
+  # fetch the right community:
   #
-  # 1. Try to find by domain
-  # 2. If there is only one community, use it
-  # 3. Otherwise nil
+  # {id: 123,
+  #  ident: "marketplace",
+  #  domain: "www.marketplace.com"
+  # }
   #
-  def self.default_community_fetch_strategy(domain)
-    # Find by domain
-    by_domain = Community.find_by_domain(domain)
-
-    if by_domain.present?
-      return by_domain
-    end
-
-    # Find by username
+  # This method can and should be overriden by controllers that use other than default method
+  # to identify the community.
+  #
+  def community_identifiers
     app_domain = URLUtils.strip_port_from_host(APP_CONFIG.domain)
-    ident = domain.chomp(".#{app_domain}")
-    by_ident = Community.where(ident: ident).first
-
-    if by_ident.present?
-      return by_ident
-    end
-
-    # If only one, use it
-    count = Community.count
-
-    if count == 1
-      return Community.first
-    end
-
-    # Not found, return nil
-    nil
+    ApplicationController.parse_community_identifiers_from_host(request.host, app_domain)
   end
 
-  # Before filter to check if current user is the member of this community
-  # and if so, find the membership
+  def request_hash
+    @request_hash ||= {
+      host: request.host,
+      protocol: request.protocol,
+      fullpath: request.fullpath,
+      port_string: request.port_string,
+      headers: request.headers
+    }
+  end
+
+  def self.parse_community_identifiers_from_host(host, app_domain)
+    app_domain_regexp = Regexp.escape(app_domain)
+    ident_with_www = /^www\.(.+)\.#{app_domain}$/.match(host)
+    ident_without_www = /^(.+)\.#{app_domain}$/.match(host)
+
+    if ident_with_www
+      {ident: ident_with_www[1]}
+    elsif ident_without_www
+      {ident: ident_without_www[1]}
+    else
+      {domain: host}
+    end
+  end
+
+  def self.find_community(identifiers)
+    by_identifier = Community.find_by_identifier(identifiers)
+
+    if by_identifier
+      by_identifier
+    elsif Community.count == 1
+      Community.first
+    else
+      nil
+    end
+  end
+
   def fetch_community_membership
     if @current_user
-      if @current_user.communities.include?(@current_community)
-        @current_community_membership = CommunityMembership.find_by_person_id_and_community_id_and_status(@current_user.id, @current_community.id, "accepted")
-        unless @current_community_membership.last_page_load_date && @current_community_membership.last_page_load_date.to_date.eql?(Date.today)
-          Delayed::Job.enqueue(PageLoadedJob.new(@current_community_membership.id, request.host))
-        end
+      @current_community_membership = CommunityMembership.where(person_id: @current_user.id, community_id: @current_community.id, status: "accepted").first
+
+      if (@current_community_membership && !date_equals?(@current_community_membership.last_page_load_date, Date.today))
+        Delayed::Job.enqueue(PageLoadedJob.new(@current_community_membership.id, request.host))
       end
     end
   end
@@ -275,7 +361,7 @@ class ApplicationController < ActionController::Base
   def check_email_confirmation
     # If confirmation is required, but not done, redirect to confirmation pending announcement page
     # (but allow confirmation to come through)
-    if @current_community && @current_user && @current_user.pending_email_confirmation_to_join?(@current_community)
+    if @current_community && @current_user && @current_user.pending_email_confirmation_to_join?(@current_community_membership)
       flash[:warning] = t("layouts.notifications.you_need_to_confirm_your_account_first")
       redirect_to :controller => "sessions", :action => "confirmation_pending" unless params[:controller] == 'devise/confirmations'
     end
@@ -294,7 +380,9 @@ class ApplicationController < ActionController::Base
   end
 
   def fetch_community_plan_expiration_status
-    @is_community_plan_expired = MarketplaceService::Community::Query.is_plan_expired(@current_community)
+    Maybe(@current_community).id.each { |community_id|
+      @current_plan = PlanService::API::Api.plans.get_current(community_id: community_id).data
+    }
   end
 
   def fetch_chargebee_plan_data
@@ -313,7 +401,25 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def report_queue_size
+    MonitoringService::Monitoring.report_queue_size
+  end
+
   private
+
+  # Override basic instrumentation and provide additional info for lograge to consume
+  # These are further configured in environment configs
+  def append_info_to_payload(payload)
+    super
+    payload[:host] = request.host
+    payload[:community_id] = Maybe(@current_community).id.or_else("")
+    payload[:current_user_id] = Maybe(@current_user).id.or_else("")
+    payload[:request_uuid] = request.uuid
+  end
+
+  def date_equals?(date, comp)
+    date && date.to_date.eql?(comp)
+  end
 
   def session_unauthorized
     # For some reason, ASI session is no longer valid => log the user out
@@ -385,13 +491,6 @@ class ApplicationController < ActionController::Base
 
   end
 
-  def force_ssl
-    # If defined in the config, always redirect to https (unless already using https or coming through Sharetribe proxy)
-    if APP_CONFIG.always_use_ssl
-      redirect_to("https://#{request.host_with_port}#{request.fullpath}") unless request.ssl? || ( request.headers["HTTP_VIA"] && request.headers["HTTP_VIA"].include?("sharetribe_proxy")) || request.fullpath == "/robots.txt"
-    end
-  end
-
   def feature_flags
     @feature_flags ||= fetch_feature_flags
   end
@@ -408,6 +507,20 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :fetch_feature_flags # Make this method available for FeatureFlagHelper
+
+  def logger
+    if @logger.nil?
+      metadata = [:marketplace_id, :marketplace_ident, :user_id, :username, :request_uuid]
+      @logger = SharetribeLogger.new(:controller, metadata)
+      @logger.add_metadata(request_uuid: request.uuid)
+    end
+
+    @logger
+  end
+
+  def setup_logger!(metadata)
+    logger.add_metadata(metadata)
+  end
 
   # Fetch temporary flags from params and session
   def self.fetch_temp_flags(is_admin, params, session)
@@ -428,11 +541,15 @@ class ApplicationController < ActionController::Base
   # Usage:
   #
   # class YourController < ApplicationController
-  #   ensure_feature_enabled, :shipping, only: [:new_shipping, edit_shipping]
+  #   ensure_feature_enabled :shipping, only: [:new_shipping, :edit_shipping]
   #   ...
   #  end
   #
   def self.ensure_feature_enabled(feature_name, options = {})
     before_filter(options) { ensure_feature_enabled(feature_name) }
+  end
+
+  def render_not_found!(msg = "Not found")
+    raise ActionController::RoutingError.new(msg)
   end
 end

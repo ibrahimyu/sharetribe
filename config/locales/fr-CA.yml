@@ -52,6 +52,10 @@ fr-CA:
         community_details: "Détails de base"
         community_look_and_feel: Design
         edit_community: "Détails de base"
+        enabled_languages: ~
+        enabled_languages_description: ~
+        default_language: ~
+        language_selection_disabled: ~
         community_name: "Nom de la place de marché"
         edit_community_name_description: "Le nom de votre place de marché. Ceci est visible par les utilisateurs dans les emails et plusieurs autres endroits."
         community_slogan: "Slogan de la place de marché"
@@ -118,6 +122,37 @@ fr-CA:
         welcome_email_content_description: "Le message ci-dessous sera envoyé à chaque nouvel utilisateur lors de leur inscription. Vous pouvez le modifier pour l'adapter à votre place de marché. En cliquant sur '%{send_test_message_link}' vous pouvez pré-visualiser le message en l'envoyant à votre adresse personnelle pour voir à quoi cela ressemblera exactement."
         edit_message: "Modifier le message"
         send_test_message: "Envoyer un message de test"
+      outgoing_email:
+        title: ~
+        info: ~
+        read_more: ~
+        sender_address: ~
+        sender_address_default: ~
+        need_to_change: ~
+        contact_support_link_text: ~
+        set_sender_address: ~
+        sender_name_label: ~
+        sender_name_placeholder: ~
+        sender_email_label: ~
+        sender_email_placeholder: ~
+        this_is_how_it_will_look: ~
+        send_verification_button: ~
+        successfully_saved: ~
+        status: ~
+        status_verified: ~
+        status_error: ~
+        status_requested: ~
+        status_expired: ~
+        status_resent: ~
+        resend_link: ~
+        invalid_email_error: ~
+        invalid_email_domain: ~
+        invalid_email_domain_read_more_link: ~
+        unknown_error: ~
+        only_white_label_offer: ~
+        upgrade_pro_plan_link: ~
+        verification_sent_from: ~
+        follow_the_instructions: ~
       getting_started:
         getting_started: "Guide de démarrage"
         welcome_to_your_marketplace: "Bienvenue dans votre place de marché, %{name} !"
@@ -130,6 +165,8 @@ fr-CA:
         categories_link_text: "ajouter des catégories et sous-catégories"
         custom_fields_link_text: "configurer les champs d'annonces"
         filters_link_text: "quels types de filtres"
+        order_types: ~
+        order_types_link_text: ~
         payments: "Si vous souhaitez que les utilisateurs puissent régler leur achats au sein de la place de marché, pour que vous puissiez prélever une commission sur chaque transaction, vous devriez %{payments_link}."
         payments_link_text: "configurer une méthode de paiement"
         info_texts: "N'oubliez pas d'éditer les pages d'informations et divers textes où vous pouvez en dire plus à vos utilisateurs sur votre place de marché. Cela se passe sur votre %{about_page_link}, vos %{terms_of_use_link} (vous devriez y ajouter vos propres conditions d'utilisations soit en modifiant le modèle actuel soit en créant un nouveau texte), votre %{privacy_policy_link} et votre %{welcome_email_link} qui est envoyé à chaque nouvel utilisateur. Il y a également %{instruction_texts_link} que vous pouvez éditer."
@@ -150,6 +187,27 @@ fr-CA:
         view_users_link_text: ici
         view_transactions_link_text: ici
         contact_support_link_text: "contacter notre support"
+      available_languages:
+        en: ~
+        en-AU: ~
+        en-GB: ~
+        fr: ~
+        fr-CA: ~
+        es: ~
+        es-ES: ~
+        pt-BR: ~
+        nb: ~
+        sv: ~
+        da-DK: ~
+        fi: ~
+        ru: ~
+        de: ~
+        el: ~
+        nl: ~
+        tr-TR: ~
+        zh: ~
+        ja: ~
+        it: ~
       settings:
         settings: Paramètres
         general: Général
@@ -176,6 +234,15 @@ fr-CA:
         automatic_newsletter_frequency: "Fréquence d'envoi de la newsletter : %{frequency_dropdown}"
         newsletter_daily: Quotidienne
         newsletter_weekly: Hebdomadaire
+        delete_marketplace_title: ~
+        type_marketplace_domain: ~
+        type_marketplace_domain_placeholder: ~
+        once_you_delete: ~
+        are_you_sure: ~
+        i_understand_button: ~
+        last_community_updates: ~
+        you_will_be_redirected_to: ~
+        delete_this_marketplace: ~
       manage_members:
         manage_members: "Gérer les utilisateurs"
         email: Email
@@ -186,6 +253,7 @@ fr-CA:
         ban_user: "Bannir l'utilisateur"
         saving_user_status: Sauvegarde...
         save_user_status_successful: Sauvegardé
+        export_all_as_csv: ~
         save_user_status_error: "La sauvegarde a échoué. Veuillez rafraîchir la page et essayer de nouveau."
         ban_user_confirmation: "Ceci supprime l'utilisateur de la place de marché et l'empêche d’y accéder de nouveau avec ce compte. Êtes-vous sûr de vouloir faire cela ?"
         ban_me_error: "Vous ne pouvez pas vous bannir vous-même."
@@ -224,6 +292,7 @@ fr-CA:
         url: URL
         empty: "Vous n'avez pas encore ajouté de liens au menu"
       transactions:
+        export_all_as_csv: ~
         transactions: "Voir les transactions"
         headers:
           conversation: "Fil de conversation"
@@ -318,6 +387,80 @@ fr-CA:
       configure: Configuration
       emails_title: Emails
       support: Support
+      subscription: ~
+    listing_shapes:
+      index:
+        listing_shapes: ~
+        description: ~
+        read_more_about_order_types: ~
+        add_new_shape: ~
+        select_template: ~
+        all_categories: ~
+        no_categories: ~
+        category_count: ~
+        header:
+          listing_shape_name: ~
+          listing_shape_categories: ~
+        order:
+          saving_order: ~
+          save_order_successful: ~
+          save_order_error: ~
+      templates:
+        selling_products: ~
+        renting_products: ~
+        offering_services: ~
+        giving_things_away: ~
+        requesting: ~
+        announcement: ~
+        custom: ~
+      new:
+        create_listing_shape: ~
+        create: ~
+        cancel: ~
+        create_success: ~
+        create_failure: ~
+      edit:
+        edit_listing_shape: ~
+        update: ~
+        cancel: ~
+        update_success: ~
+        update_failure: ~
+        delete: ~
+        can_not_delete_last: ~
+        can_not_delete_only_one_in_categories: ~
+      listing_shape_name: ~
+      listing_shape_name_placeholder: ~
+      action_button_label: ~
+      action_button_placeholder: ~
+      successfully_closed: ~
+      successfully_deleted: ~
+      pricing_and_checkout_title: ~
+      online_payments_label: ~
+      shipping_label: ~
+      price_label: ~
+      units_title: ~
+      units_desc: ~
+      units:
+        piece: ~
+        hour: ~
+        day: ~
+        night: ~
+        week: ~
+        month: ~
+      can_not_find: ~
+      add_custom_unit: ~
+      delete_custom_unit: ~
+      custom_unit_form:
+        title: ~
+        label_heading: ~
+        selector_label_heading: ~
+        label_placeholder: ~
+        selector_placeholder: ~
+        per: ~
+        unit_type:
+          heading: ~
+          quantity_label: ~
+          time_label: ~
     paypal_accounts:
       marketplace_paypal_integration: "Paramètres de paiement"
       preferences_updated: "Préférences de paiement mises à jour"
@@ -476,6 +619,7 @@ fr-CA:
       canceled_request: "a annulé la demande"
       canceled_offer: "a annulé l'offre"
       paid: "a payé %{sum}"
+      payment_preauthorized: ~
     new:
       offer_message_form_title: "Proposer %{listing} à %{person}"
       request_message_form_title: "Demander %{listing} à %{person}"
@@ -625,6 +769,11 @@ fr-CA:
       credit_card_expiration_date: "Date d'expiration"
       confirm_payment: "Confirmer le paiement"
       exp: "Exp :"
+  feedback:
+    feedback_subject: ~
+    feedback_body: ~
+    unlogged_user: ~
+    anonymous_user: ~
   preauthorize_payments:
     edit:
       confirm_payment: "Confirmer le paiement"
@@ -807,7 +956,7 @@ fr-CA:
     transaction_preauthorized:
       subject: "%{requester} a demandé et payé pour %{listing_title}"
       transaction_requested_by_user: "%{requester} a demandé et payé pour \"%{listing_title}\""
-      you_have_days_to_accept: "Vous devez accepter ou refuser la demande sous %{payment_expires_in_days} jours. Si vous n'acceptez pas durant ce délai, la demande sera automatiquement refusée et vous ne recevrez pas le paiement."
+      you_have_time_to_accept: ~
       click_here_to_reply: "Cliquez ici pour répondre à la demande"
     transaction_preauthorized_reminder:
       subject: "N'oubliez pas d'accepter la demande de %{requester} à propos de l'annonce %{listing_title}"
@@ -818,8 +967,6 @@ fr-CA:
       welcome_email_subject: "Bienvenue sur %{service_name}"
       welcome_to_marketplace: "Bienvenue sur %{service_name} ! Ravi que vous nous ayez rejoint."
       love_marketplace_crew: "Love,<br /><i>L'équipe de %{service_name}</i>"
-      p_s_did_you_know: "PS : souhaitez-vous créer votre propre place de marché comme %{service_name} ? C'est simple et ne demande pas de compétences techniques. %{click_here_link} pour en savoir plus !"
-      click_here_link_text: "Cliquez ici"
       welcome_email_footer_text: "Quels types d'emails souhaitez vous recevoir de la part de %{service_name} ? %{settings_link}"
       settings_link_text: "Vérifiez vos paramètres"
       welcome_email_subject_for_marketplace_creator: "Bienvenue sur Sharetribe"
@@ -857,6 +1004,8 @@ fr-CA:
     transaction_agreement:
       required_error: "Vous devez accepter l'accord"
     paypal:
+      buyer_cannot_pay_error: ~
+      pending_review_error: ~
       generic_error: "Une erreur s'est produite durant le processus de paiement. Le paiement PayPal n'a pas pu être réalisé."
       cancel_error: "Une erreur s'est produite durant l'annulation. Celle-ci n'a pas pu être réalisée."
       accept_authorization_error: "Une erreur s'est produite lors de la validation de la pré-autorisation du paiement PayPal. Merci d'essayer de nouveau."
@@ -1010,11 +1159,12 @@ fr-CA:
       filter: Filtre
       this_is_private_community: "Vous devez vous connecter pour voir le contenu."
     invitation_form:
-      invite_your_friends: "Inviter vos amis sur %{service_name}"
       email: "Adresse(s) email"
       message: "Votre message"
       send_invitation: "Envoyer l' (les) invitation(s)"
-      add_as_many_emails_as_you_want: "Ajoutez la ou les adresse(s) des gens que vous souhaitez inviter, ci-dessous. Si vous ajoutez plusieurs adresses, séparez les par une virgule."
+      add_email_addresses_description: "Ajoutez la ou les adresse(s) des gens que vous souhaitez inviter, ci-dessous. Si vous ajoutez plusieurs adresses, séparez les par une virgule."
+      add_lots_of_email_addresses: ~
+      this_article_link: ~
       invitation_emails_field_placeholder: "ami1@exemple.fr, ami2@exemple.fr, ..."
       invitation_message_field_placeholder: "J'ai rejoint cette super place de marché. Tu devrais aussi !"
       errors_in_emails: "Vérifiiez que les adresses email que vous ajoutez sont valides. Si vous ajoutez plusieurs adresses, assurez-vous qu'elles soient séparées par une virgule."
@@ -1043,6 +1193,8 @@ fr-CA:
       list_button: Liste
       all_listing_types: "Tous les types d'annonces"
       all_categories: "Toutes les catégories"
+    errors:
+      search_engine_not_responding: ~
   infos:
     about:
       default_about_text_title: "Qu'est ce que Sharetribe ?"
@@ -1140,6 +1292,7 @@ fr-CA:
       feedback_sent_to: "Avis envoyé à %{target_person}."
       feedback_skipped: "Pas d'avis donné"
       invitation_cannot_be_sent: "L' (les) invitation(s) n'a (n'ont) pas pu être envoyée(s)"
+      invitation_limit_reached: ~
       invitation_sent: "L' (les) invitation(s) a (ont) été envoyée(s)"
       inviting_new_users_is_not_allowed_in_this_community: "Inviter de nouveaux utilisateurs n'est pas autorisé."
       login_again: "Merci de vous reconnecter."
@@ -1195,6 +1348,7 @@ fr-CA:
       you_are_not_allowed_to_give_feedback_on_this_transaction: "Vous n'êtes pas autorisé à donner un avis sur cet événement"
       you_are_not_authorized_to_do_this: "Vous n'êtes pas autorisé à faire ceci"
       you_are_not_authorized_to_view_this_content: "Vous n'êtes pas autorisé à voir ce contenu"
+      listing_closed: ~
       send_instructions: "Vous allez recevoir un email vous expliquant comment ré-initialiser votre mot de passe dans quelques minutes."
       you_cannot_reply_to_a_closed_offer: "Vous ne pouvez pas répondre à une offre fermée"
       you_cannot_reply_to_a_closed_request: "Vous ne pouvez pas répondre à une demande fermée"
@@ -1209,6 +1363,7 @@ fr-CA:
       you_must_log_in_to_invite_new_users: "Vous devez vous connecter pour pouvoir inviter de nouveaux utilisateurs sur %{service_name}"
       you_must_log_in_to_send_a_comment: "Vous devez vous connecter pour envoyer un nouveau commentaire"
       you_must_log_in_to_send_a_message: "Vous devez vous connecter à %{service_name} pour envoyer un message à un autre utilisateur."
+      you_must_log_in_to_do_a_transaction: ~
       you_must_log_in_to_view_this_content: "Vous devez vous connecter pour voir ce contenu"
       you_must_log_in_to_view_this_page: "Connectez vous pour voir cette page"
       you_must_log_in_to_view_your_inbox: "Vous devez vous connecter à %{service_name} pour consulter votre boîte de réception."
@@ -1242,6 +1397,8 @@ fr-CA:
     comment:
       wrote: "a écrit"
       send_private_message: "Envoyer un message à %{person}"
+      delete: ~
+      are_you_sure: ~
     comment_form:
       ask_a_question: "Ajoutez un commentaire ou posez une question pour demander des détails. Tous les autres utilisateurs pourront voir votre commentaire."
       log_in: "vous connecter"
@@ -1262,6 +1419,10 @@ fr-CA:
       show_in_updates_email_loading: Chargement...
       show_in_updates_email_error: "Impossible de se connecter au serveur. Veuillez essayer de nouveau après avoir rafraîchi la page."
       show_in_updates_email_success: "Cette annonce sera diffusée dans le prochain email d'actualité, automatiquement envoyée aux utilisateurs"
+    map:
+      open_in_google_maps: ~
+    error:
+      something_went_wrong: ~
     follow_links:
       follow: "Recevoir les nouveaux commentaires par email."
       unfollow: "Ne pas recevoir les nouveaux commentaires par email."
@@ -1293,17 +1454,22 @@ fr-CA:
         googlemap_updatemap: "Mettre à jour le plan"
       images:
         image: Image
+        best_result: ~
         no_file_selected: "Aucun fichier sélectionné"
         remove_image: "Supprimer l'image"
         select_file: "Choisir une image"
+        add_more: ~
         removing: Suppression...
         processing: Traitement...
         loading_image: Chargement...
+        image_uploading_in_progress: ~
+        processing_takes_a_while: ~
         this_may_take_a_while: "(cela peut prendre un moment)"
         percentage_loaded: "%{percentage} %"
         uploading_failed: "Erreur lors de l'envoi d'image"
         file_too_large: "Le fichier est trop volumineux"
         accepted_formats: "L'image doit être au fomat GIF, JPG ou PNG."
+        images_not_uploaded_confirm: ~
       location:
         location: Lieu
       price:
@@ -1322,6 +1488,7 @@ fr-CA:
         delivery: Livraison
         shipping: Envoi
         shipping_price: "Frais de livraison"
+        shipping_price_additional: ~
         pickup: Retrait
       origin:
         location: Lieu
@@ -1352,10 +1519,6 @@ fr-CA:
         valid_until: "Date d'expiration"
       valid_until_radio_buttons:
         for_the_time_being: "Pas de date d'expiration"
-      visibility:
-        all_communities: "Toutes mes places de marché Sharetribe"
-        this_community: "Seuls les membres de %{service_name}"
-        visibility: Visibilité
       privacy:
         privacy: Visibilité
         private: "Privée (visible uniquement par les utilisateurs connectés)"
@@ -1406,6 +1569,7 @@ fr-CA:
       booking_from: Du
       booking_to: Au
       how_paypal_works: "Comment fonctionne PayPal"
+      payment_help: ~
     new:
       post_a_new_listing: "Affichez une annonce"
       listing: annonce
@@ -1469,7 +1633,10 @@ fr-CA:
         per_day: "par jour"
       delivery: Livraison
       shipping: "Envoi (+%{price})"
+      shipping_no_price: ~
+      shipping_price_additional: ~
       pickup: Retrait
+      pickup_no_price: ~
     unit_types:
       piece: ~
       hour: ~
@@ -1523,7 +1690,6 @@ fr-CA:
       continue: Continuer
       payment_receiver: "Destinataire du paiement : "
       sum: "Montant total : "
-      commission_will_be_added: "Une commission de 10% sera ajoutée."
     form:
       total: Total
       service_charge: Commission
@@ -1616,6 +1782,7 @@ fr-CA:
       invalid_invitation_code: "Le code d'invitation n'est pas valide."
       invitation_code: "Code d'invitation"
       not_required: ", pas demandé"
+      notification_is_mandatory: ~
       organization_name: "Nom de l'organisation"
       password_again: "Confirmer le mot de passe"
       show_my_name_to_others: "Montrer mon nom complet aux autres utilisateurs de %{service_name}"

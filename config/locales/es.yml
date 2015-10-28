@@ -37,6 +37,10 @@ es:
         community_details: "Detalles de la tribu"
         community_look_and_feel: "Apariencia de la tribu"
         edit_community: "Editar detalles de la comunidad \"%{community_name}\""
+        enabled_languages: ~
+        enabled_languages_description: ~
+        default_language: ~
+        language_selection_disabled: ~
         community_name: "Nombre de la tribu:"
         edit_community_name_description: ~
         community_slogan: "Eslogan de la tribu:"
@@ -103,6 +107,37 @@ es:
         welcome_email_content_description: "Este mensaje será enviado a todos los miembros nuevos cuando ellos se unen a la comunidad. Puede modificar el contenido para adaptar a su comunidad. Haciendo click en '%{send_test_message_link}' puede ver cómo queda el mensaje en tu email."
         edit_message: ~
         send_test_message: ~
+      outgoing_email:
+        title: ~
+        info: ~
+        read_more: ~
+        sender_address: ~
+        sender_address_default: ~
+        need_to_change: ~
+        contact_support_link_text: ~
+        set_sender_address: ~
+        sender_name_label: ~
+        sender_name_placeholder: ~
+        sender_email_label: ~
+        sender_email_placeholder: ~
+        this_is_how_it_will_look: ~
+        send_verification_button: ~
+        successfully_saved: ~
+        status: ~
+        status_verified: ~
+        status_error: ~
+        status_requested: ~
+        status_expired: ~
+        status_resent: ~
+        resend_link: ~
+        invalid_email_error: ~
+        invalid_email_domain: ~
+        invalid_email_domain_read_more_link: ~
+        unknown_error: ~
+        only_white_label_offer: ~
+        upgrade_pro_plan_link: ~
+        verification_sent_from: ~
+        follow_the_instructions: ~
       getting_started:
         getting_started: ~
         welcome_to_your_marketplace: ~
@@ -115,6 +150,8 @@ es:
         categories_link_text: ~
         custom_fields_link_text: ~
         filters_link_text: ~
+        order_types: ~
+        order_types_link_text: ~
         payments: ~
         payments_link_text: ~
         info_texts: ~
@@ -135,6 +172,27 @@ es:
         view_users_link_text: ~
         view_transactions_link_text: ~
         contact_support_link_text: ~
+      available_languages:
+        en: ~
+        en-AU: ~
+        en-GB: ~
+        fr: ~
+        fr-CA: ~
+        es: ~
+        es-ES: ~
+        pt-BR: ~
+        nb: ~
+        sv: ~
+        da-DK: ~
+        fi: ~
+        ru: ~
+        de: ~
+        el: ~
+        nl: ~
+        tr-TR: ~
+        zh: ~
+        ja: ~
+        it: ~
       settings:
         settings: ~
         general: ~
@@ -161,6 +219,15 @@ es:
         automatic_newsletter_frequency: ~
         newsletter_daily: ~
         newsletter_weekly: ~
+        delete_marketplace_title: ~
+        type_marketplace_domain: ~
+        type_marketplace_domain_placeholder: ~
+        once_you_delete: ~
+        are_you_sure: ~
+        i_understand_button: ~
+        last_community_updates: ~
+        you_will_be_redirected_to: ~
+        delete_this_marketplace: ~
       manage_members:
         manage_members: ~
         email: ~
@@ -171,6 +238,7 @@ es:
         ban_user: ~
         saving_user_status: ~
         save_user_status_successful: ~
+        export_all_as_csv: ~
         save_user_status_error: ~
         ban_user_confirmation: ~
         ban_me_error: ~
@@ -209,6 +277,7 @@ es:
         url: ~
         empty: ~
       transactions:
+        export_all_as_csv: ~
         transactions: ~
         headers:
           conversation: ~
@@ -303,6 +372,80 @@ es:
       configure: ~
       emails_title: ~
       support: ~
+      subscription: ~
+    listing_shapes:
+      index:
+        listing_shapes: ~
+        description: ~
+        read_more_about_order_types: ~
+        add_new_shape: ~
+        select_template: ~
+        all_categories: ~
+        no_categories: ~
+        category_count: ~
+        header:
+          listing_shape_name: ~
+          listing_shape_categories: ~
+        order:
+          saving_order: ~
+          save_order_successful: ~
+          save_order_error: ~
+      templates:
+        selling_products: ~
+        renting_products: ~
+        offering_services: ~
+        giving_things_away: ~
+        requesting: ~
+        announcement: ~
+        custom: ~
+      new:
+        create_listing_shape: ~
+        create: ~
+        cancel: ~
+        create_success: ~
+        create_failure: ~
+      edit:
+        edit_listing_shape: ~
+        update: ~
+        cancel: ~
+        update_success: ~
+        update_failure: ~
+        delete: ~
+        can_not_delete_last: ~
+        can_not_delete_only_one_in_categories: ~
+      listing_shape_name: ~
+      listing_shape_name_placeholder: ~
+      action_button_label: ~
+      action_button_placeholder: ~
+      successfully_closed: ~
+      successfully_deleted: ~
+      pricing_and_checkout_title: ~
+      online_payments_label: ~
+      shipping_label: ~
+      price_label: ~
+      units_title: ~
+      units_desc: ~
+      units:
+        piece: ~
+        hour: ~
+        day: ~
+        night: ~
+        week: ~
+        month: ~
+      can_not_find: ~
+      add_custom_unit: ~
+      delete_custom_unit: ~
+      custom_unit_form:
+        title: ~
+        label_heading: ~
+        selector_label_heading: ~
+        label_placeholder: ~
+        selector_placeholder: ~
+        per: ~
+        unit_type:
+          heading: ~
+          quantity_label: ~
+          time_label: ~
     paypal_accounts:
       marketplace_paypal_integration: ~
       preferences_updated: ~
@@ -457,6 +600,7 @@ es:
       canceled_request: "Solicitud cancelada"
       canceled_offer: "cancelar la oferta"
       paid: "%{sum} pagado"
+      payment_preauthorized: ~
     new:
       offer_message_form_title: "Ofertar %{listing} a %{person}"
       request_message_form_title: "La solicitud %{listing} de %{person}"
@@ -606,6 +750,11 @@ es:
       credit_card_expiration_date: ~
       confirm_payment: ~
       exp: ~
+  feedback:
+    feedback_subject: ~
+    feedback_body: ~
+    unlogged_user: ~
+    anonymous_user: ~
   preauthorize_payments:
     edit:
       confirm_payment: ~
@@ -795,7 +944,7 @@ es:
     transaction_preauthorized:
       subject: ~
       transaction_requested_by_user: ~
-      you_have_days_to_accept: ~
+      you_have_time_to_accept: ~
       click_here_to_reply: ~
     transaction_preauthorized_reminder:
       subject: ~
@@ -806,8 +955,6 @@ es:
       welcome_email_subject: ~
       welcome_to_marketplace: ~
       love_marketplace_crew: ~
-      p_s_did_you_know: "P.D. ¿Sabías que puedes crear un mercado como este para cualquier comunidad a la que perteneces, completamente gratis? %{click_here_link} para saber más!"
-      click_here_link_text: "Haz clic aquí"
       welcome_email_footer_text: "¿Qué tipo de emails desea recibir de %{service_name}? %{settings_link}"
       settings_link_text: "Revisa tu configuración"
       welcome_email_subject_for_marketplace_creator: ~
@@ -845,6 +992,8 @@ es:
     transaction_agreement:
       required_error: ~
     paypal:
+      buyer_cannot_pay_error: ~
+      pending_review_error: ~
       generic_error: ~
       cancel_error: ~
       accept_authorization_error: ~
@@ -998,11 +1147,12 @@ es:
       filter: Filtro
       this_is_private_community: ~
     invitation_form:
-      invite_your_friends: "Invita a tus amigos a %{service_name}!"
       email: "Dirección de correo electrónico de tu amigo:"
       message: "Un mensaje personal:"
       send_invitation: "Enviar invitación"
-      add_as_many_emails_as_you_want: "Añade el/los email/s de tu/s amigo/s en el campo más abajo. Si quieres añadir más de una dirección email, sepáralas con una coma."
+      add_email_addresses_description: "Añade el/los email/s de tu/s amigo/s en el campo más abajo. Si quieres añadir más de una dirección email, sepáralas con una coma."
+      add_lots_of_email_addresses: ~
+      this_article_link: ~
       invitation_emails_field_placeholder: "amigo1@ejemplo.com, amigo2@ejemplo.com, ..."
       invitation_message_field_placeholder: "Me uní a este fantástico servicio. Deberías hacer lo mismo!"
       errors_in_emails: "Revisa que sean emails válidos, separados por una coma."
@@ -1031,6 +1181,8 @@ es:
       list_button: Lista
       all_listing_types: "Todos los tipos de listado"
       all_categories: "Todas las categorías"
+    errors:
+      search_engine_not_responding: ~
   infos:
     about:
       default_about_text_title: "¿Qué es Sharetribe?"
@@ -1128,6 +1280,7 @@ es:
       feedback_sent_to: "Feedback enviado a %{target_person}"
       feedback_skipped: "Feedback omitido"
       invitation_cannot_be_sent: "No se pudo enviar la invitación"
+      invitation_limit_reached: ~
       invitation_sent: "Invitación enviada satisfactoriamente"
       inviting_new_users_is_not_allowed_in_this_community: "Invitar a nuevos usuarios no está permitido en ésta comunidad de %{service_name}"
       login_again: "Por favor, vuelve a iniciar la sesión"
@@ -1183,6 +1336,7 @@ es:
       you_are_not_allowed_to_give_feedback_on_this_transaction: "No estás autorizado para dar sugerencias en este evento."
       you_are_not_authorized_to_do_this: "No estás autorizado para realizar esta acción."
       you_are_not_authorized_to_view_this_content: "No estás autorizado para ver este contenido"
+      listing_closed: ~
       send_instructions: "Recibirás un e-mail con las instrucciones para cambiar tu contraseña en unos pocos minutos."
       you_cannot_reply_to_a_closed_offer: "No puedes responder a una oferta cerrada"
       you_cannot_reply_to_a_closed_request: "No puedes responder a una solicitud cerrada"
@@ -1197,6 +1351,7 @@ es:
       you_must_log_in_to_invite_new_users: "Debes iniciar sesión para invitar a nuevos usuarios a %{service_name}"
       you_must_log_in_to_send_a_comment: "Debes iniciar tu sesión para enviar un nuevo comentario"
       you_must_log_in_to_send_a_message: "Debes iniciar tu sesión en %{service_name} para enviar un mensaje a otro usuario"
+      you_must_log_in_to_do_a_transaction: ~
       you_must_log_in_to_view_this_content: "Debes iniciar tu sesión para ver este contenido"
       you_must_log_in_to_view_this_page: "Tienes que iniciar sesión para ver esta página"
       you_must_log_in_to_view_your_inbox: "Debes iniciar tu sesión en %{service_name} para revisar tu bandeja de entrada"
@@ -1230,6 +1385,8 @@ es:
     comment:
       wrote: escrito
       send_private_message: "Enviar mensaje privado a %{person}"
+      delete: ~
+      are_you_sure: ~
     comment_form:
       ask_a_question: "Comenta en el listado o pregunta por más detalles. Todos los otros usuarios podrán ver tu comentario."
       log_in: Registrarse
@@ -1250,6 +1407,10 @@ es:
       show_in_updates_email_loading: ~
       show_in_updates_email_error: ~
       show_in_updates_email_success: ~
+    map:
+      open_in_google_maps: ~
+    error:
+      something_went_wrong: ~
     follow_links:
       follow: "Seguir este anuncio"
       unfollow: "Dejar de seguir este anuncio"
@@ -1281,17 +1442,22 @@ es:
         googlemap_updatemap: "Actualizar mapa"
       images:
         image: Imagen
+        best_result: ~
         no_file_selected: "No hay archivos seleccionados"
         remove_image: "Quitar imagen"
         select_file: "Elegir Archivo"
+        add_more: ~
         removing: ~
         processing: Procesando...
         loading_image: ~
+        image_uploading_in_progress: ~
+        processing_takes_a_while: ~
         this_may_take_a_while: "(esto podría tomar un tiempo)"
         percentage_loaded: ~
         uploading_failed: ~
         file_too_large: ~
         accepted_formats: "El archivo de imagen debe estar en formato GIF, JPG o PNG."
+        images_not_uploaded_confirm: ~
       location:
         location: Lugar
       price:
@@ -1310,6 +1476,7 @@ es:
         delivery: ~
         shipping: ~
         shipping_price: ~
+        shipping_price_additional: ~
         pickup: ~
       origin:
         location: Lugar
@@ -1340,10 +1507,6 @@ es:
         valid_until: "Fecha de caducidad"
       valid_until_radio_buttons:
         for_the_time_being: "Por el momento"
-      visibility:
-        all_communities: "Todas mis comunidades %{service_name}"
-        this_community: "Sólo miembros de %{community}"
-        visibility: Visibilidad
       privacy:
         privacy: Privacidad
         private: "Privado (sólo usuarios registrados pueden verlo)"
@@ -1394,6 +1557,7 @@ es:
       booking_from: ~
       booking_to: ~
       how_paypal_works: ~
+      payment_help: ~
     new:
       post_a_new_listing: "Publica un nuevo listado"
       listing: listado
@@ -1457,7 +1621,10 @@ es:
         per_day: ~
       delivery: ~
       shipping: ~
+      shipping_no_price: ~
+      shipping_price_additional: ~
       pickup: ~
+      pickup_no_price: ~
     unit_types:
       piece: ~
       hour: ~
@@ -1500,6 +1667,8 @@ es:
       search_verb: Buscar
       you_have_something_others_do_not: "¿Tienes algo para ofrecer?"
     please_comment: Comentario
+  mercury:
+    content_too_long: ~
   okl:
     member_id: "Número de identificación"
     member_id_or_email: "Identificación de usuario o email"
@@ -1509,7 +1678,6 @@ es:
       continue: Continuar
       payment_receiver: "Receptor del pago"
       sum: "Monto a pagar"
-      commission_will_be_added: "Un cargo del 10% será agregado."
     form:
       total: ~
       service_charge: ~
@@ -1602,6 +1770,7 @@ es:
       invalid_invitation_code: "El código de invitación no es válido."
       invitation_code: "Código de invitación:"
       not_required: ", no es necesario"
+      notification_is_mandatory: ~
       organization_name: ~
       password_again: "Confirma la contraseña:"
       show_my_name_to_others: "Mostrar mi nombre real a otros usuarios de %{service_name}"

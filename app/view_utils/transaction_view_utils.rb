@@ -13,6 +13,7 @@ module TransactionViewUtils
   PriceBreakDownLocals = EntityUtils.define_builder(
     [:listing_price, :money, :mandatory],
     [:localized_unit_type, :string],
+    [:localized_selector_label, :string],
     [:booking, :to_bool, default: false],
     [:start_on, :date],
     [:end_on, :date],
@@ -138,7 +139,7 @@ module TransactionViewUtils
 
     message = case state
     when "preauthorized"
-      t("conversations.message.paid", sum: humanized_money_with_symbol(payment_sum))
+      t("conversations.message.payment_preauthorized", sum: humanized_money_with_symbol(payment_sum))
     when "accepted"
       t("conversations.message.accepted_request")
     when "rejected"
@@ -159,4 +160,22 @@ module TransactionViewUtils
   def price_break_down_locals(opts)
     PriceBreakDownLocals.call(opts)
   end
+
+  def parse_booking_date(str)
+    Date.parse(str) unless str.blank?
+  end
+
+  def stringify_booking_date(date)
+    date.iso8601
+  end
+
+  def parse_quantity(quantity)
+    Maybe(quantity)
+      .select { |q| StringUtils.is_numeric?(q) }
+      .map(&:to_i)
+      .select { |q| q > 0 }
+      .or_else(1)
+  end
+
+
 end

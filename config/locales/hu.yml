@@ -37,6 +37,10 @@ hu:
         community_details: ~
         community_look_and_feel: ~
         edit_community: ~
+        enabled_languages: ~
+        enabled_languages_description: ~
+        default_language: ~
+        language_selection_disabled: ~
         community_name: ~
         edit_community_name_description: ~
         community_slogan: ~
@@ -85,9 +89,9 @@ hu:
         custom_color2_instructions_text: ~
         default_browse_view: ~
         default_browse_view_instructions_text: ~
-        grid: ~
-        list: ~
-        map: ~
+        grid: "Magazin nézet"
+        list: "Lista nézet"
+        map: "Térkép nézet"
         name_display_type: ~
         name_display_type_instructions_text: ~
         full_name: ~
@@ -103,6 +107,37 @@ hu:
         welcome_email_content_description: ~
         edit_message: ~
         send_test_message: ~
+      outgoing_email:
+        title: ~
+        info: ~
+        read_more: ~
+        sender_address: ~
+        sender_address_default: ~
+        need_to_change: ~
+        contact_support_link_text: ~
+        set_sender_address: ~
+        sender_name_label: ~
+        sender_name_placeholder: ~
+        sender_email_label: ~
+        sender_email_placeholder: ~
+        this_is_how_it_will_look: ~
+        send_verification_button: ~
+        successfully_saved: ~
+        status: ~
+        status_verified: ~
+        status_error: ~
+        status_requested: ~
+        status_expired: ~
+        status_resent: ~
+        resend_link: ~
+        invalid_email_error: ~
+        invalid_email_domain: ~
+        invalid_email_domain_read_more_link: ~
+        unknown_error: ~
+        only_white_label_offer: ~
+        upgrade_pro_plan_link: ~
+        verification_sent_from: ~
+        follow_the_instructions: ~
       getting_started:
         getting_started: ~
         welcome_to_your_marketplace: ~
@@ -115,6 +150,8 @@ hu:
         categories_link_text: ~
         custom_fields_link_text: ~
         filters_link_text: ~
+        order_types: ~
+        order_types_link_text: ~
         payments: ~
         payments_link_text: ~
         info_texts: ~
@@ -135,6 +172,27 @@ hu:
         view_users_link_text: ~
         view_transactions_link_text: ~
         contact_support_link_text: ~
+      available_languages:
+        en: ~
+        en-AU: ~
+        en-GB: ~
+        fr: ~
+        fr-CA: ~
+        es: ~
+        es-ES: ~
+        pt-BR: ~
+        nb: ~
+        sv: ~
+        da-DK: ~
+        fi: ~
+        ru: ~
+        de: ~
+        el: ~
+        nl: ~
+        tr-TR: ~
+        zh: ~
+        ja: ~
+        it: ~
       settings:
         settings: ~
         general: ~
@@ -161,6 +219,15 @@ hu:
         automatic_newsletter_frequency: ~
         newsletter_daily: ~
         newsletter_weekly: ~
+        delete_marketplace_title: ~
+        type_marketplace_domain: ~
+        type_marketplace_domain_placeholder: ~
+        once_you_delete: ~
+        are_you_sure: ~
+        i_understand_button: ~
+        last_community_updates: ~
+        you_will_be_redirected_to: ~
+        delete_this_marketplace: ~
       manage_members:
         manage_members: ~
         email: ~
@@ -171,6 +238,7 @@ hu:
         ban_user: ~
         saving_user_status: ~
         save_user_status_successful: ~
+        export_all_as_csv: ~
         save_user_status_error: ~
         ban_user_confirmation: ~
         ban_me_error: ~
@@ -209,6 +277,7 @@ hu:
         url: ~
         empty: ~
       transactions:
+        export_all_as_csv: ~
         transactions: ~
         headers:
           conversation: ~
@@ -303,6 +372,80 @@ hu:
       configure: ~
       emails_title: ~
       support: ~
+      subscription: ~
+    listing_shapes:
+      index:
+        listing_shapes: ~
+        description: ~
+        read_more_about_order_types: ~
+        add_new_shape: ~
+        select_template: ~
+        all_categories: ~
+        no_categories: ~
+        category_count: ~
+        header:
+          listing_shape_name: ~
+          listing_shape_categories: ~
+        order:
+          saving_order: ~
+          save_order_successful: ~
+          save_order_error: ~
+      templates:
+        selling_products: ~
+        renting_products: ~
+        offering_services: ~
+        giving_things_away: ~
+        requesting: ~
+        announcement: ~
+        custom: ~
+      new:
+        create_listing_shape: ~
+        create: ~
+        cancel: ~
+        create_success: ~
+        create_failure: ~
+      edit:
+        edit_listing_shape: ~
+        update: ~
+        cancel: ~
+        update_success: ~
+        update_failure: ~
+        delete: ~
+        can_not_delete_last: ~
+        can_not_delete_only_one_in_categories: ~
+      listing_shape_name: ~
+      listing_shape_name_placeholder: ~
+      action_button_label: ~
+      action_button_placeholder: ~
+      successfully_closed: ~
+      successfully_deleted: ~
+      pricing_and_checkout_title: ~
+      online_payments_label: ~
+      shipping_label: ~
+      price_label: ~
+      units_title: ~
+      units_desc: ~
+      units:
+        piece: ~
+        hour: ~
+        day: ~
+        night: ~
+        week: ~
+        month: ~
+      can_not_find: ~
+      add_custom_unit: ~
+      delete_custom_unit: ~
+      custom_unit_form:
+        title: ~
+        label_heading: ~
+        selector_label_heading: ~
+        label_placeholder: ~
+        selector_placeholder: ~
+        per: ~
+        unit_type:
+          heading: ~
+          quantity_label: ~
+          time_label: ~
     paypal_accounts:
       marketplace_paypal_integration: ~
       preferences_updated: ~
@@ -334,31 +477,31 @@ hu:
         rent: ~
         request: ~
         offer: ~
-        inquiry: ~
+        inquiry: Kapcsolatfelvétel
   common:
-    edit_page: ~
-    default_community_slogan: ~
+    edit_page: "Oldal szerkesztése"
+    default_community_slogan: "Közösség piactér"
     default_community_description: ~
-    cancel: ~
-    fields_that_are_mandatory: ~
-    or: ~
-    password: ~
-    service_name: ~
+    cancel: Mégse
+    fields_that_are_mandatory: "Kötelező mezők (*)"
+    or: vagy
+    password: Jelszó
+    service_name: "Szolgáltatás neve %{service_name}"
     share_types:
-      request: ~
-      offer: ~
-      borrow: ~
-      buy: ~
-      give_away: ~
-      lend: ~
-      receive: ~
-      rent: ~
-      rent_out: ~
-      sell: ~
-      offer_to_swap: ~
-      request_to_swap: ~
-      share_for_free: ~
-      accept_for_free: ~
+      request: Kérés
+      offer: Ajánlat
+      borrow: Kölcsönvétel
+      buy: Vétel
+      give_away: Ajándékozás
+      lend: Kölcsönadás
+      receive: Fogadás
+      rent: Kölcsönzés
+      rent_out: Kölcsönözés
+      sell: Eladás
+      offer_to_swap: Csereajánlat
+      request_to_swap: "Csereajánlat kérés"
+      share_for_free: "Ingyenes kölcsönadás"
+      accept_for_free: "Ingyenes kölcsönvétel"
     categories:
       item: ~
       favor: ~
@@ -379,10 +522,10 @@ hu:
       garden: ~
       travel: ~
       other: ~
-    username: ~
-    username_or_email: ~
-    what_is_this: ~
-    removed_user: ~
+    username: Felhasználónév
+    username_or_email: "Felhasználónév vagy email"
+    what_is_this: "Mi ez?"
+    removed_user: "Törölt felhasználó"
     paypal_fee_info:
       title: ~
       body_text: ~
@@ -430,11 +573,11 @@ hu:
       days: ~
       price_per_day: ~
     index:
-      loading_more_messages: ~
-      message_partitive: ~
-      messages_partitive: ~
-      no_received_messages: ~
-      no_sent_messages: ~
+      loading_more_messages: "Több üzenet betöltése"
+      message_partitive: Üzenet
+      messages_partitive: Üzenetek
+      no_received_messages: "Nincs üzeneted"
+      no_sent_messages: "Nincs elküldött üzenet"
     conversation:
       accepted_request: ~
       accepted_offer: ~
@@ -445,8 +588,8 @@ hu:
       canceled_request: ~
       canceled_offer: ~
       message_from: ~
-      about_listing: ~
-      free_message: ~
+      about_listing: "A következő hirdetéssel kapcsolatban: %{listing_title}"
+      free_message: Kapcsolatfelvétel
     message:
       accepted_request: ~
       accepted_offer: ~
@@ -457,10 +600,11 @@ hu:
       canceled_request: ~
       canceled_offer: ~
       paid: ~
+      payment_preauthorized: ~
     new:
       offer_message_form_title: ~
       request_message_form_title: ~
-      favor_offer_message_form_title: "Segítséget kérek innen: %{person}"
+      favor_offer_message_form_title: "Segítséget kérek tőle: %{person}"
       favor_request_message_form_title: "Segítek neki: %{person}"
       housing_offer_message_form_title: ~
       housing_request_message_form_title: ~
@@ -492,8 +636,8 @@ hu:
       you_will_get_notified_of_acceptance: ~
       you_will_get_notified: ~
       title: Cím
-      send_message_to_user: ~
-      about_listing: ~
+      send_message_to_user: "Üzenet küldése %{person} felhasználónak"
+      about_listing: "A következő hirdetéssel kapcsolatban: %{listing_title}"
       author_has_to_accept_request: ~
     show:
       in_response_to_listing: ~
@@ -502,8 +646,8 @@ hu:
       send_reply: "Választ küldök"
       write_a_reply: "Választ írok"
       conversation_about_listing: ~
-      conversation_with_user: ~
-      conversation_with: ~
+      conversation_with_user: "%{person} felhasználóval"
+      conversation_with: "Üzenetváltás %{person} felhasználóval"
       last_message_at: ~
       price: ~
       sum: ~
@@ -606,6 +750,11 @@ hu:
       credit_card_expiration_date: ~
       confirm_payment: ~
       exp: ~
+  feedback:
+    feedback_subject: ~
+    feedback_body: ~
+    unlogged_user: ~
+    anonymous_user: ~
   preauthorize_payments:
     edit:
       confirm_payment: ~
@@ -623,7 +772,7 @@ hu:
       you_can_join_email_confirmation_multiple_addresses: ~
       you_can_join_with_invite_only: ~
       if_want_to_view_content: ~
-      log_out: ~
+      log_out: Kijelentkezés
       join_community_button: ~
   emails:
     accept_reminder:
@@ -680,11 +829,11 @@ hu:
       if_this_was_error: ~
       please_contant_admin_link: ~
     confirmation_instructions:
-      confirmation_instructions_signature: ~
-      welcome_to_kassi: ~
-      need_to_confirm: ~
-      confirmation_link_text: ~
-      or_paste_link: ~
+      confirmation_instructions_signature: "Üdvözlettel,<br/>A %{service_name} csapata"
+      welcome_to_kassi: "Üdvözlünk a %{service_name}-n!"
+      need_to_confirm: "Aktiválnod kell a fiókodat e-mailben."
+      confirmation_link_text: "Email aktíválása"
+      or_paste_link: "Az aktiválás az alábbi URL-cím böngészőbe másolásával is hozzáférhető:"
       turning_on_confirmations_in_this_community: ~
     common:
       check_your_settings: "Ellenőrizd a beállításaidat."
@@ -696,7 +845,7 @@ hu:
       edit_your_email_settings_here: ~
       message_not_displaying_correctly: ~
       view_it_in_your_browser: ~
-      or: ~
+      or: vagy
       unsubscribe_from_these_emails: ~
     conversation_status_changed:
       has_accepted_your_offer: ~
@@ -704,8 +853,8 @@ hu:
       has_rejected_your_offer: ~
       has_rejected_your_request: ~
       view_thread: ~
-      your_offer_was_accepted: Elfogadva
-      your_offer_was_rejected: Elutasítva
+      your_offer_was_accepted: "Ajánlat elfogadva"
+      your_offer_was_rejected: "Ajánlat elutasítva"
       your_request_was_accepted: Elfogadva
       your_request_was_rejected: Elutasítva
       you_can_now_pay_to: ~
@@ -788,7 +937,7 @@ hu:
     transaction_preauthorized:
       subject: ~
       transaction_requested_by_user: ~
-      you_have_days_to_accept: ~
+      you_have_time_to_accept: ~
       click_here_to_reply: ~
     transaction_preauthorized_reminder:
       subject: ~
@@ -799,8 +948,6 @@ hu:
       welcome_email_subject: ~
       welcome_to_marketplace: ~
       love_marketplace_crew: ~
-      p_s_did_you_know: ~
-      click_here_link_text: ~
       welcome_email_footer_text: ~
       settings_link_text: ~
       welcome_email_subject_for_marketplace_creator: ~
@@ -828,7 +975,7 @@ hu:
   error_messages:
     listings:
       departure_time: ~
-      share_type: ~
+      share_type: "Ki kell választani egyet."
       valid_until: ~
       price: ~
       minimum_price: ~
@@ -838,17 +985,19 @@ hu:
     transaction_agreement:
       required_error: ~
     paypal:
+      buyer_cannot_pay_error: ~
+      pending_review_error: ~
       generic_error: ~
       cancel_error: ~
       accept_authorization_error: ~
       reject_authorization_error: ~
   error_pages:
-    back_to_kassi_front_page: ~
+    back_to_kassi_front_page: "Vissza a kezdőoldalra"
     error_404:
       if_you_believe: ~
-      page_can_not_be_found: ~
+      page_can_not_be_found: "Az oldal nem található!"
       page_you_requested_can_not_be_found: ~
-    error_404_title: ~
+    error_404_title: "Nincs ilyen oldal"
     error_410:
       page_removed: ~
       page_you_requested_has_been_removed: ~
@@ -859,16 +1008,16 @@ hu:
       unable_to_process: ~
       we_hate_this: ~
       refer_to_error_id: ~
-    error_500_title: ~
+    error_500_title: "Az oldal betöltése nem sikerült"
     error_description: ~
     no_javascript:
-      javascript_is_disabled_in_your_browser: ~
+      javascript_is_disabled_in_your_browser: "A JavaScript ki van kapcsolva a böngésződben"
       kassi_does_not_currently_work_without_javascript: ~
       contact_us: ~
-      send_feedback: ~
+      send_feedback: "Visszajelzés küldése"
       your_feedback_to_admins: ~
-    send: ~
-    your_email_address: ~
+    send: Küldés
+    your_email_address: "Az e-mail címed"
   errors:
     messages:
       invalid_date: ~
@@ -906,13 +1055,13 @@ hu:
       offer_partitive: ~
       request_partitive: ~
   header:
-    about: ~
-    home: ~
+    about: Rólunk
+    home: Főoldal
     members: ~
     new_listing: ~
-    mobile_version: ~
-    offers: ~
-    requests: ~
+    mobile_version: "Mobil verzió"
+    offers: Ajánlatok
+    requests: Kérések
     search_kassi: ~
     create_new_marketplace: ~
     contact_us: ~
@@ -975,7 +1124,7 @@ hu:
       are_offering: ~
       add_news_item: ~
       lend_rent_help_carpool: ~
-      loading_more_content: ~
+      loading_more_content: "További tartalom betöltése"
       more_events: ~
       news: ~
       no_news: ~
@@ -991,11 +1140,12 @@ hu:
       filter: ~
       this_is_private_community: ~
     invitation_form:
-      invite_your_friends: ~
-      email: ~
-      message: ~
-      send_invitation: ~
-      add_as_many_emails_as_you_want: ~
+      email: "E-mail cím(ek)"
+      message: "Személyes üzenet"
+      send_invitation: "Meghívó küldése"
+      add_email_addresses_description: ~
+      add_lots_of_email_addresses: ~
+      this_article_link: ~
       invitation_emails_field_placeholder: ~
       invitation_message_field_placeholder: ~
       errors_in_emails: ~
@@ -1024,6 +1174,8 @@ hu:
       list_button: ~
       all_listing_types: ~
       all_categories: ~
+    errors:
+      search_engine_not_responding: ~
   infos:
     about:
       default_about_text_title: ~
@@ -1121,6 +1273,7 @@ hu:
       feedback_sent_to: ~
       feedback_skipped: ~
       invitation_cannot_be_sent: ~
+      invitation_limit_reached: ~
       invitation_sent: ~
       inviting_new_users_is_not_allowed_in_this_community: ~
       login_again: ~
@@ -1176,6 +1329,7 @@ hu:
       you_are_not_allowed_to_give_feedback_on_this_transaction: ~
       you_are_not_authorized_to_do_this: ~
       you_are_not_authorized_to_view_this_content: ~
+      listing_closed: ~
       send_instructions: ~
       you_cannot_reply_to_a_closed_offer: ~
       you_cannot_reply_to_a_closed_request: ~
@@ -1190,6 +1344,7 @@ hu:
       you_must_log_in_to_invite_new_users: ~
       you_must_log_in_to_send_a_comment: ~
       you_must_log_in_to_send_a_message: ~
+      you_must_log_in_to_do_a_transaction: ~
       you_must_log_in_to_view_this_content: ~
       you_must_log_in_to_view_this_page: ~
       you_must_log_in_to_view_your_inbox: ~
@@ -1223,15 +1378,17 @@ hu:
     comment:
       wrote: ~
       send_private_message: ~
+      delete: ~
+      are_you_sure: ~
     comment_form:
-      ask_a_question: ~
+      ask_a_question: "Írj hozzászólást vagy vedd fel a kapcsolatot az eladóval, ha kérdésed van. Hozzászólásódát valamennyi felhasználó olvashatja."
       log_in: ~
-      send_comment: ~
+      send_comment: "Hozzászólás küldése"
       to_send_a_comment: ~
       write_comment: ~
       you_cannot_send_a_new_comment_because_listing_is_closed: ~
       you_must: ~
-      subscribe_to_comments: ~
+      subscribe_to_comments: "Értesítsen engem új hozzászólás vagy frissítés esetén"
     edit:
       edit_listing: ~
     edit_links:
@@ -1240,12 +1397,16 @@ hu:
       reopen_listing: ~
       move_to_top: ~
       show_in_updates_email: ~
-      show_in_updates_email_loading: ~
+      show_in_updates_email_loading: Töltés...
       show_in_updates_email_error: ~
       show_in_updates_email_success: ~
+    map:
+      open_in_google_maps: ~
+    error:
+      something_went_wrong: ~
     follow_links:
-      follow: ~
-      unfollow: ~
+      follow: "E-mail értesítést kérek új hozzászólás esetén"
+      unfollow: "Nem kérek e-mail értesítést új hozzászólás esetén"
     form:
       custom_field_partials:
         dropdown:
@@ -1274,17 +1435,22 @@ hu:
         googlemap_updatemap: ~
       images:
         image: ~
+        best_result: ~
         no_file_selected: ~
         remove_image: ~
         select_file: ~
+        add_more: ~
         removing: ~
         processing: ~
-        loading_image: ~
+        loading_image: Töltés...
+        image_uploading_in_progress: ~
+        processing_takes_a_while: ~
         this_may_take_a_while: ~
         percentage_loaded: ~
-        uploading_failed: ~
+        uploading_failed: "A kép feltöltése sikertelen"
         file_too_large: ~
         accepted_formats: ~
+        images_not_uploaded_confirm: ~
       location:
         location: ~
       price:
@@ -1303,6 +1469,7 @@ hu:
         delivery: ~
         shipping: ~
         shipping_price: ~
+        shipping_price_additional: ~
         pickup: ~
       origin:
         location: ~
@@ -1333,10 +1500,6 @@ hu:
         valid_until: ~
       valid_until_radio_buttons:
         for_the_time_being: ~
-      visibility:
-        all_communities: ~
-        this_community: ~
-        visibility: ~
       privacy:
         privacy: ~
         private: ~
@@ -1387,6 +1550,7 @@ hu:
       booking_from: ~
       booking_to: ~
       how_paypal_works: ~
+      payment_help: ~
     new:
       post_a_new_listing: ~
       listing: ~
@@ -1415,7 +1579,7 @@ hu:
     show:
       add_your_phone_number: ~
       add_profile_picture: ~
-      comments: ~
+      comments: "Nyilvános beszélgetés"
       contact_by_phone: ~
       contact: ~
       favor_offer: ~
@@ -1444,13 +1608,16 @@ hu:
       times_viewed: ~
       processing_uploaded_image: ~
       price_excludes_vat: ~
-      listing_created_at: ~
+      listing_created_at: "Hirdetés létrehozva"
       price:
         per_quantity_unit: ~
         per_day: ~
       delivery: ~
       shipping: ~
+      shipping_no_price: ~
+      shipping_price_additional: ~
       pickup: ~
+      pickup_no_price: ~
     unit_types:
       piece: ~
       hour: ~
@@ -1504,7 +1671,6 @@ hu:
       continue: ~
       payment_receiver: ~
       sum: ~
-      commission_will_be_added: ~
     form:
       total: ~
       service_charge: ~
@@ -1563,7 +1729,7 @@ hu:
     transaction:
       commission_payment_name: ~
       commission_payment_description: ~
-    wait_while_loading: ~
+    wait_while_loading: "Kérem várjon."
     chatting_with_paypal: ~
   people:
     edit_links:
@@ -1594,6 +1760,7 @@ hu:
       invalid_invitation_code: ~
       invitation_code: ~
       not_required: ~
+      notification_is_mandatory: ~
       organization_name: ~
       password_again: ~
       show_my_name_to_others: ~

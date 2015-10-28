@@ -150,6 +150,11 @@ Given /^community "(.*?)" is private$/ do |community_ident|
   Community.where(ident: community_ident).first.update_attributes({:private => true})
 end
 
+Given /^this community is private$/ do
+  @current_community.private = true
+  @current_community.save!
+end
+
 Given /^community "(.*?)" has following category structure:$/ do |community, categories|
   current_community = Community.where(ident: community).first
   old_category_ids = current_community.categories.collect(&:id)
@@ -276,7 +281,7 @@ end
 
 Given /^that transaction belongs to category "(.*?)"$/ do |category_name|
   category = find_category_by_name(category_name)
-  CategoryListingShape.create!(category_id: category.id, listing_shape_id: @shape[:id])
+  CategoryListingShape.where(category_id: category.id, listing_shape_id: @shape[:id]).first_or_create!
   category.reload
 end
 
@@ -320,6 +325,13 @@ Given(/^this community does not send automatic newsletters$/) do
   @current_community.update_attribute(:automatic_newsletters, false)
 end
 
-Given(/^community emails are sent from "(.*?)"$/) do |email|
-  @current_community.update_attribute(:custom_email_from_address, email)
+Given(/^community emails are sent from name "(.*?)" and address "(.*?)"$/) do |name, email|
+  EmailService::API::Api.addresses.create(
+    community_id: @current_community.id,
+    address: {
+      name: name,
+      email: email,
+      verification_status: :verified
+    }
+  )
 end

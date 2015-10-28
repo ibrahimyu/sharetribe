@@ -5,6 +5,7 @@
 #  id                                         :integer          not null, primary key
 #  ident                                      :string(255)
 #  domain                                     :string(255)
+#  use_domain                                 :boolean          default(FALSE), not null
 #  created_at                                 :datetime
 #  updated_at                                 :datetime
 #  settings                                   :text
@@ -51,8 +52,6 @@
 #  service_logo_style                         :string(255)      default("full-logo")
 #  available_currencies                       :text
 #  facebook_connect_enabled                   :boolean          default(TRUE)
-#  only_public_listings                       :boolean          default(TRUE)
-#  custom_email_from_address                  :string(255)
 #  vat                                        :integer
 #  commission_from_seller                     :integer
 #  minimum_price_cents                        :integer
@@ -92,6 +91,9 @@
 #  cover_photo_processing                     :boolean
 #  small_cover_photo_processing               :boolean
 #  favicon_processing                         :boolean
+#  dv_test_file_name                          :string(64)
+#  dv_test_file                               :string(64)
+#  deleted                                    :boolean
 #
 # Indexes
 #
@@ -121,7 +123,7 @@ class Community < ActiveRecord::Base
   has_many :transactions
   has_many :payments
 
-  has_and_belongs_to_many :listings
+  has_many :listings
 
   has_one :marketplace_settings, dependent: :destroy
   has_one :payment_gateway, :dependent => :destroy
@@ -145,8 +147,8 @@ class Community < ActiveRecord::Base
   VALID_BROWSE_TYPES = %{grid map list}
   validates_inclusion_of :default_browse_view, :in => VALID_BROWSE_TYPES
 
-  VALID_NAME_DISPLAY_TYPES = %{first_name_only first_name_with_initial}
-  validates_inclusion_of :default_browse_view, :in => VALID_BROWSE_TYPES, :allow_nil => true, :allow_blank => true
+  VALID_NAME_DISPLAY_TYPES = %{first_name_only first_name_with_initial full_name}
+  validates_inclusion_of :name_display_type, :in => VALID_NAME_DISPLAY_TYPES
 
   # The settings hash contains some community specific settings:
   # locales: which locales are in use, the first one is the default
@@ -263,13 +265,22 @@ class Community < ActiveRecord::Base
 
   attr_accessor :terms
 
+  def self.columns
+    super.reject { |c| ["only_public_listings"].include?(c.name) }
+  end
+
   def name(locale)
     customization = Maybe(community_customizations.where(locale: locale).first).or_else {
       # We should not end up in a situation where the given locale is not found.
       # However, currently that is likely to happend, because:
       # - User has one locale
       # - User can join to multiple communities, which may not have user's locale available
-      community_customizations.where(locale: default_locale).first
+      fallback_customisation = community_customizations.where(locale: default_locale).first
+      if !(fallback_customisation && fallback_customisation.name)
+        # Corner case: switching default language to a language without localisation.
+        fallback_customisation = community_customizations.where("name IS NOT NULL").order(:updated_at).last
+      end
+      fallback_customisation
     }
 
     if customization
@@ -312,7 +323,7 @@ class Community < ActiveRecord::Base
       return settings["locales"]
     else
       # if locales not set, return the short locales from the default list
-      return Kassi::Application.config.AVAILABLE_LOCALES.collect{|loc| loc[1]}
+      return Sharetribe::AVAILABLE_LOCALES.map { |l| l[:ident] }
     end
   end
 
@@ -400,7 +411,7 @@ class Community < ActiveRecord::Base
     default_host, default_port = APP_CONFIG.domain.split(':')
     port_string = options[:port] || default_port
 
-    if domain.present? # custom domain
+    if domain.present? && use_domain? # custom domain
       dom = domain
     else # just a subdomain specified
       dom = "#{self.ident}.#{default_host}"
@@ -435,7 +446,6 @@ class Community < ActiveRecord::Base
     selected_listings = listings
       .currently_open
       .where("updates_email_at > ? AND updates_email_at > created_at", latest)
-      .visible_to(person, self)
       .order("updates_email_at DESC")
       .to_a
 
@@ -445,7 +455,7 @@ class Community < ActiveRecord::Base
         listings
           .currently_open
           .where("updates_email_at > ? AND updates_email_at = created_at", latest)
-          .visible_to(person, self)
+          .order("updates_email_at DESC")
           .limit(additional_listings)
           .to_a
       else
@@ -571,6 +581,29 @@ class Community < ActiveRecord::Base
     cover_photo.processing? ||
     small_cover_photo.processing? ||
     favicon.processing?
+  end
+
+  # Finds a community by the given identifier(s)
+  #
+  # Communities have 3 values that can used individually to
+  # uniquely identify a community.
+  #
+  # Those are (in the order of priority):
+  #
+  # - id
+  # - ident
+  # - domain
+  #
+  def self.find_by_identifier(identifiers)
+    priority = [:id, :ident, :domain]
+
+    identifier_to_use = priority.find { |identifier| identifiers[identifier].present? }
+
+    if identifier_to_use.nil?
+      nil
+    else
+      Community.where({ identifier_to_use => identifiers[identifier_to_use]}).first
+    end
   end
 
   private

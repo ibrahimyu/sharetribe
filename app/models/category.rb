@@ -13,8 +13,9 @@
 #
 # Indexes
 #
-#  index_categories_on_parent_id  (parent_id)
-#  index_categories_on_url        (url)
+#  index_categories_on_community_id  (community_id)
+#  index_categories_on_parent_id     (parent_id)
+#  index_categories_on_url           (url)
 #
 
 class Category < ActiveRecord::Base
@@ -24,8 +25,11 @@ class Category < ActiveRecord::Base
     :translations,
     :translation_attributes,
     :sort_priority,
-    :url
+    :url,
+    :basename
   )
+
+  attr_accessor :basename
 
   has_many :subcategories, :class_name => "Category", :foreign_key => "parent_id", :dependent => :destroy, :order => "sort_priority"
   # children is a more generic alias for sub categories, used in classification.rb
@@ -61,7 +65,7 @@ class Category < ActiveRecord::Base
   end
 
   def url_source
-    Maybe(default_translation_without_cache).name.or_else("category")
+    basename || Maybe(default_translation_without_cache).name.or_else("category")
   end
 
   def default_translation_without_cache
@@ -70,7 +74,7 @@ class Category < ActiveRecord::Base
 
   # TODO this should be done on service layer
   def uniq_url
-    current_url = url_source.to_url
+    current_url = Maybe(url_source).to_url.or_else("noname")
 
     if new_record? || url != current_url
       blacklist = ['new', 'all']

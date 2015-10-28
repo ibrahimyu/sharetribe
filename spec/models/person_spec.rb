@@ -43,6 +43,7 @@
 #
 # Indexes
 #
+#  index_people_on_authentication_token  (authentication_token)
 #  index_people_on_email                 (email) UNIQUE
 #  index_people_on_facebook_id           (facebook_id) UNIQUE
 #  index_people_on_id                    (id)
@@ -126,8 +127,8 @@ describe Person do
       end
 
       it "returns the name of the user" do
-        @test_person.name.should_not be_blank
-        @test_person.name.should == "Ripa R"
+        @test_person.name('first_name_with_initial').should_not be_blank
+        @test_person.name('first_name_with_initial').should == "Ripa R"
       end
 
       it "returns the given or the last name of the user" do

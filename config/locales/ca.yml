@@ -37,6 +37,10 @@ ca:
         community_details: ~
         community_look_and_feel: ~
         edit_community: ~
+        enabled_languages: ~
+        enabled_languages_description: ~
+        default_language: ~
+        language_selection_disabled: ~
         community_name: ~
         edit_community_name_description: ~
         community_slogan: ~
@@ -103,6 +107,37 @@ ca:
         welcome_email_content_description: ~
         edit_message: ~
         send_test_message: ~
+      outgoing_email:
+        title: ~
+        info: ~
+        read_more: ~
+        sender_address: ~
+        sender_address_default: ~
+        need_to_change: ~
+        contact_support_link_text: ~
+        set_sender_address: ~
+        sender_name_label: ~
+        sender_name_placeholder: ~
+        sender_email_label: ~
+        sender_email_placeholder: ~
+        this_is_how_it_will_look: ~
+        send_verification_button: ~
+        successfully_saved: ~
+        status: ~
+        status_verified: ~
+        status_error: ~
+        status_requested: ~
+        status_expired: ~
+        status_resent: ~
+        resend_link: ~
+        invalid_email_error: ~
+        invalid_email_domain: ~
+        invalid_email_domain_read_more_link: ~
+        unknown_error: ~
+        only_white_label_offer: ~
+        upgrade_pro_plan_link: ~
+        verification_sent_from: ~
+        follow_the_instructions: ~
       getting_started:
         getting_started: ~
         welcome_to_your_marketplace: ~
@@ -115,6 +150,8 @@ ca:
         categories_link_text: ~
         custom_fields_link_text: ~
         filters_link_text: ~
+        order_types: ~
+        order_types_link_text: ~
         payments: ~
         payments_link_text: ~
         info_texts: ~
@@ -135,6 +172,27 @@ ca:
         view_users_link_text: ~
         view_transactions_link_text: ~
         contact_support_link_text: ~
+      available_languages:
+        en: ~
+        en-AU: ~
+        en-GB: ~
+        fr: ~
+        fr-CA: ~
+        es: ~
+        es-ES: ~
+        pt-BR: ~
+        nb: ~
+        sv: ~
+        da-DK: ~
+        fi: ~
+        ru: ~
+        de: ~
+        el: ~
+        nl: ~
+        tr-TR: ~
+        zh: ~
+        ja: ~
+        it: ~
       settings:
         settings: ~
         general: ~
@@ -161,6 +219,15 @@ ca:
         automatic_newsletter_frequency: ~
         newsletter_daily: ~
         newsletter_weekly: ~
+        delete_marketplace_title: ~
+        type_marketplace_domain: ~
+        type_marketplace_domain_placeholder: ~
+        once_you_delete: ~
+        are_you_sure: ~
+        i_understand_button: ~
+        last_community_updates: ~
+        you_will_be_redirected_to: ~
+        delete_this_marketplace: ~
       manage_members:
         manage_members: ~
         email: ~
@@ -171,6 +238,7 @@ ca:
         ban_user: ~
         saving_user_status: ~
         save_user_status_successful: ~
+        export_all_as_csv: ~
         save_user_status_error: ~
         ban_user_confirmation: ~
         ban_me_error: ~
@@ -209,6 +277,7 @@ ca:
         url: ~
         empty: ~
       transactions:
+        export_all_as_csv: ~
         transactions: ~
         headers:
           conversation: ~
@@ -303,6 +372,80 @@ ca:
       configure: ~
       emails_title: ~
       support: ~
+      subscription: ~
+    listing_shapes:
+      index:
+        listing_shapes: ~
+        description: ~
+        read_more_about_order_types: ~
+        add_new_shape: ~
+        select_template: ~
+        all_categories: ~
+        no_categories: ~
+        category_count: ~
+        header:
+          listing_shape_name: ~
+          listing_shape_categories: ~
+        order:
+          saving_order: ~
+          save_order_successful: ~
+          save_order_error: ~
+      templates:
+        selling_products: ~
+        renting_products: ~
+        offering_services: ~
+        giving_things_away: ~
+        requesting: ~
+        announcement: ~
+        custom: ~
+      new:
+        create_listing_shape: ~
+        create: ~
+        cancel: ~
+        create_success: ~
+        create_failure: ~
+      edit:
+        edit_listing_shape: ~
+        update: ~
+        cancel: ~
+        update_success: ~
+        update_failure: ~
+        delete: ~
+        can_not_delete_last: ~
+        can_not_delete_only_one_in_categories: ~
+      listing_shape_name: ~
+      listing_shape_name_placeholder: ~
+      action_button_label: ~
+      action_button_placeholder: ~
+      successfully_closed: ~
+      successfully_deleted: ~
+      pricing_and_checkout_title: ~
+      online_payments_label: ~
+      shipping_label: ~
+      price_label: ~
+      units_title: ~
+      units_desc: ~
+      units:
+        piece: ~
+        hour: ~
+        day: ~
+        night: ~
+        week: ~
+        month: ~
+      can_not_find: ~
+      add_custom_unit: ~
+      delete_custom_unit: ~
+      custom_unit_form:
+        title: ~
+        label_heading: ~
+        selector_label_heading: ~
+        label_placeholder: ~
+        selector_placeholder: ~
+        per: ~
+        unit_type:
+          heading: ~
+          quantity_label: ~
+          time_label: ~
     paypal_accounts:
       marketplace_paypal_integration: ~
       preferences_updated: ~
@@ -457,6 +600,7 @@ ca:
       canceled_request: ~
       canceled_offer: ~
       paid: ~
+      payment_preauthorized: ~
     new:
       offer_message_form_title: ~
       request_message_form_title: ~
@@ -606,6 +750,11 @@ ca:
       credit_card_expiration_date: ~
       confirm_payment: ~
       exp: ~
+  feedback:
+    feedback_subject: ~
+    feedback_body: ~
+    unlogged_user: ~
+    anonymous_user: ~
   preauthorize_payments:
     edit:
       confirm_payment: ~
@@ -790,7 +939,7 @@ ca:
     transaction_preauthorized:
       subject: ~
       transaction_requested_by_user: ~
-      you_have_days_to_accept: ~
+      you_have_time_to_accept: ~
       click_here_to_reply: ~
     transaction_preauthorized_reminder:
       subject: ~
@@ -801,8 +950,6 @@ ca:
       welcome_email_subject: ~
       welcome_to_marketplace: ~
       love_marketplace_crew: ~
-      p_s_did_you_know: ~
-      click_here_link_text: ~
       welcome_email_footer_text: ~
       settings_link_text: ~
       welcome_email_subject_for_marketplace_creator: ~
@@ -840,6 +987,8 @@ ca:
     transaction_agreement:
       required_error: ~
     paypal:
+      buyer_cannot_pay_error: ~
+      pending_review_error: ~
       generic_error: ~
       cancel_error: ~
       accept_authorization_error: ~
@@ -993,11 +1142,12 @@ ca:
       filter: ~
       this_is_private_community: ~
     invitation_form:
-      invite_your_friends: "Convida als teus amics a Kassi!"
       email: "Adreça de correu electrònic del teu amic:"
       message: "Missatge personal:"
       send_invitation: "Enviar invitació"
-      add_as_many_emails_as_you_want: ~
+      add_email_addresses_description: ~
+      add_lots_of_email_addresses: ~
+      this_article_link: ~
       invitation_emails_field_placeholder: ~
       invitation_message_field_placeholder: ~
       errors_in_emails: ~
@@ -1026,6 +1176,8 @@ ca:
       list_button: ~
       all_listing_types: ~
       all_categories: ~
+    errors:
+      search_engine_not_responding: ~
   infos:
     about:
       default_about_text_title: ~
@@ -1123,6 +1275,7 @@ ca:
       feedback_sent_to: "Comentari enviat a"
       feedback_skipped: "Suggeriment omès"
       invitation_cannot_be_sent: "No s'ha pogut enviar la invitació"
+      invitation_limit_reached: ~
       invitation_sent: "Invitació enviada amb èxit"
       inviting_new_users_is_not_allowed_in_this_community: "Convidar a nous usuaris no està permès en aquesta comunitat"
       login_again: "Siusplau, torna a iniciar sessió"
@@ -1178,6 +1331,7 @@ ca:
       you_are_not_allowed_to_give_feedback_on_this_transaction: "No tens autorització per donar suggeriments en aquest esdeveniment."
       you_are_not_authorized_to_do_this: "No tens autorització per dur a terme aquesta acció."
       you_are_not_authorized_to_view_this_content: "No tens autorització per veure aquest contingut"
+      listing_closed: ~
       send_instructions: ~
       you_cannot_reply_to_a_closed_offer: "No pots respondre a una oferta finalitzada"
       you_cannot_reply_to_a_closed_request: "No pots respondre a una sol·licitud tancada"
@@ -1192,6 +1346,7 @@ ca:
       you_must_log_in_to_invite_new_users: "Cal que inicis sessió per convida a nous usuaris"
       you_must_log_in_to_send_a_comment: "Iniciar sessió per a comentar"
       you_must_log_in_to_send_a_message: "Iniciar sessió per a enviar un missatge a un usuari"
+      you_must_log_in_to_do_a_transaction: ~
       you_must_log_in_to_view_this_content: "Iniciar sessió per a veure el contingut"
       you_must_log_in_to_view_this_page: ~
       you_must_log_in_to_view_your_inbox: "Iniciar sessió per a revisar la safata d'entrada"
@@ -1225,6 +1380,8 @@ ca:
     comment:
       wrote: ~
       send_private_message: ~
+      delete: ~
+      are_you_sure: ~
     comment_form:
       ask_a_question: ~
       log_in: Registre
@@ -1245,6 +1402,10 @@ ca:
       show_in_updates_email_loading: ~
       show_in_updates_email_error: ~
       show_in_updates_email_success: ~
+    map:
+      open_in_google_maps: ~
+    error:
+      something_went_wrong: ~
     follow_links:
       follow: "Segueix aquest anunci"
       unfollow: "Deixa de segur aquest anunci"
@@ -1276,17 +1437,22 @@ ca:
         googlemap_updatemap: "Acualitzar mapa"
       images:
         image: Imatge
+        best_result: ~
         no_file_selected: "No hi han fitxers seleccionats"
         remove_image: "Elimina la imatge"
         select_file: "Trieu el fitxer"
+        add_more: ~
         removing: ~
         processing: ~
         loading_image: ~
+        image_uploading_in_progress: ~
+        processing_takes_a_while: ~
         this_may_take_a_while: ~
         percentage_loaded: ~
         uploading_failed: ~
         file_too_large: ~
         accepted_formats: "L'arxiu d'imatge ha d'estar en format GIF, JPG o PNG."
+        images_not_uploaded_confirm: ~
       location:
         location: Lloc
       price:
@@ -1305,6 +1471,7 @@ ca:
         delivery: ~
         shipping: ~
         shipping_price: ~
+        shipping_price_additional: ~
         pickup: ~
       origin:
         location: Lloc
@@ -1335,10 +1502,6 @@ ca:
         valid_until: "Data de caducitat"
       valid_until_radio_buttons:
         for_the_time_being: "De moment"
-      visibility:
-        all_communities: ~
-        this_community: "Tan sols membres de %{community}"
-        visibility: Visibilitat
       privacy:
         privacy: ~
         private: ~
@@ -1389,6 +1552,7 @@ ca:
       booking_from: ~
       booking_to: ~
       how_paypal_works: ~
+      payment_help: ~
     new:
       post_a_new_listing: ~
       listing: ~
@@ -1452,7 +1616,10 @@ ca:
         per_day: ~
       delivery: ~
       shipping: ~
+      shipping_no_price: ~
+      shipping_price_additional: ~
       pickup: ~
+      pickup_no_price: ~
     unit_types:
       piece: ~
       hour: ~
@@ -1506,7 +1673,6 @@ ca:
       continue: ~
       payment_receiver: ~
       sum: ~
-      commission_will_be_added: ~
     form:
       total: ~
       service_charge: ~
@@ -1596,6 +1762,7 @@ ca:
       invalid_invitation_code: "El codi d'invitació no és vàlid"
       invitation_code: "Codi d'invitació:"
       not_required: ", no és necessari"
+      notification_is_mandatory: ~
       organization_name: ~
       password_again: "Confirma la contrasenya:"
       show_my_name_to_others: "Mostra el meu nom real als altres usuaris"

@@ -62,6 +62,10 @@ ru:
         community_details: "Основные детали"
         community_look_and_feel: Дизайн
         edit_community: "Основные детали"
+        enabled_languages: ~
+        enabled_languages_description: ~
+        default_language: ~
+        language_selection_disabled: ~
         community_name: "Название проекта"
         edit_community_name_description: "Название вашего проекта. Оно будет показано в emails и других местах."
         community_slogan: Девиз
@@ -128,6 +132,37 @@ ru:
         welcome_email_content_description: "Сообщение расположенное ниже будет отправлено каждому новому пользователю. Вы можете адаптировать сообщение наиболее подходящим для вашего проекта способом. Нажимая \"%{send_test_message_link}\" вы можете предварительно посмотреть сообщение чтобы проверить как оно будет отображено клиенту."
         edit_message: "Редактировать сообщение"
         send_test_message: "Отправить тестовое сообщение"
+      outgoing_email:
+        title: ~
+        info: ~
+        read_more: ~
+        sender_address: ~
+        sender_address_default: ~
+        need_to_change: ~
+        contact_support_link_text: ~
+        set_sender_address: ~
+        sender_name_label: ~
+        sender_name_placeholder: ~
+        sender_email_label: ~
+        sender_email_placeholder: ~
+        this_is_how_it_will_look: ~
+        send_verification_button: ~
+        successfully_saved: ~
+        status: ~
+        status_verified: ~
+        status_error: ~
+        status_requested: ~
+        status_expired: ~
+        status_resent: ~
+        resend_link: ~
+        invalid_email_error: ~
+        invalid_email_domain: ~
+        invalid_email_domain_read_more_link: ~
+        unknown_error: ~
+        only_white_label_offer: ~
+        upgrade_pro_plan_link: ~
+        verification_sent_from: ~
+        follow_the_instructions: ~
       getting_started:
         getting_started: "Гид для начала работы"
         welcome_to_your_marketplace: "Добро пожаловать в ваш маркетплейс, %{name}!"
@@ -140,6 +175,8 @@ ru:
         categories_link_text: "добавьте категории и субкатегории"
         custom_fields_link_text: "Настроить поля формы"
         filters_link_text: "какой тип фильтров"
+        order_types: ~
+        order_types_link_text: ~
         payments: "Если вы хотите чтобы люди могли оплачивать покупки в вашем маркетплейс, что позволит вам получать комиссию с каждой транзакции, вам необходимо %{payments_link}."
         payments_link_text: "настройте метод оплаты"
         info_texts: "Не забудьте настроить информационную страницу и другие тексты где вы можете рассказать вашим пользователям о вашем маркетплейс.  Это %{about_page_link}, %{terms_of_use_link} (вы должны добавить ваши собственные условия использования сервиса здесь, либо модифицировать текущий шаблон либо создать новый документ), %{privacy_policy_link}, и %{welcome_email_link} - отправляется каждому новому пользователю. Также здесь %{instruction_texts_link} информация которую можно настроить."
@@ -160,6 +197,27 @@ ru:
         view_users_link_text: здесь
         view_transactions_link_text: здесь
         contact_support_link_text: "свяжитесь со службой поддержки"
+      available_languages:
+        en: ~
+        en-AU: ~
+        en-GB: ~
+        fr: ~
+        fr-CA: ~
+        es: ~
+        es-ES: ~
+        pt-BR: ~
+        nb: ~
+        sv: ~
+        da-DK: ~
+        fi: ~
+        ru: ~
+        de: ~
+        el: ~
+        nl: ~
+        tr-TR: ~
+        zh: ~
+        ja: ~
+        it: ~
       settings:
         settings: Настройки
         general: Основные
@@ -186,6 +244,15 @@ ru:
         automatic_newsletter_frequency: "Отправлять автоматически новости: %{frequency_dropdown}"
         newsletter_daily: Ежедневно
         newsletter_weekly: Еженедельно
+        delete_marketplace_title: ~
+        type_marketplace_domain: ~
+        type_marketplace_domain_placeholder: ~
+        once_you_delete: ~
+        are_you_sure: ~
+        i_understand_button: ~
+        last_community_updates: ~
+        you_will_be_redirected_to: ~
+        delete_this_marketplace: ~
       manage_members:
         manage_members: "Управление участниками"
         email: E-mail
@@ -196,6 +263,7 @@ ru:
         ban_user: "Заблокировать участника"
         saving_user_status: Сохранение...
         save_user_status_successful: Сохранено
+        export_all_as_csv: ~
         save_user_status_error: "Во время сохранения поля произошла ошибка Обновите страницу и попробуйте еще раз."
         ban_user_confirmation: "Это удалит участника из проекта и доступ из этого аккаунта будет не возможен. Вы уверены что хотите продолжить?"
         ban_me_error: "Вы не можете заблокировать сами себя"
@@ -234,6 +302,7 @@ ru:
         url: URL
         empty: "У вас нет дополнительных ссылок меню"
       transactions:
+        export_all_as_csv: ~
         transactions: "Посмотреть транзакции"
         headers:
           conversation: Обсуждение
@@ -328,6 +397,80 @@ ru:
       configure: Конфигурация
       emails_title: Emails
       support: Поддержка
+      subscription: ~
+    listing_shapes:
+      index:
+        listing_shapes: ~
+        description: ~
+        read_more_about_order_types: ~
+        add_new_shape: ~
+        select_template: ~
+        all_categories: ~
+        no_categories: ~
+        category_count: ~
+        header:
+          listing_shape_name: ~
+          listing_shape_categories: ~
+        order:
+          saving_order: ~
+          save_order_successful: ~
+          save_order_error: ~
+      templates:
+        selling_products: ~
+        renting_products: ~
+        offering_services: ~
+        giving_things_away: ~
+        requesting: ~
+        announcement: ~
+        custom: ~
+      new:
+        create_listing_shape: ~
+        create: ~
+        cancel: ~
+        create_success: ~
+        create_failure: ~
+      edit:
+        edit_listing_shape: ~
+        update: ~
+        cancel: ~
+        update_success: ~
+        update_failure: ~
+        delete: ~
+        can_not_delete_last: ~
+        can_not_delete_only_one_in_categories: ~
+      listing_shape_name: ~
+      listing_shape_name_placeholder: ~
+      action_button_label: ~
+      action_button_placeholder: ~
+      successfully_closed: ~
+      successfully_deleted: ~
+      pricing_and_checkout_title: ~
+      online_payments_label: ~
+      shipping_label: ~
+      price_label: ~
+      units_title: ~
+      units_desc: ~
+      units:
+        piece: ~
+        hour: ~
+        day: ~
+        night: ~
+        week: ~
+        month: ~
+      can_not_find: ~
+      add_custom_unit: ~
+      delete_custom_unit: ~
+      custom_unit_form:
+        title: ~
+        label_heading: ~
+        selector_label_heading: ~
+        label_placeholder: ~
+        selector_placeholder: ~
+        per: ~
+        unit_type:
+          heading: ~
+          quantity_label: ~
+          time_label: ~
     paypal_accounts:
       marketplace_paypal_integration: "Настройки платежей"
       preferences_updated: "Настройки платежей обновлены."
@@ -432,7 +575,7 @@ ru:
       minimum_price_error_message: "Цена не может быть ниже чем %{amount}."
       accept: Принять
       decline: Отклонить
-      quantity_label: ~
+      quantity_label: "Количество:"
       sum_label: "Промежуточный итог:"
       service_fee_label: "%{service_name} комиссия:"
       you_will_get_label: "Вы получите:"
@@ -482,6 +625,7 @@ ru:
       canceled_request: "отменный запрос"
       canceled_offer: "отмененное предложение"
       paid: "оплачено %{sum}"
+      payment_preauthorized: ~
     new:
       offer_message_form_title: "Предложить %{listing} для %{person}"
       request_message_form_title: "Запросить %{listing} у %{person}"
@@ -631,6 +775,11 @@ ru:
       credit_card_expiration_date: "Дата окончания действия карты"
       confirm_payment: "Подтверждение оплаты"
       exp: "Exp:"
+  feedback:
+    feedback_subject: ~
+    feedback_body: ~
+    unlogged_user: ~
+    anonymous_user: ~
   preauthorize_payments:
     edit:
       confirm_payment: "Подтверждение оплаты"
@@ -754,8 +903,8 @@ ru:
       you_have_a_new_message: "У вас новое сообщение в %{service_name} от %{sender_name}"
     new_payment:
       new_payment: "Вы получили новый платёж"
-      price_per_unit_type: ~
-      quantity: ~
+      price_per_unit_type: "Цена за %{unit_type}"
+      quantity: "Количество:"
       you_have_received_new_payment: "Вам оплатили <b>%{payment_sum}</b> за <b>%{listing_title}</b> от %{payer_full_name}. Здесь ваша квитанция."
     paypal_new_payment:
       paypal_gateway_fee: "комиссия PayPal:"
@@ -770,10 +919,10 @@ ru:
       receipt_of_payment: "Квитанция об оплате"
       you_have_made_new_payment: "Вы оплатили <b>%{payment_sum}</b> за <b>%{listing_title}</b> %{recipient_full_name}. Здесь ваша квитанция."
       product: Продукт
-      price_per_unit_type: ~
-      duration: ~
-      quantity: ~
-      subtotal: ~
+      price_per_unit_type: "Цена за %{unit_type}"
+      duration: "Продолжительность:"
+      quantity: "Количество:"
+      subtotal: "Сумма:"
       total: Всего
       price: Цена
       service_fee: "Комиссия сервиса"
@@ -813,7 +962,7 @@ ru:
     transaction_preauthorized:
       subject: "%{requester} запросил и оплатил за %{listing_title}"
       transaction_requested_by_user: "%{requester} запросил и оплатил за \"%{listing_title}\""
-      you_have_days_to_accept: "Вам нужно принять или отклонить запрос в течении %{payment_expires_in_days} дней. Если вы не примите в течение этого времени, запрос будет автоматически отклонен и вам не будет произведена оплата."
+      you_have_time_to_accept: ~
       click_here_to_reply: "Нажмите здесь чтобы ответить на запрос"
     transaction_preauthorized_reminder:
       subject: "Не забудьте принять запрос от %{requester} о предложении %{listing_title}"
@@ -824,8 +973,6 @@ ru:
       welcome_email_subject: "Добро пожаловать в %{service_name}"
       welcome_to_marketplace: "Добро пожаловать в %{service_name}! Рады видеть вас с нами!"
       love_marketplace_crew: "С уважением, команда <br /><i>%{service_name}</i>"
-      p_s_did_you_know: "P.S. Знаете ли вы, что можно бесплатно создать отдельный сайт как %{service_name}? Чтобы узнать больше, %{click_here_link}!"
-      click_here_link_text: "Нажмите здесь"
       welcome_email_footer_text: "Какие типы сообщение вы хотите получать от %{service_name}? %{settings_link}"
       settings_link_text: "Проверьте настройки"
       welcome_email_subject_for_marketplace_creator: "Добро пожаловать на Sharetribe"
@@ -863,6 +1010,8 @@ ru:
     transaction_agreement:
       required_error: "Вам необходимо принять соглашение."
     paypal:
+      buyer_cannot_pay_error: ~
+      pending_review_error: ~
       generic_error: "В процессе платежа произошла ошибка. Платеж не был завершен."
       cancel_error: "В процессе отмены произошла ошибка. Не смогли завершить отмену."
       accept_authorization_error: "Во время предавторизации платежа Paypal произошла ошибка. Пожалуйста, попробуйте снова."
@@ -904,7 +1053,7 @@ ru:
       on_or_before: "Должно быть в или до %{restriction}"
       after: "Должно быть после %{restriction}"
       on_or_after: "Должно быть в или после %{restriction}"
-      positive_number: ~
+      positive_number: "Укажите цифру"
   event_feed_events:
     accept:
       has_accepted_lend_item: "%{offerer_name} согласился дать %{listing_title} %{requester_name} %{time_ago}."
@@ -1016,11 +1165,12 @@ ru:
       filter: Фильтр
       this_is_private_community: "Вам нужно войти чтобы увидеть контент."
     invitation_form:
-      invite_your_friends: "Пригласите друзей в %{service_name}!"
       email: "Адрес(а) электронной почты"
       message: "Личное сообщение:"
       send_invitation: "Отправить приглашение"
-      add_as_many_emails_as_you_want: "Введите в поле адреса электронной почты своих друзей. Если вы хотите пригласить нескольких друзей, разделите их адреса электронной почты с помощью запятой."
+      add_email_addresses_description: "Введите в поле адреса электронной почты своих друзей. Если вы хотите пригласить нескольких друзей, разделите их адреса электронной почты с помощью запятой."
+      add_lots_of_email_addresses: ~
+      this_article_link: ~
       invitation_emails_field_placeholder: "friend1@example.com, friend2@example.com, ..."
       invitation_message_field_placeholder: "Я присоединился к этому замечательному проекту. Тебе тоже нужно!"
       errors_in_emails: "Проверьте правильность адресов электронной почты, разделённых запятой."
@@ -1049,6 +1199,8 @@ ru:
       list_button: Список
       all_listing_types: "Все предложения"
       all_categories: "Все категории"
+    errors:
+      search_engine_not_responding: ~
   infos:
     about:
       default_about_text_title: "Что такое Sharetribe?"
@@ -1146,6 +1298,7 @@ ru:
       feedback_sent_to: "Отзыв отправлен %{target_person}"
       feedback_skipped: "Отзыв отменён"
       invitation_cannot_be_sent: "Приглашение не может быть отправлено"
+      invitation_limit_reached: ~
       invitation_sent: "Приглашение успешно отправлено"
       inviting_new_users_is_not_allowed_in_this_community: "Приглашать новых пользователей не разрешено"
       login_again: "Попробуйте войти ещё раз."
@@ -1201,6 +1354,7 @@ ru:
       you_are_not_allowed_to_give_feedback_on_this_transaction: "Для того, чтобы оставить отзыв об этом событии, требуется авторизация"
       you_are_not_authorized_to_do_this: "У вас не хватает прав для этого действия"
       you_are_not_authorized_to_view_this_content: "У вас не хватает прав для просмотра этой информации"
+      listing_closed: ~
       send_instructions: "В течение нескольких минут вы получите письмо с инструкциями по восстановлению вашего пароля."
       you_cannot_reply_to_a_closed_offer: "Вы не можете ответить на закрытое предложение"
       you_cannot_reply_to_a_closed_request: "Вы не можете ответить на закрытый запрос"
@@ -1215,6 +1369,7 @@ ru:
       you_must_log_in_to_invite_new_users: "Для того, чтобы пригласить новых пользователей, вы должны войти в %{service_name}"
       you_must_log_in_to_send_a_comment: "Вы должны войти, чтобы оставить новый комментарий"
       you_must_log_in_to_send_a_message: "Для того, чтобы отправить сообщение пользователю, вы должны авторизоваться в %{service_name}"
+      you_must_log_in_to_do_a_transaction: ~
       you_must_log_in_to_view_this_content: "Для просмотра содержимого требуется авторизация"
       you_must_log_in_to_view_this_page: "Вам необходимо войти в систему для просмотра этой страницы"
       you_must_log_in_to_view_your_inbox: "Для того, чтобы просмотреть входящие сообщения, вы должны зайти в %{service_name}."
@@ -1248,6 +1403,8 @@ ru:
     comment:
       wrote: написал
       send_private_message: "Отправить личное сообщение для %{person}"
+      delete: ~
+      are_you_sure: ~
     comment_form:
       ask_a_question: "Оставьте комментарий или запросите более подробную информацию. Ваш комментарий смогут увидеть все остальные пользователи."
       log_in: войти
@@ -1268,6 +1425,10 @@ ru:
       show_in_updates_email_loading: загрузка...
       show_in_updates_email_error: "Не удалось установить связь с сервером. Попробуйте еще раз после перезагрузки страницы."
       show_in_updates_email_success: "Это размещение будет показано в следующей рассылке email отправляемой клиентам"
+    map:
+      open_in_google_maps: ~
+    error:
+      something_went_wrong: ~
     follow_links:
       follow: "Получать письма о новых комментариях"
       unfollow: "Не получать письма о новых комментариях"
@@ -1299,17 +1460,22 @@ ru:
         googlemap_updatemap: "Обновить карту"
       images:
         image: Изображение
+        best_result: ~
         no_file_selected: "Файл не выбран"
         remove_image: "Удалить изображение"
         select_file: "Выбрать файл"
+        add_more: ~
         removing: Удаление...
         processing: Обработка...
         loading_image: Загрузка...
+        image_uploading_in_progress: ~
+        processing_takes_a_while: ~
         this_may_take_a_while: "(возможно нужно подождать)"
         percentage_loaded: "%{percentage}%"
         uploading_failed: "Ошибка загрузки изображения"
         file_too_large: "Файл слишком большой"
         accepted_formats: "Файлы изображений должны быть в формате GIF, JPG или PNG."
+        images_not_uploaded_confirm: ~
       location:
         location: Местоположение
       price:
@@ -1328,6 +1494,7 @@ ru:
         delivery: "Способ доставки"
         shipping: Доставка
         shipping_price: "Стоимость доставки"
+        shipping_price_additional: Дополнительно
         pickup: "Самостоятельное получение"
       origin:
         location: Местоположение
@@ -1358,10 +1525,6 @@ ru:
         valid_until: "Дата окончания"
       valid_until_radio_buttons:
         for_the_time_being: Неопределённая
-      visibility:
-        all_communities: "Все мои сообщества в Sharetribe"
-        this_community: "Только участники %{service_name}"
-        visibility: Видимость
       privacy:
         privacy: Конфиденциальность
         private: "Приватно (только для авторизованных пользователей)"
@@ -1412,6 +1575,7 @@ ru:
       booking_from: От
       booking_to: До
       how_paypal_works: "Как функционирует PayPal"
+      payment_help: ~
     new:
       post_a_new_listing: "Новое предложение"
       listing: список
@@ -1427,13 +1591,13 @@ ru:
       payment_settings_link: "Настройки оплаты"
       community_not_configured_for_payments_admin: "%{service_name} не был настроен для принятия платежей, поэтому вы не можете размещать новые предложения сейчас. Перейдите на %{payment_settings_link} чтобы настроить платежные реквизиты."
     quantity:
-      hour: ~
-      day: ~
-      night: ~
-      week: ~
-      month: ~
-      custom: ~
-    quantity_placeholder: ~
+      hour: "Количество часов:"
+      day: "Количество дней:"
+      night: "Количество недель:"
+      week: "Количество недель:"
+      month: "Количество месяцев:"
+      custom: "Количество:"
+    quantity_placeholder: Количество
     please_comment: Комментарий
     reply_link:
       listing_closed: "Предложение закрыто"
@@ -1475,14 +1639,17 @@ ru:
         per_day: "в день"
       delivery: "Способ доставки"
       shipping: "Доставка (+%{price})"
+      shipping_no_price: Доставка
+      shipping_price_additional: "Доставка (+%{price}, дополнительно: +%{shipping_price_additional}"
       pickup: "Самостоятельное получение"
+      pickup_no_price: "Самостоятельное получение"
     unit_types:
-      piece: ~
-      hour: ~
-      day: ~
-      night: ~
-      week: ~
-      month: ~
+      piece: шт.
+      hour: час
+      day: день
+      night: ночь
+      week: неделя
+      month: месяц
     verification_required:
       verification_required: "Требуется подтверждение"
   listing_conversations:
@@ -1518,6 +1685,8 @@ ru:
       search_verb: Поиск
       you_have_something_others_do_not: "Можете предложить что-нибудь?"
     please_comment: Комментарий
+  mercury:
+    content_too_long: "Вставленный текст слишком длинный."
   okl:
     member_id: Идентификатор
     member_id_or_email: "ID пользователя или электронная почта"
@@ -1527,7 +1696,6 @@ ru:
       continue: Продолжить
       payment_receiver: "Получатель платежа:"
       sum: "Сумма оплаты:"
-      commission_will_be_added: "Будет добавлена комиссия сервиса 10%."
     form:
       total: Итого
       service_charge: "Комиссия сервиса"
@@ -1622,6 +1790,7 @@ ru:
       invalid_invitation_code: "Код приглашения недействителен."
       invitation_code: "Код приглашения:"
       not_required: ", не обязательно"
+      notification_is_mandatory: ~
       organization_name: "Название организации"
       password_again: "Подтвердить пароль:"
       show_my_name_to_others: "Показывать моё настоящее имя другим пользователям %{service_name}"
@@ -1811,7 +1980,7 @@ ru:
       visible_to_registered_users: "(видимо только для зарегистрированных пользователей)"
       default_in_listing: "(используется по умолчанию при создании нового предложения))"
       invisible: "(не видно другим участникам)"
-      image_is_processing: ~
+      image_is_processing: "Изображение вашего профиля обрабатывается. Пожалуйста, перезагрузите страницу."
     save_information: Сохранить
   shipping_address:
     shipping_address: "Адрес доставки"
@@ -1908,7 +2077,7 @@ ru:
       december: Дек
     today: Сегодня
     clear: Очистить
-    format: мм/дд/гггг
+    format: mm/dd/yyyy
   time:
     formats:
       short: "%e %b %Y в %H:%M"
@@ -1934,16 +2103,16 @@ ru:
       other: дня
   transactions:
     initiate:
-      booked_days: ~
-      price_per_day: ~
-      quantity: ~
+      booked_days: "Забронировано дней:"
+      price_per_day: "Цена за день:"
+      quantity: "Количество:"
       subtotal: "Предварительный итог:"
       shipping-price: "Доставка:"
-    price_per_quantity: ~
-    price: ~
-    quantity: ~
-    unit_price: ~
-    total: ~
+    price_per_quantity: "Цена за %{unit_type}:"
+    price: "Цена:"
+    quantity: "Количество: %{quantity}"
+    unit_price: "Цена единицы: %{unit_price}"
+    total: "Всего:"
   unit:
     day: день
     days: дней

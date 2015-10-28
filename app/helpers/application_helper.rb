@@ -12,6 +12,7 @@ module ApplicationHelper
       "grid" => "ss-thumbnails",
       "new_listing" => "ss-addfile",
       "search"  => "ss-search",
+      "globelocation" => "ss-globelocation",
       "list" => "ss-list",
       "home" => "ss-home",
       "community" =>"ss-usergroup",
@@ -65,9 +66,14 @@ module ApplicationHelper
       "send" => "ss-send",
       "form" => "ss-form",
       "link" => "ss-link",
+      "external_link" => "ss-action",
       "social_media" => "ss-share",
       "analytics" => "ss-analytics",
       "openbook" => "ss-openbook",
+      "order_types" => "ss-cart",
+      "download" => "ss-download",
+      "credit_card" => "ss-creditcard",
+
 
       # Default category & share type icons
       "offer" => "ss-share",
@@ -160,6 +166,7 @@ module ApplicationHelper
       "new_listing" => "icon-plus-sign-alt",
 
       "search"  => "icon-search",
+      "globelocation" => "icon-globe",
       "list" => "icon-reorder",
 
       "home" => "icon-home",
@@ -182,6 +189,10 @@ module ApplicationHelper
       "settings" => " icon-cog",
       "facebook" => "icon-facebook",
       "invite" => "icon-users",
+      "download" => "icon-download",
+      "link" => "icon-link",
+      "external_link" => "icon-external-link",
+      "credit_card" => "icon-credit-card",
 
       "information" => "icon-info-sign",
       "alert" => "icon-warning-sign",
@@ -295,6 +306,10 @@ module ApplicationHelper
     return time
   end
 
+  def translate_time_to(unit, count)
+    t("timestamps.time_to.#{unit}", count: count)
+  end
+
   # used to escape strings to URL friendly format
   def self.escape_for_url(str)
      URI.escape(str, Regexp.new("[^-_!~*()a-zA-Z\\d]"))
@@ -370,21 +385,19 @@ module ApplicationHelper
   end
 
   def available_locales
-    if @current_community
-      # use the ordered list from community settings, but replace the short locales with ["English", "en"] like arrays from APP_CONFIG
-      return @current_community.locales.collect{|loc| Kassi::Application.config.AVAILABLE_LOCALES.select{|app_loc| app_loc[1] == loc }[0]}
-    else
-      return Kassi::Application.config.AVAILABLE_LOCALES
-    end
+    locales =
+      if @current_community
+        @current_community.locales
+          .map { |loc| Sharetribe::AVAILABLE_LOCALES.find { |app_loc| app_loc[:ident] == loc } }
+      else
+        Sharetribe::AVAILABLE_LOCALES
+      end
+
+    locales.map { |loc| [loc[:name], loc[:ident]] }
   end
 
   def get_full_locale_name(locale)
-    Kassi::Application.config.AVAILABLE_LOCALES.each do |l|
-      if l[1].to_s == locale.to_s
-        return l[0]
-      end
-    end
-    return locale # return the short string if no match found for longer name
+    Maybe(Sharetribe::AVAILABLE_LOCALES.find { |l| l[:ident] == locale.to_s })[:name].or_else(locale)
   end
 
   def self.send_error_notification(message, error_class="Special Error", parameters={})
@@ -557,67 +570,91 @@ module ApplicationHelper
   def admin_links_for(community)
     links = [
       {
+        :topic => :general,
         :text => t("admin.communities.getting_started.getting_started"),
         :icon_class => icon_class("openbook"),
         :path => getting_started_admin_community_path(@current_community),
         :name => "getting_started"
       },
       {
+        :topic => :general,
         :text => t("admin.left_hand_navigation.support"),
         :icon_class => icon_class("help"),
         :path => "mailto:#{APP_CONFIG.support_email}",
         :name => "support",
         :data_uv_trigger => "contact"
-      },
+      }
+    ]
+
+    if feature_enabled?(:new_plan_page) && APP_CONFIG.external_plan_service_in_use
+      links << {
+        :topic => :general,
+        :text => t("admin.left_hand_navigation.subscription"),
+        :icon_class => icon_class("credit_card"),
+        :path => "#{external_plan_service_login_url(@current_community.id)}",
+        :name => "subscription",
+      }
+    end
+
+    links += [
       {
+        :topic => :manage,
         :text => t("admin.communities.manage_members.manage_members"),
         :icon_class => icon_class("community"),
         :path => admin_community_community_memberships_path(@current_community, sort: "join_date", direction: "desc"),
         :name => "manage_members"
       },
       {
+        :topic => :manage,
         :text => t("admin.emails.new.send_email_to_members"),
         :icon_class => icon_class("send"),
         :path => new_admin_community_email_path(:community_id => @current_community.id),
         :name => "email_members"
       },
       {
+        :topic => :manage,
         :text => t("admin.communities.edit_details.invite_people"),
         :icon_class => "ss-adduser",
         :path => new_invitation_path,
         :name => "invite_people"
       },
       {
+        :topic => :manage,
         :text => t("admin.communities.transactions.transactions"),
         :icon_class => icon_class("coins"),
         :path => admin_community_transactions_path(@current_community, sort: "last_activity", direction: "desc"),
         :name => "transactions"
       },
       {
+        :topic => :configure,
         :text => t("admin.communities.edit_details.community_details"),
         :icon_class => "ss-page",
         :path => edit_details_admin_community_path(@current_community),
         :name => "tribe_details"
       },
       {
+        :topic => :configure,
         :text => t("admin.communities.edit_details.community_look_and_feel"),
         :icon_class => "ss-paintroller",
         :path => edit_look_and_feel_admin_community_path(@current_community),
         :name => "tribe_look_and_feel"
       },
       {
+        :topic => :configure,
         :text => t("admin.communities.menu_links.menu_links"),
         :icon_class => icon_class("link"),
         :path => menu_links_admin_community_path(@current_community),
         :name => "menu_links"
       },
       {
+        :topic => :configure,
         :text => t("admin.categories.index.listing_categories"),
         :icon_class => icon_class("list"),
         :path => admin_categories_path,
         :name => "listing_categories"
       },
       {
+        :topic => :configure,
         :text => t("admin.custom_fields.index.listing_fields"),
         :icon_class => icon_class("form"),
         :path => admin_custom_fields_path,
@@ -625,10 +662,13 @@ module ApplicationHelper
       }
     ]
 
-    with_feature(:shape_ui) do
+    # Disabled for Braintree and Checkout
+    gw = PaymentGateway.where(community_id: @current_community.id).first
+    unless gw
       links << {
+        :topic => :configure,
         :text => t("admin.listing_shapes.index.listing_shapes"),
-        :icon_class => icon_class("form"),
+        :icon_class => icon_class("order_types"),
         :path => admin_listing_shapes_path,
         :name => "listing_shapes"
       }
@@ -636,6 +676,7 @@ module ApplicationHelper
 
     if PaypalHelper.paypal_active?(@current_community.id)
       links << {
+        :topic => :configure,
         :text => t("admin.communities.paypal_account.paypal_admin_account"),
         :icon_class => icon_class("payments"),
         :path => admin_community_paypal_preferences_path(@current_community),
@@ -645,6 +686,7 @@ module ApplicationHelper
 
     if Maybe(@current_user).is_admin?.or_else { false }
       links << {
+        :topic => :configure,
         :text => t("admin.communities.braintree_payment_gateway.braintree_payment_gateway"),
         :icon_class => icon_class("payments"),
         :path => payment_gateways_admin_community_path(@current_community),
@@ -653,6 +695,7 @@ module ApplicationHelper
     end
 
     links << {
+      :topic => :configure,
       :text => t("admin.communities.social_media.social_media"),
       :icon_class => icon_class("social_media"),
       :path => social_media_admin_community_path(@current_community),
@@ -660,6 +703,7 @@ module ApplicationHelper
     }
 
     links << {
+      :topic => :configure,
       :text => t("admin.communities.analytics.analytics"),
       :icon_class => icon_class("analytics"),
       :path => analytics_admin_community_path(@current_community),
@@ -667,18 +711,21 @@ module ApplicationHelper
     }
 
     links << {
+      :topic => :configure,
       :text => t("admin.communities.edit_text_instructions.edit_text_instructions"),
       :icon_class => icon_class("edit"),
       :path => edit_text_instructions_admin_community_path(@current_community),
       :name => "text_instructions"
     }
     links << {
+      :topic => :configure,
       :text => t("admin.left_hand_navigation.emails_title"),
       :icon_class => icon_class("mail"),
       :path => edit_welcome_email_admin_community_path(@current_community),
       :name => "welcome_email"
     }
     links << {
+      :topic => :configure,
       :text => t("admin.communities.settings.settings"),
       :icon_class => icon_class("settings"),
       :path => settings_admin_community_path(@current_community),
@@ -752,6 +799,22 @@ module ApplicationHelper
     elsif gateway_type == :paypal
       show_paypal_account_settings_payment_url(person, url_params.merge(locale: person.locale))
     end
+  end
+
+  def external_plan_service_login_url(marketplace_id)
+    if APP_CONFIG.external_plan_service_url && APP_CONFIG.external_plan_service_secret
+      payload = {user_id: marketplace_id}
+      secret = APP_CONFIG.external_plan_service_secret
+      external_plan_service_url = APP_CONFIG.external_plan_service_url + "login"
+      token = JWTUtils.encode(payload, secret)
+      URLUtils.append_query_param(external_plan_service_url, "token", token)
+    end
+  end
+
+  def display_expiration_notice?
+    APP_CONFIG.external_plan_service_in_use &&
+      Maybe(@current_user).has_admin_rights_in?(@current_community).or_else(false) &&
+      PlanUtils.expired?(@current_plan)
   end
 
   # returns either "http://" or "https://" based on configuration settings
@@ -884,5 +947,4 @@ module ApplicationHelper
       content_for :extra_javascript do js end
     end
   end
-
 end

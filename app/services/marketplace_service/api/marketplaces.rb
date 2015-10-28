@@ -45,7 +45,16 @@ module MarketplaceService::API
       "local",
       "proxy",
       "preproduction",
-      "staging"
+      "staging",
+      "demo",
+      "plan",
+      "plans",
+      "customer",
+      "customers",
+      "subscription",
+      "subscriptions",
+      "client",
+      "clients"
     ]
 
     module_function
@@ -61,12 +70,30 @@ module MarketplaceService::API
 
       Helper.create_community_customization!(community, marketplace_name, locale)
       Helper.create_category!("Default", community, locale)
+      processes = Helper.create_processes!(community.id, payment_process)
       shape = Helper.create_listing_shape!(community, p[:marketplace_type], payment_process)
 
-      plan_level = p[:plan_level].or_else(CommunityPlan::FREE_PLAN)
-      Helper.create_community_plan!(community, {plan_level: plan_level});
+      from_model(community)
+    end
 
-      return from_model(community)
+    def set_locales(community, locales)
+      default_locale = community.locales[0]
+      community_name = community.name(default_locale)
+      locales.each { |locale| Helper.first_or_create_community_customization!(community, community_name, locale) }
+
+      settings = community.settings || {}
+      settings["locales"] = locales
+      community.settings = settings
+      community.save!
+    end
+
+    def all_locales
+      Sharetribe::SUPPORTED_LOCALES.map{ |l|
+        {
+          locale_key: l[:ident],
+          locale_name: l[:name]
+        }
+      }
     end
 
     # Create a Marketplace hash from Community model
@@ -104,6 +131,39 @@ module MarketplaceService::API
         }
       end
 
+      def create_processes!(community_id, default_payment_process)
+        payment_process = default_payment_process.to_sym
+        unless [:none, :preauthorize].include?(payment_process)
+          raise ArgumentError.new("Unknown payment process: #{payment_process}")
+        end
+
+        [
+          {author_is_seller: true, process: :none},
+          {author_is_seller: false, process: :none},
+          {author_is_seller: true, process: payment_process}
+        ].to_set.map { |p|
+          get_or_create_transaction_process(
+            community_id: community_id,
+            process: p[:process],
+            author_is_seller: p[:author_is_seller])
+        }
+      end
+
+      def get_or_create_transaction_process(community_id:, process:, author_is_seller:)
+        TransactionService::API::Api.processes.get(community_id: community_id)
+          .maybe
+          .map { |processes|
+          processes.find { |p| p[:process] == process && p[:author_is_seller] == author_is_seller }
+        }
+          .or_else {
+          TransactionService::API::Api.processes.create(
+            community_id: community_id,
+            process: process,
+            author_is_seller: author_is_seller
+          ).data
+        }
+      end
+
       def create_listing_shape!(community, marketplace_type, process)
         listing_shape_template = select_listing_shape_template(marketplace_type)
         enable_shipping = marketplace_type.or_else("product") == "product"
@@ -114,12 +174,9 @@ module MarketplaceService::API
         community.community_customizations.create(customization_params(marketplace_name, locale))
       end
 
-      def create_community_plan!(community, options={})
-        CommunityPlan.create({
-          community_id: community.id,
-          plan_level:   Maybe(options[:plan_level]).or_else(0),
-          expires_at:   Maybe(options[:expires_at]).or_else(DateTime.now.change({ hour: 9, min: 0, sec: 0 }) + 31.days)
-        })
+      def first_or_create_community_customization!(community, marketplace_name, locale)
+        existing_customization = community.community_customizations.where(locale: locale).first
+        community.community_customizations.create!(customization_params(marketplace_name, locale)) unless existing_customization
       end
 
       def select_listing_shape_template(type)
@@ -138,13 +195,7 @@ module MarketplaceService::API
       end
 
       def available_ident_based_on(initial_ident)
-
-        if initial_ident.blank?
-          initial_ident = "trial_site"
-        end
-
-        current_ident = initial_ident.to_url
-        current_ident = current_ident[0..29] #truncate to 30 chars or less
+        current_ident = Maybe(initial_ident).to_url[0..29].or_else("trial_site") #truncate to 30 chars or less
 
         # use basedomain as basis on new variations if current domain is not available
         base_ident = current_ident

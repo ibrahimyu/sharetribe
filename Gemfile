@@ -23,8 +23,7 @@ gem 'jquery-rails', '2.1.4'
 # Bundle the extra gems:
 
 # gem 'heroku' install the Heroku toolbelt (https://toolbelt.heroku.com/) instead (as gem had some problems)
-#gem 'thin'
-gem 'unicorn', "~>4.6.3"
+gem "passenger", "~> 5.0.18"
 gem "rack-timeout"
 
 gem "mysql2"
@@ -33,7 +32,8 @@ gem 'sass', "  ~> 3.2.9"
 gem 'rest-client', '>= 1.6.0'
 gem 'paperclip'
 gem 'delayed_paperclip'
-gem 'aws-sdk'
+gem 'aws-sdk-v1'
+gem 'aws-sdk', '~> 2'
 gem "will_paginate"
 gem 'dalli'
 gem "memcachier"
@@ -57,7 +57,7 @@ gem 'postmark-rails' # could be removed as not currently used
 gem 'rails-i18n'
 gem 'devise', "~>2.2.4"  #3.0rc requires bit bigger changes
 gem "devise-encryptable"
-gem "omniauth-facebook"
+gem "omniauth-facebook", "~> 2.0.1"
 gem 'spreadsheet'
 gem 'rabl'
 gem 'rake'
@@ -80,6 +80,13 @@ gem 'paypal-sdk-permissions',
   :ref    => 'c0240bee9f94fe6338d67b4f754e1a11ce81619a'
 gem 'paypal-sdk-merchant', '~> 1.116.0'
 gem 'airbrake', '~>4.1.0'
+gem 'cache_digests'
+gem 'librato-rails'
+gem 'jwt', '~> 1.5.1'
+
+gem 'lograge'
+gem 'public_suffix' # Needed currently to set GA hostname right, probably not
+                    # needed anymore when GA script updated.
 
 group :staging, :production do
   gem 'newrelic_rpm', '~> 3.9.1.236'
@@ -88,6 +95,10 @@ end
 group :development, :test do
   gem 'rubocop',          require: false
   gem 'factory_girl_rails'
+end
+
+group :development, :staging do
+  gem 'meta_request'
 end
 
 group :development do
@@ -100,7 +111,6 @@ group :development do
   gem 'i18n-tasks', '~> 0.6.2'
   gem 'quiet_assets'
   gem 'better_errors'
-  gem 'meta_request'
 end
 
 group :test do

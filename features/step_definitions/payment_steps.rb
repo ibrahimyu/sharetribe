@@ -131,7 +131,7 @@ Given /^I want to pay "(.*?)"$/ do |item_title|
   steps %Q{
     Given I am on the messages page
     Then I should see "Waiting for you to pay"
-    When I click ".conversation-title-link"
+    When I click ".conversation-title-link-unread"
     And I follow "Pay"
     Then I should see payment details form for Braintree
   }
@@ -142,7 +142,7 @@ When /^I cancel the transaction$/ do
   steps %Q{
     Given I am on the messages page
     Then I should see "Waiting for you to mark the request completed"
-    When I click ".conversation-title-link"
+    When I click ".conversation-title-link-unread"
     And I follow "Dispute"
   }
 end
@@ -255,6 +255,10 @@ Then /^I should see that I successfully paid (.*?)$/ do |amount|
   page.should have_content("paid #{amount}")
 end
 
+Then /^I should see that I successfully authorized payment (.*?)$/ do |amount|
+  page.should have_content("Payment authorized: #{amount}")
+end
+
 Then /^"(.*?)" should receive email about payment$/ do |receiver|
   email = Person.find_by_username(receiver).confirmed_notification_emails.first.address
   steps %Q{
@@ -288,7 +292,6 @@ end
 
 Then /^I should see receipt info for unit_type (.*?) with quantity (\d+) and subtotal of (.*?)$/ do |unit_type, quantity, subtotal|
   page.should have_content("Price per #{unit_type}")
-  page.should have_content("Quantity:")
   page.should have_content("Subtotal:")
   page.should have_content("Total:")
 

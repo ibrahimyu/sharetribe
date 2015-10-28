@@ -2,7 +2,7 @@ module HashUtils
   module_function
 
   def compact(h)
-    h.delete_if { |k, v| v.nil? }
+    h.reject { |k, v| v.nil? }
   end
 
   def camelize_keys(h, deep=true)
@@ -49,7 +49,6 @@ module HashUtils
     }.flatten.compact
   end
 
-
   # Select a subset of the hash h using given set of keys.
   # Only include keys that are present in h.
   #
@@ -61,6 +60,14 @@ module HashUtils
       sub_hash[k] = h[k] if h.has_key?(k)
       sub_hash
     end
+  end
+
+  # Return true if given subset of fields in both hashes are equal
+  #
+  # Usage:
+  #  suq_eq({a: 1, b: 2, c: 3}, {a: 1, b: 2, c: 4}, :a, :b) => true
+  def sub_eq(a, b, *keys)
+    a.slice(*keys) == b.slice(*keys)
   end
 
   #
@@ -97,5 +104,40 @@ module HashUtils
     Maybe(value).map { |v|
       Hash[key, v]
     }.or_else({})
+  end
+
+  # { 1: [15], 2: [15, 16] => { 15: [1, 2], 16: [2] }
+  #
+  def transpose(x)
+    x.reduce({}) { |acc, (key, value)|
+      value.each { |v|
+        acc[v] = (acc[v] || Set.new) << key
+      }
+      acc
+    }.map { |(k, v)| [k, v.to_a] }.to_h
+  end
+
+  # { a: b: 1 } -> { :"a.b" => 1 }
+  def flatten(h)
+    # use helper lambda
+    acc = ->(prefix, hash) {
+      hash.inject({}) { |memo, (k, v)|
+        key_s = k.to_s
+
+        if !k.is_a?(Symbol) || key_s.include?(".")
+          raise ArgumentError.new("Key must be a Symbol and must not contain dot (.). Was: '#{k.to_s}', (#{k.class.name})")
+        end
+
+        prefixed_key = prefix.nil? ? k : [prefix.to_s, key_s].join(".")
+
+        if v.is_a? Hash
+          memo.merge(acc.call(prefixed_key, v))
+        else
+          memo.merge(prefixed_key.to_sym => v)
+        end
+      }
+    }
+
+    acc.call(nil, h)
   end
 end

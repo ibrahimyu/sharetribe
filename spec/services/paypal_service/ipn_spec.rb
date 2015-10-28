@@ -27,7 +27,6 @@ describe PaypalService::IPN do
     }
 
     @order = {
-      order_total: 100,
       community_id: 1,
       transaction_id: 1,
       payer_id: "7LFUVCDKGARH4",
@@ -37,6 +36,18 @@ describe PaypalService::IPN do
       order_id: "O-2ES620817J8424036",
       order_date: Time.now,
       order_total: Money.new(1000, "GBP")
+    }
+
+    @authorization = {
+      community_id: 1,
+      transaction_id: 2,
+      payer_id: "7LFUVCDKGARH4",
+      receiver_id: "URAPMR7WHFAWY",
+      merchant_id: "asdfasdf",
+      pending_reason: "authorization",
+      authorization_id: "O-2ES620817J8424038",
+      authorzation_date: Time.now,
+      authorization_total: Money.new(1000, "GBP")
     }
 
     @auth_created_msg = {
@@ -53,6 +64,38 @@ describe PaypalService::IPN do
       pending_reason: "authorization",
       receipt_id: "3609-0935-6989-4532",
       order_total: Money.new(120, "GBP"),
+      authorization_total: Money.new(120, "GBP")
+    }
+
+    @auth_created_no_order_msg = {
+      type: :authorization_created,
+      authorization_date: "2014-10-01 09:04:07 +0300",
+      authorization_expires_date: "2014-10-04 09:50:00 +0300",
+      order_id: nil,
+      authorization_id: "O-2ES620817J8424038",
+      payer_email: "foobar@barfoo.com",
+      payer_id: "7LFUVCDKGARH4",
+      receiver_email: "dev+paypal-user1@sharetribe.com",
+      receiver_id: "URAPMR7WHFAWY",
+      payment_status: "Pending",
+      pending_reason: "authorization",
+      receipt_id: "3609-0935-6989-4532",
+      order_total: nil,
+      authorization_total: Money.new(120, "GBP")
+    }
+
+    @payment_review_no_order_msg = {
+      type: :payment_review,
+      authorization_date: "2014-10-01 09:04:07 +0300",
+      authorization_expires_date: "2014-10-04 09:50:00 +0300",
+      authorization_id: "O-2ES620817J8424038",
+      payer_email: "foobar@barfoo.com",
+      payer_id: "7LFUVCDKGARH4",
+      receiver_email: "dev+paypal-user1@sharetribe.com",
+      receiver_id: "URAPMR7WHFAWY",
+      payment_status: "Pending",
+      pending_reason: "payment-review",
+      receipt_id: "3609-0935-6989-4532",
       authorization_total: Money.new(120, "GBP")
     }
 
@@ -171,6 +214,7 @@ describe PaypalService::IPN do
 
     @cid = 1
     @txid = 1
+    @txid_auth = 2
     @mid = "merchant_id_1"
     @payer_id = "payer_id_1"
     @paypal_email = "merchant_1@test.com"
@@ -178,6 +222,7 @@ describe PaypalService::IPN do
     @billing_agreement_id = "bagrid"
 
     PaypalService::Store::PaypalPayment.create(@cid, @txid, @order)
+    PaypalService::Store::PaypalPayment.create(@cid, @txid_auth, @authorization)
 
     AccountStore.create(
       opts:
@@ -193,14 +238,6 @@ describe PaypalService::IPN do
           billing_agreement_request_token: "B-123456789",
           billing_agreement_paypal_username_to: @paypal_email_admin
         })
-
-    # PaypalService::PaypalAccount::Command.create_personal_account(
-    #   @mid,
-    #   @cid,
-    #   {email: @paypal_email, payer_id: @payer_id})
-    # PaypalService::PaypalAccount::Command.create_pending_billing_agreement(@mid, @cid, @paypal_email_admin, "request-token")
-    # PaypalService::PaypalAccount::Command.confirm_billing_agreement(@mid, @cid, "request-token", @billing_agreement_id)
-
   end
 
   context "update payment" do
@@ -208,6 +245,45 @@ describe PaypalService::IPN do
       @ipn_service.handle_msg(@auth_created_msg)
       @ipn_service.handle_msg(@auth_created_msg)
       expect(@events.received_events[:payment_updated].length).to eq 1
+    end
+
+    it "should keep payment in payment-review when payment-review ipn msg received" do
+      PaypalPayment.where(authorization_id: @authorization[:authorization_id])
+        .first
+        .update_attribute(:pending_reason, "payment-review")
+
+      @ipn_service.handle_msg(@payment_review_no_order_msg)
+      payment = PaypalPayment.where(authorization_id: @authorization[:authorization_id]).first
+      expect(payment.payment_status).to eql "pending"
+      expect(payment.pending_reason).to eql "payment-review"
+    end
+
+    it "should handle authorization when payment in payment-review state" do
+      PaypalPayment.where(authorization_id: @authorization[:authorization_id])
+        .first
+        .update_attribute(:pending_reason, "payment-review")
+
+      @ipn_service.handle_msg(@auth_created_no_order_msg)
+      payment = PaypalPayment.where(authorization_id: @authorization[:authorization_id]).first
+      expect(payment.payment_status).to eql "pending"
+      expect(payment.pending_reason).to eql "authorization"
+    end
+
+    it "should handle authorization without order" do
+      @ipn_service.handle_msg(@auth_created_no_order_msg)
+
+      payment = PaypalPayment.where(authorization_id: @authorization[:authorization_id]).first
+      expect(payment.payment_status).to eql "pending"
+      expect(payment.pending_reason).to eql "authorization"
+    end
+
+    it "should not move authorized payment to payment-review is ipns arrive out of order" do
+      @ipn_service.handle_msg(@auth_created_no_order_msg)
+      @ipn_service.handle_msg(@payment_review_no_order_msg)
+
+      payment = PaypalPayment.where(authorization_id: @authorization[:authorization_id]).first
+      expect(payment.payment_status).to eql "pending"
+      expect(payment.pending_reason).to eql "authorization"
     end
 
     it "shouldn't move backwards in state" do
@@ -226,7 +302,7 @@ describe PaypalService::IPN do
 
     it "should keep the fee_total even if ipn completed does not have it" do
       @ipn_service.handle_msg(@auth_created_msg)
-      #at this point, our own service would complete payment and get fee in response
+      # at this point, our own service would complete payment and get fee in response
       PaypalPayment.first.update_attribute(:fee_total, Money.new(100, "GBP"))
       @ipn_service.handle_msg(@payment_completed_msg)
       expect(PaypalPayment.first.fee_total)
@@ -295,8 +371,6 @@ describe PaypalService::IPN do
       )
       expect(acc2[:billing_agreement_state]).to eql(:not_verified)
       expect(acc2[:billing_agreement_billing_agreement_id]).to be_nil
-
-      # expect(acc2[:billing_agreement_id]).to be_nil
     end
   end
 

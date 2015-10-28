@@ -37,6 +37,10 @@ ro:
         community_details: ~
         community_look_and_feel: ~
         edit_community: ~
+        enabled_languages: ~
+        enabled_languages_description: ~
+        default_language: ~
+        language_selection_disabled: ~
         community_name: ~
         edit_community_name_description: ~
         community_slogan: ~
@@ -103,6 +107,37 @@ ro:
         welcome_email_content_description: ~
         edit_message: ~
         send_test_message: ~
+      outgoing_email:
+        title: ~
+        info: ~
+        read_more: ~
+        sender_address: ~
+        sender_address_default: ~
+        need_to_change: ~
+        contact_support_link_text: ~
+        set_sender_address: ~
+        sender_name_label: ~
+        sender_name_placeholder: ~
+        sender_email_label: ~
+        sender_email_placeholder: ~
+        this_is_how_it_will_look: ~
+        send_verification_button: ~
+        successfully_saved: ~
+        status: ~
+        status_verified: ~
+        status_error: ~
+        status_requested: ~
+        status_expired: ~
+        status_resent: ~
+        resend_link: ~
+        invalid_email_error: ~
+        invalid_email_domain: ~
+        invalid_email_domain_read_more_link: ~
+        unknown_error: ~
+        only_white_label_offer: ~
+        upgrade_pro_plan_link: ~
+        verification_sent_from: ~
+        follow_the_instructions: ~
       getting_started:
         getting_started: ~
         welcome_to_your_marketplace: ~
@@ -115,6 +150,8 @@ ro:
         categories_link_text: ~
         custom_fields_link_text: ~
         filters_link_text: ~
+        order_types: ~
+        order_types_link_text: ~
         payments: ~
         payments_link_text: ~
         info_texts: ~
@@ -135,6 +172,27 @@ ro:
         view_users_link_text: ~
         view_transactions_link_text: ~
         contact_support_link_text: ~
+      available_languages:
+        en: ~
+        en-AU: ~
+        en-GB: ~
+        fr: ~
+        fr-CA: ~
+        es: ~
+        es-ES: ~
+        pt-BR: ~
+        nb: ~
+        sv: ~
+        da-DK: ~
+        fi: ~
+        ru: ~
+        de: ~
+        el: ~
+        nl: ~
+        tr-TR: ~
+        zh: ~
+        ja: ~
+        it: ~
       settings:
         settings: ~
         general: ~
@@ -161,6 +219,15 @@ ro:
         automatic_newsletter_frequency: ~
         newsletter_daily: ~
         newsletter_weekly: ~
+        delete_marketplace_title: ~
+        type_marketplace_domain: ~
+        type_marketplace_domain_placeholder: ~
+        once_you_delete: ~
+        are_you_sure: ~
+        i_understand_button: ~
+        last_community_updates: ~
+        you_will_be_redirected_to: ~
+        delete_this_marketplace: ~
       manage_members:
         manage_members: ~
         email: ~
@@ -171,6 +238,7 @@ ro:
         ban_user: ~
         saving_user_status: ~
         save_user_status_successful: ~
+        export_all_as_csv: "Exportă tot in format CSV"
         save_user_status_error: ~
         ban_user_confirmation: ~
         ban_me_error: ~
@@ -209,6 +277,7 @@ ro:
         url: ~
         empty: ~
       transactions:
+        export_all_as_csv: "Exportă tot in formatul CSV"
         transactions: ~
         headers:
           conversation: ~
@@ -303,6 +372,80 @@ ro:
       configure: ~
       emails_title: ~
       support: ~
+      subscription: ~
+    listing_shapes:
+      index:
+        listing_shapes: ~
+        description: ~
+        read_more_about_order_types: ~
+        add_new_shape: ~
+        select_template: ~
+        all_categories: ~
+        no_categories: ~
+        category_count: ~
+        header:
+          listing_shape_name: ~
+          listing_shape_categories: ~
+        order:
+          saving_order: ~
+          save_order_successful: ~
+          save_order_error: ~
+      templates:
+        selling_products: ~
+        renting_products: ~
+        offering_services: ~
+        giving_things_away: ~
+        requesting: ~
+        announcement: ~
+        custom: ~
+      new:
+        create_listing_shape: ~
+        create: ~
+        cancel: ~
+        create_success: ~
+        create_failure: ~
+      edit:
+        edit_listing_shape: ~
+        update: ~
+        cancel: ~
+        update_success: ~
+        update_failure: ~
+        delete: ~
+        can_not_delete_last: ~
+        can_not_delete_only_one_in_categories: ~
+      listing_shape_name: ~
+      listing_shape_name_placeholder: ~
+      action_button_label: ~
+      action_button_placeholder: ~
+      successfully_closed: ~
+      successfully_deleted: ~
+      pricing_and_checkout_title: ~
+      online_payments_label: ~
+      shipping_label: ~
+      price_label: ~
+      units_title: ~
+      units_desc: ~
+      units:
+        piece: ~
+        hour: ~
+        day: ~
+        night: ~
+        week: ~
+        month: ~
+      can_not_find: ~
+      add_custom_unit: ~
+      delete_custom_unit: ~
+      custom_unit_form:
+        title: ~
+        label_heading: ~
+        selector_label_heading: ~
+        label_placeholder: ~
+        selector_placeholder: ~
+        per: ~
+        unit_type:
+          heading: ~
+          quantity_label: ~
+          time_label: ~
     paypal_accounts:
       marketplace_paypal_integration: ~
       preferences_updated: ~
@@ -347,13 +490,13 @@ ro:
     share_types:
       request: ~
       offer: ~
-      borrow: imprumutare
+      borrow: împrumutare
       buy: cumpărare
-      give_away: oferire
+      give_away: donatie
       lend: împrumut
       receive: gratuit
       rent: inchiriere
-      rent_out: "de dat spre închiriere"
+      rent_out: "de închiriat"
       sell: "de vânzare"
       offer_to_swap: ~
       request_to_swap: ~
@@ -433,7 +576,7 @@ ro:
       loading_more_messages: "Se încarcă mai multe mesaje"
       message_partitive: mesaj
       messages_partitive: mesaje
-      no_received_messages: "Nici un mesaj primit"
+      no_received_messages: "Niciun mesaj primit"
       no_sent_messages: "Nici un mesaj trimis"
     conversation:
       accepted_request: ~
@@ -457,12 +600,13 @@ ro:
       canceled_request: ~
       canceled_offer: ~
       paid: ~
+      payment_preauthorized: ~
     new:
       offer_message_form_title: ~
       request_message_form_title: ~
-      favor_offer_message_form_title: "Cere o favoare de la"
-      favor_request_message_form_title: "Oferă o favoare pentru"
-      housing_offer_message_form_title: Răspunde
+      favor_offer_message_form_title: "Cere ajutor de la %{person}"
+      favor_request_message_form_title: "Oferă ajutor lui %{person}"
+      housing_offer_message_form_title: "Oferă spațiu pentru %{person}"
       housing_request_message_form_title: ~
       item_offer_lend_message_form_title: ~
       item_offer_sell_message_form_title: ~
@@ -500,7 +644,7 @@ ro:
       message_sent_by: ~
       message_sent_to: ~
       send_reply: "Trimite raspuns"
-      write_a_reply: "Scrie un răspuns"
+      write_a_reply: "Scrie un răspuns:"
       conversation_about_listing: ~
       conversation_with_user: ~
       conversation_with: ~
@@ -540,7 +684,7 @@ ro:
       request_canceled: ~
       request_paid: ~
       request_preauthorized: ~
-      skip_feedback: ~
+      skip_feedback: "Omite feedback-ul."
       waiting_for_listing_author_to_accept_offer: ~
       waiting_for_listing_author_to_accept_request: ~
       waiting_for_you_to_accept_request: ~
@@ -557,8 +701,8 @@ ro:
           verify: ~
     status_link:
       accept_offer: "Acceptă ofertă"
-      accept_request: "Acceptă cerere"
-      reject_offer: "Respinge ofertă"
+      accept_request: "Acceptă cererea"
+      reject_offer: "Respinge oferta"
       reject_request: "Respinge cerere"
       accept_preauthorized_offer: ~
       accept_preauthorized_request: ~
@@ -606,6 +750,11 @@ ro:
       credit_card_expiration_date: ~
       confirm_payment: ~
       exp: ~
+  feedback:
+    feedback_subject: ~
+    feedback_body: ~
+    unlogged_user: ~
+    anonymous_user: ~
   preauthorize_payments:
     edit:
       confirm_payment: ~
@@ -628,11 +777,11 @@ ro:
   emails:
     accept_reminder:
       remember_to_accept_offer: ~
-      remember_to_accept_request: ~
-      you_can_accept_or_reject_offer_at: ~
-      you_can_accept_or_reject_request_at: ~
-      you_have_not_yet_accepted_or_rejected_offer: ~
-      you_have_not_yet_accepted_or_rejected_request: ~
+      remember_to_accept_request: "Amintește-ți să accepți sau să refuzi cererea de la %{sender_name}."
+      you_can_accept_or_reject_offer_at: "Poți accepta sau refuza oferta la"
+      you_can_accept_or_reject_request_at: "Poți accepta sau refuza oferta la"
+      you_have_not_yet_accepted_or_rejected_offer: "Nu ai acceptat sau refuzat oferta %{title} pe care ai primit-o pe %{date}."
+      you_have_not_yet_accepted_or_rejected_request: "Nu ai acceptat sau refuzat oferta %{title} pe care ai primit-o pe %{date}."
       show_thread: ~
     braintree_account_approved:
       account_ready: ~
@@ -687,11 +836,11 @@ ro:
       or_paste_link: ~
       turning_on_confirmations_in_this_community: ~
     common:
-      check_your_settings: ~
-      hey: ~
-      kassi_team: ~
-      thanks: ~
-      want_to_control_emails: ~
+      check_your_settings: "Verifică-ți setările."
+      hey: "Salut %{name}"
+      kassi_team: "Echipa %{service_name}"
+      thanks: "Mulţumim,"
+      want_to_control_emails: "Vrei să controlezi e-mail-urile pe care le primești de la %{service_name}?"
       dont_want_to_receive_these_emails: ~
       edit_your_email_settings_here: ~
       message_not_displaying_correctly: ~
@@ -699,15 +848,15 @@ ro:
       or: ~
       unsubscribe_from_these_emails: ~
     conversation_status_changed:
-      has_accepted_your_offer: ~
-      has_accepted_your_request: ~
-      has_rejected_your_offer: ~
-      has_rejected_your_request: ~
+      has_accepted_your_offer: "%{accepter} ți-a acceptat oferta %{listing}."
+      has_accepted_your_request: "%{accepter} ți-a acceptat cererea %{listing}."
+      has_rejected_your_offer: "%{accepter} ți-a refuzat oferta %{listing}."
+      has_rejected_your_request: "%{accepter} ți-a refuzat cererea %{listing}."
       view_thread: ~
-      your_offer_was_accepted: ~
-      your_offer_was_rejected: ~
-      your_request_was_accepted: ~
-      your_request_was_rejected: ~
+      your_offer_was_accepted: "Oferta ți-a fost acceptată."
+      your_offer_was_rejected: "Oferta ți-a fost refuzată."
+      your_request_was_accepted: "Cererea ți-a fost acceptată."
+      your_request_was_rejected: "Cererea ți-a fost refuzată."
       you_can_now_pay_to: ~
       pay_now: ~
       remember_to_confirm: ~
@@ -788,7 +937,7 @@ ro:
     transaction_preauthorized:
       subject: ~
       transaction_requested_by_user: ~
-      you_have_days_to_accept: ~
+      you_have_time_to_accept: ~
       click_here_to_reply: ~
     transaction_preauthorized_reminder:
       subject: ~
@@ -799,8 +948,6 @@ ro:
       welcome_email_subject: ~
       welcome_to_marketplace: ~
       love_marketplace_crew: ~
-      p_s_did_you_know: ~
-      click_here_link_text: ~
       welcome_email_footer_text: ~
       settings_link_text: ~
       welcome_email_subject_for_marketplace_creator: ~
@@ -838,6 +985,8 @@ ro:
     transaction_agreement:
       required_error: ~
     paypal:
+      buyer_cannot_pay_error: ~
+      pending_review_error: ~
       generic_error: ~
       cancel_error: ~
       accept_authorization_error: ~
@@ -860,7 +1009,7 @@ ro:
       we_hate_this: ~
       refer_to_error_id: ~
     error_500_title: ~
-    error_description: ~
+    error_description: "S-a produs o eroare"
     no_javascript:
       javascript_is_disabled_in_your_browser: ~
       kassi_does_not_currently_work_without_javascript: ~
@@ -906,7 +1055,7 @@ ro:
       offer_partitive: ~
       request_partitive: ~
   header:
-    about: ~
+    about: "Despre noi"
     home: Acasa
     members: ~
     new_listing: ~
@@ -991,11 +1140,12 @@ ro:
       filter: ~
       this_is_private_community: ~
     invitation_form:
-      invite_your_friends: ~
       email: ~
       message: ~
       send_invitation: ~
-      add_as_many_emails_as_you_want: ~
+      add_email_addresses_description: ~
+      add_lots_of_email_addresses: ~
+      this_article_link: ~
       invitation_emails_field_placeholder: ~
       invitation_message_field_placeholder: ~
       errors_in_emails: ~
@@ -1024,6 +1174,8 @@ ro:
       list_button: ~
       all_listing_types: ~
       all_categories: ~
+    errors:
+      search_engine_not_responding: ~
   infos:
     about:
       default_about_text_title: ~
@@ -1066,7 +1218,7 @@ ro:
     global-header:
       select_language: ~
     infos:
-      about: "Ce este Kassi?"
+      about: "Despre noi"
       how_to_use: "Cum să folosești Kassi"
       info_about_kassi: "Informații despre Kassi"
       news: ~
@@ -1121,6 +1273,7 @@ ro:
       feedback_sent_to: ~
       feedback_skipped: ~
       invitation_cannot_be_sent: ~
+      invitation_limit_reached: ~
       invitation_sent: ~
       inviting_new_users_is_not_allowed_in_this_community: ~
       login_again: ~
@@ -1176,6 +1329,7 @@ ro:
       you_are_not_allowed_to_give_feedback_on_this_transaction: ~
       you_are_not_authorized_to_do_this: ~
       you_are_not_authorized_to_view_this_content: ~
+      listing_closed: ~
       send_instructions: ~
       you_cannot_reply_to_a_closed_offer: ~
       you_cannot_reply_to_a_closed_request: ~
@@ -1190,6 +1344,7 @@ ro:
       you_must_log_in_to_invite_new_users: ~
       you_must_log_in_to_send_a_comment: ~
       you_must_log_in_to_send_a_message: ~
+      you_must_log_in_to_do_a_transaction: ~
       you_must_log_in_to_view_this_content: ~
       you_must_log_in_to_view_this_page: ~
       you_must_log_in_to_view_your_inbox: ~
@@ -1223,6 +1378,8 @@ ro:
     comment:
       wrote: ~
       send_private_message: ~
+      delete: ~
+      are_you_sure: ~
     comment_form:
       ask_a_question: ~
       log_in: ~
@@ -1243,6 +1400,10 @@ ro:
       show_in_updates_email_loading: ~
       show_in_updates_email_error: ~
       show_in_updates_email_success: ~
+    map:
+      open_in_google_maps: ~
+    error:
+      something_went_wrong: ~
     follow_links:
       follow: ~
       unfollow: ~
@@ -1274,17 +1435,22 @@ ro:
         googlemap_updatemap: ~
       images:
         image: ~
+        best_result: ~
         no_file_selected: ~
         remove_image: ~
         select_file: ~
+        add_more: ~
         removing: ~
         processing: ~
         loading_image: ~
+        image_uploading_in_progress: ~
+        processing_takes_a_while: ~
         this_may_take_a_while: ~
         percentage_loaded: ~
         uploading_failed: ~
         file_too_large: ~
         accepted_formats: ~
+        images_not_uploaded_confirm: ~
       location:
         location: ~
       price:
@@ -1303,6 +1469,7 @@ ro:
         delivery: ~
         shipping: ~
         shipping_price: ~
+        shipping_price_additional: ~
         pickup: ~
       origin:
         location: ~
@@ -1333,10 +1500,6 @@ ro:
         valid_until: ~
       valid_until_radio_buttons:
         for_the_time_being: ~
-      visibility:
-        all_communities: ~
-        this_community: ~
-        visibility: ~
       privacy:
         privacy: ~
         private: ~
@@ -1387,6 +1550,7 @@ ro:
       booking_from: ~
       booking_to: ~
       how_paypal_works: ~
+      payment_help: ~
     new:
       post_a_new_listing: ~
       listing: ~
@@ -1450,7 +1614,10 @@ ro:
         per_day: ~
       delivery: ~
       shipping: ~
+      shipping_no_price: ~
+      shipping_price_additional: ~
       pickup: ~
+      pickup_no_price: ~
     unit_types:
       piece: ~
       hour: ~
@@ -1504,7 +1671,6 @@ ro:
       continue: ~
       payment_receiver: ~
       sum: ~
-      commission_will_be_added: ~
     form:
       total: ~
       service_charge: ~
@@ -1594,6 +1760,7 @@ ro:
       invalid_invitation_code: ~
       invitation_code: ~
       not_required: ~
+      notification_is_mandatory: ~
       organization_name: ~
       password_again: ~
       show_my_name_to_others: ~

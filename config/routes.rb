@@ -11,6 +11,10 @@ Kassi::Application.routes.draw do
 
   match "/robots.txt" => RobotsGenerator
 
+  # A route for DV test file
+  # A CA will check if there is a file in this route
+  get "/:dv_file" => "domain_validation#index", constraints: {dv_file: /.*\.txt/}
+
   match "/design" => "design#design"
 
   # config/routes.rb
@@ -22,6 +26,8 @@ Kassi::Application.routes.draw do
   get '/webhooks/braintree' => 'braintree_webhooks#challenge'
   post '/webhooks/braintree' => 'braintree_webhooks#hooks'
   post '/webhooks/paypal_ipn' => 'paypal_ipn#ipn_hook', as: :paypal_ipn_hook
+  post '/webhooks/plans' => 'plans#create'
+  get '/webhooks/trials' => 'plans#get_trials'
 
   post '/bounces' => 'amazon_bounces#notification'
 
@@ -41,11 +47,13 @@ Kassi::Application.routes.draw do
     get "/check_email_availability" => "marketplaces#check_email_availability"
   end
 
-  locale_matcher = Regexp.new(Rails.application.config.AVAILABLE_LOCALES.map(&:last).join("|"))
+  REMOVED_LOCALES = Rails.application.config.REMOVED_LOCALES.to_a
+
+  locale_matcher = Regexp.new(Sharetribe::AVAILABLE_LOCALES.map { |l| l[:ident] }.concat(REMOVED_LOCALES).join("|"))
 
   # Inside this constraits are the routes that are used when request has subdomain other than www
-  match '/:locale/' => 'homepage#index', :constraints => { :locale => locale_matcher }
-  match '/' => 'homepage#index'
+  match '/:locale/' => 'homepage#index', :constraints => { :locale => locale_matcher }, as: :homepage_with_locale
+  match '/' => 'homepage#index', as: :homepage_without_locale
   root :to => 'homepage#index'
 
   # error handling: 3$: http://blog.plataformatec.com.br/2012/01/my-five-favorite-hidden-features-in-rails-3-2/
@@ -63,6 +71,9 @@ Kassi::Application.routes.draw do
 
     match "/transactions/op_status/:process_token" => "transactions#op_status", :as => :transaction_op_status
 
+    # All new transactions (in the future)
+    match "/transactions/new" => "transactions#new", as: :new_transaction
+
     # preauthorize flow
     match "/listings/:listing_id/preauthorize" => "preauthorize_transactions#preauthorize", :as => :preauthorize_payment
     match "/listings/:listing_id/preauthorized" => "preauthorize_transactions#preauthorized", :as => :preauthorized_payment
@@ -76,7 +87,6 @@ Kassi::Application.routes.draw do
     match "/listings/:listing_id/create_transaction" => "post_pay_transactions#create", :as => :create_transaction, :method => :post
 
     # free flow
-    match "/listings/:listing_id/reply" => "free_transactions#new", :as => :reply_to_listing
     match "/listings/:listing_id/create_contact" => "free_transactions#create_contact", :as => :create_contact
     match "/listings/:listing_id/contact" => "free_transactions#contact", :as => :contact_to_listing
 
@@ -115,6 +125,9 @@ Kassi::Application.routes.draw do
           get :edit_look_and_feel
           put :edit_look_and_feel, to: 'communities#update_look_and_feel'
           get :edit_welcome_email
+          post :create_sender_address
+          get :check_email_status
+          post :resend_verification_email
           get :edit_text_instructions
           get :test_welcome_email
           get :settings
@@ -128,6 +141,7 @@ Kassi::Application.routes.draw do
           get :menu_links
           put :menu_links, to: 'communities#update_menu_links'
           put :update_settings
+          delete :delete_marketplace
         end
         resources :transactions, controller: :community_transactions, only: :index
         resources :emails
@@ -168,7 +182,14 @@ Kassi::Application.routes.draw do
           post :order
         end
       end
-      resources :listing_shapes
+      resources :listing_shapes do
+        collection do
+          post :order
+        end
+        member do
+          get :close_listings
+        end
+      end
     end
 
     resources :invitations
@@ -191,12 +212,14 @@ Kassi::Application.routes.draw do
         delete :unfollow
       end
       collection do
+        get :new_form_content
+        get :edit_form_content
         get :more_listings
         get :browse
         get :locations_json
         get :verification_required
       end
-      resources :comments
+      resources :comments, :only => [:create, :destroy]
       resources :listing_images do
         collection do
           post :add_from_file
@@ -324,7 +347,7 @@ Kassi::Application.routes.draw do
             get :billing_agreement_cancel
           end
         end
-        resources :transactions, :only => [:show]
+        resources :transactions, only: [:show, :new, :create]
         resource :checkout_account, only: [:new, :show, :create]
         resource :settings do
           member do

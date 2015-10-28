@@ -1,3 +1,4 @@
+# rubocop:disable ClassLength
 class ListingsController < ApplicationController
   class ListingDeleted < StandardError; end
 
@@ -6,11 +7,11 @@ class ListingsController < ApplicationController
   # Skip auth token check as current jQuery doesn't provide it automatically
   skip_before_filter :verify_authenticity_token, :only => [:close, :update, :follow, :unfollow]
 
-  before_filter :only => [ :edit, :update, :close, :follow, :unfollow ] do |controller|
+  before_filter :only => [ :edit, :edit_form_content, :update, :close, :follow, :unfollow ] do |controller|
     controller.ensure_logged_in t("layouts.notifications.you_must_log_in_to_view_this_content")
   end
 
-  before_filter :only => [ :new, :create ] do |controller|
+  before_filter :only => [ :new, :new_form_content, :create ] do |controller|
     controller.ensure_logged_in t("layouts.notifications.you_must_log_in_to_create_new_listing", :sign_up_link => view_context.link_to(t("layouts.notifications.create_one_here"), sign_up_path)).html_safe
   end
 
@@ -21,7 +22,7 @@ class ListingsController < ApplicationController
     controller.ensure_current_user_is_listing_author t("layouts.notifications.only_listing_author_can_close_a_listing")
   end
 
-  before_filter :only => [ :edit, :update ] do |controller|
+  before_filter :only => [ :edit, :edit_form_content, :update ] do |controller|
     controller.ensure_current_user_is_listing_author t("layouts.notifications.only_listing_author_can_edit_a_listing")
   end
 
@@ -41,7 +42,26 @@ class ListingsController < ApplicationController
 
           # Returns the listings for one person formatted for profile page view
           per_page = params[:per_page] || 200 # the point is to show all here by default
-          render :partial => "listings/profile_listings", :locals => {:person => @person, :limit => per_page}
+          includes = [:author, :listing_images]
+          include_closed = @person == @current_user
+          search = {
+            author_id: @person.id,
+            include_closed: include_closed,
+            page: 1,
+            per_page: per_page
+          }
+
+          listings = ListingIndexService::API::Api.listings.search(community_id: @current_community.id, search: search, includes: includes).and_then { |res|
+            Result::Success.new(
+              ListingIndexViewUtils.to_struct(
+              result: res,
+              includes: includes,
+              page: search[:page],
+              per_page: search[:per_page]
+            ))
+          }.data
+
+          render :partial => "listings/profile_listings", :locals => {person: @person, limit: per_page, listings: listings}
         else
           redirect_to root
         end
@@ -64,10 +84,19 @@ class ListingsController < ApplicationController
             }.map { |shape| shape[:id] }
           }
         end
+        search_res = @current_community.private ? Result::Success.new({count: 0, listings: []}) : ListingIndexService::API::Api.listings.search(
+                     community_id: @current_community.id,
+                     search: {
+                       listing_shapes: params[:listing_shapes],
+                       page: page,
+                       per_page: per_page
+                     },
+                     includes: [:listing_images, :author, :location])
 
-        listings = @current_community.private ? [] : Listing.find_with(params, @current_user, @current_community, per_page, page)
+        listings = search_res.data[:listings]
+
         title = build_title(params)
-        updated = listings.first.present? ? listings.first.updated_at : Time.now
+        updated = listings.first.present? ? listings.first[:updated_at] : Time.now
 
         render layout: false,
                locals: { listings: listings,
@@ -100,7 +129,13 @@ class ListingsController < ApplicationController
   # Used to show multiple listings in one bubble
   def listing_bubble_multiple
     ids = numbers_str_to_array(params[:ids])
-    @listings = Listing.visible_to(@current_user, @current_community, ids).order("id DESC")
+
+    if @current_user || !@current_community.private?
+      @listings = @current_community.listings.where(listings: {id: ids}).order("listings.created_at DESC")
+    else
+      @listings = []
+    end
+
     if @listings.size > 0
       render :partial => "homepage/listing_bubble_multiple"
     else
@@ -110,9 +145,6 @@ class ListingsController < ApplicationController
 
   def show
     @selected_tribe_navi_tab = "home"
-    unless current_user?(@listing.author)
-      @listing.increment!(:times_viewed)
-    end
 
     @current_image = if params[:image]
       @listing.image_by_id(params[:image])
@@ -127,32 +159,42 @@ class ListingsController < ApplicationController
     end
 
     payment_gateway = MarketplaceService::Community::Query.payment_type(@current_community.id)
-
-    # TODO Change this so that the path is always the same, but the controller
-    # decides what to do. We don't want to make a API call to TransactionService
-    # just to show a listing details
     process = get_transaction_process(community_id: @current_community.id, transaction_process_id: @listing.transaction_process_id)
+    form_path = new_transaction_path(listing_id: @listing.id)
+    community_country_code = LocalizationUtils.valid_country_code(@current_community.country)
 
-    form_path = select_new_transaction_path(
-      listing_id: @listing.id.to_s,
-      payment_gateway: payment_gateway,
-      payment_process: process,
-      booking: @listing.unit_type == :day
-    )
-
-    delivery_opts = delivery_config(@listing.require_shipping_address, @listing.pickup_enabled, @listing.shipping_price, @listing.currency)
+    delivery_opts = delivery_config(@listing.require_shipping_address, @listing.pickup_enabled, @listing.shipping_price, @listing.shipping_price_additional, @listing.currency)
 
     render locals: {
              form_path: form_path,
              payment_gateway: payment_gateway,
+             # TODO I guess we should not need to know the process in order to show the listing
              process: process,
              delivery_opts: delivery_opts,
-             listing_unit_type: @listing.unit_type
+             listing_unit_type: @listing.unit_type,
+             country_code: community_country_code
            }
   end
 
   def new
-    @selected_tribe_navi_tab = "new_listing"
+    category_tree = CategoryViewUtils.category_tree(
+      categories: ListingService::API::Api.categories.get_all(community_id: @current_community.id)[:data],
+      shapes: get_shapes,
+      locale: I18n.locale,
+      all_locales: @current_community.locales
+    )
+
+    render :new, locals: {
+             categories: @current_community.top_level_categories,
+             subcategories: @current_community.subcategories,
+             shapes: get_shapes,
+             category_tree: category_tree
+           }
+  end
+
+  def new_form_content
+    return redirect_to action: :new unless request.xhr?
+
     @listing = Listing.new
 
     if (@current_user.location != nil)
@@ -163,100 +205,81 @@ class ListingsController < ApplicationController
       @listing.build_origin_loc(:location_type => "origin_loc")
     end
 
-    if request.xhr? # AJAX request to get the actual form contents
-      @listing.category = @current_community.categories.find(params[:subcategory].blank? ? params[:category] : params[:subcategory])
-      @custom_field_questions = @listing.category.custom_fields
-      @numeric_field_ids = numeric_field_ids(@custom_field_questions)
+    form_content
+  end
 
-      shape = get_shape(Maybe(params)[:listing_shape].to_i.or_else(nil))
-      process = get_transaction_process(community_id: @current_community.id, transaction_process_id: shape[:transaction_process_id])
+  def edit_form_content
+    return redirect_to action: :edit unless request.xhr?
 
-      # PaymentRegistrationGuard needs this to be set before posting
-      @listing.transaction_process_id = shape[:transaction_process_id]
-      @listing.listing_shape_id = shape[:id]
-
-      payment_type = MarketplaceService::Community::Query.payment_type(@current_community.id)
-      allow_posting, error_msg = payment_setup_status(
-                       community: @current_community,
-                       user: @current_user,
-                       listing: @listing,
-                       payment_type: payment_type,
-                       process: process)
-
-      if allow_posting
-        unit_options = ListingViewUtils.unit_options(shape[:units])
-
-        render :partial => "listings/form/form_content", locals: commission(@current_community, process).merge(
-                 shape: shape,
-                 unit_options: unit_options)
-      else
-        render :partial => "listings/payout_registration_before_posting", locals: { error_msg: error_msg }
-      end
-    else
-      category_tree = CategoryViewUtils.category_tree(
-        categories: ListingService::API::Api.categories.get(community_id: @current_community.id)[:data],
-        shapes: get_shapes,
-        locale: I18n.locale,
-        all_locales: @current_community.locales
-      )
-
-      render :new, locals: {
-               categories: @current_community.top_level_categories,
-               subcategories: @current_community.subcategories,
-               shapes: get_shapes,
-               category_tree: category_tree
-             }
+    if !@listing.origin_loc
+        @listing.build_origin_loc(:location_type => "origin_loc")
     end
+
+    form_content
   end
 
   def create
-    if params[:listing][:origin_loc_attributes][:address].empty? || params[:listing][:origin_loc_attributes][:address].blank?
-      params[:listing].delete("origin_loc_attributes")
-    end
+    params[:listing].delete("origin_loc_attributes") if params[:listing][:origin_loc_attributes][:address].blank?
 
-    params[:listing] = normalize_price_param(params[:listing])
     shape = get_shape(Maybe(params)[:listing][:listing_shape_id].to_i.or_else(nil))
-    m_unit = select_unit(params, shape)
 
-    if unit_required?(shape) && m_unit.is_none?
-      flash[:error] = "Given unit doesn't belong to listing shape" # no need to translate, rare case
-      redirect_to new_listing_path and return
+    listing_params = ListingFormViewUtils.filter(params[:listing], shape)
+    listing_unit = Maybe(params)[:listing][:unit].map { |u| ListingViewUtils::Unit.deserialize(u) }.or_else(nil)
+    listing_params = ListingFormViewUtils.filter_additional_shipping(listing_params, listing_unit)
+    validation_result = ListingFormViewUtils.validate(listing_params, shape, listing_unit)
+
+    unless validation_result.success
+      flash[:error] = t("listings.error.something_went_wrong", error_code: validation_result.data.join(', '))
+      return redirect_to new_listing_path
     end
 
-    @listing = Listing.new(
-      create_listing_params(params[:listing]).merge(
+    listing_params = normalize_price_params(listing_params)
+    m_unit = select_unit(listing_unit, shape)
+
+    listing_params = create_listing_params(listing_params).merge(
+        community_id: @current_community.id,
         listing_shape_id: shape[:id],
         transaction_process_id: shape[:transaction_process_id],
         shape_name_tr_key: shape[:name_tr_key],
-        action_button_tr_key: shape[:action_button_tr_key]
-      ).merge(unit_to_listing_opts(m_unit)).except(:unit)
-    )
+        action_button_tr_key: shape[:action_button_tr_key],
+    ).merge(unit_to_listing_opts(m_unit)).except(:unit)
 
-    @listing.author = @current_user
+    @listing = Listing.new(listing_params)
 
-    if @listing.save
-      upsert_field_values!(@listing, params[:custom_fields])
+    ActiveRecord::Base.transaction do
+      @listing.author = @current_user
 
-      listing_image_ids = params[:listing_images].collect { |h| h[:id] }.select { |id| id.present? }
-      ListingImage.where(id: listing_image_ids, author_id: @current_user.id).update_all(listing_id: @listing.id)
+      if @listing.save
+        upsert_field_values!(@listing, params[:custom_fields])
 
-      Delayed::Job.enqueue(ListingCreatedJob.new(@listing.id, @current_community.id))
-      if @current_community.follow_in_use?
-        Delayed::Job.enqueue(NotifyFollowersJob.new(@listing.id, @current_community.id), :run_at => NotifyFollowersJob::DELAY.from_now)
+        listing_image_ids =
+          if params[:listing_images]
+            params[:listing_images].collect { |h| h[:id] }.select { |id| id.present? }
+          else
+            logger.error("Listing images array is missing", nil, {params: params})
+            []
+          end
+
+        ListingImage.where(id: listing_image_ids, author_id: @current_user.id).update_all(listing_id: @listing.id)
+
+        Delayed::Job.enqueue(ListingCreatedJob.new(@listing.id, @current_community.id))
+        if @current_community.follow_in_use?
+          Delayed::Job.enqueue(NotifyFollowersJob.new(@listing.id, @current_community.id), :run_at => NotifyFollowersJob::DELAY.from_now)
+        end
+
+        flash[:notice] = t(
+          "layouts.notifications.listing_created_successfully",
+          :new_listing_link => view_context.link_to(t("layouts.notifications.create_new_listing"),new_listing_path)
+        ).html_safe
+        redirect_to @listing, status: 303 and return
+      else
+        logger.error("Errors in creating listing: #{@listing.errors.full_messages.inspect}")
+        flash[:error] = t(
+          "layouts.notifications.listing_could_not_be_saved",
+          :contact_admin_link => view_context.link_to(t("layouts.notifications.contact_admin_link_text"), new_user_feedback_path, :class => "flash-error-link")
+        ).html_safe
+        redirect_to new_listing_path and return
       end
-
-      flash[:notice] = t(
-        "layouts.notifications.listing_created_successfully",
-        :new_listing_link => view_context.link_to(t("layouts.notifications.create_new_listing"),new_listing_path)
-        ).html_safe
-      redirect_to @listing, status: 303 and return
-    else
-      Rails.logger.error "Errors in creating listing: #{@listing.errors.full_messages.inspect}"
-      flash[:error] = t(
-        "layouts.notifications.listing_could_not_be_saved",
-        :contact_admin_link => view_context.link_to(t("layouts.notifications.contact_admin_link_text"), new_user_feedback_path, :class => "flash-error-link")
-        ).html_safe
-      redirect_to new_listing_path and return
     end
   end
 
@@ -269,14 +292,36 @@ class ListingsController < ApplicationController
     @custom_field_questions = @listing.category.custom_fields.find_all_by_community_id(@current_community.id)
     @numeric_field_ids = numeric_field_ids(@custom_field_questions)
 
-    shape = get_shape(@listing.listing_shape_id)
-    process = get_transaction_process(community_id: @current_community.id, transaction_process_id: shape[:transaction_process_id])
-    unit_options = ListingViewUtils.unit_options(shape[:units], unit_from_listing(@listing))
+    shape = select_shape(get_shapes, @listing.listing_shape_id)
 
-    render locals: commission(@current_community, process).merge(
-             shape: shape,
-             unit_options: unit_options
-           )
+    if shape
+      @listing.listing_shape_id = shape[:id]
+    end
+
+    category_tree = CategoryViewUtils.category_tree(
+      categories: ListingService::API::Api.categories.get_all(community_id: @current_community.id)[:data],
+      shapes: get_shapes,
+      locale: I18n.locale,
+      all_locales: @current_community.locales
+    )
+
+    category_id, subcategory_id =
+      if @listing.category.parent_id
+        [@listing.category.parent_id, @listing.category.id]
+      else
+        [@listing.category.id, nil]
+      end
+
+    render locals: {
+             category_tree: category_tree,
+             categories: @current_community.top_level_categories,
+             subcategories: @current_community.subcategories,
+             shapes: get_shapes,
+             category_id: category_id,
+             subcategory_id: subcategory_id,
+             shape_id: @listing.listing_shape_id,
+             form_content: form_locals(shape)
+           }
   end
 
   def update
@@ -287,23 +332,31 @@ class ListingsController < ApplicationController
       end
     end
 
-    params[:listing] = normalize_price_param(params[:listing])
+    shape = get_shape(params[:listing][:listing_shape_id])
 
-    shape = get_shape(@listing.listing_shape_id)
-    m_unit = select_unit(params, shape)
+    listing_params = ListingFormViewUtils.filter(params[:listing], shape)
+    listing_unit = Maybe(params)[:listing][:unit].map { |u| ListingViewUtils::Unit.deserialize(u) }.or_else(nil)
+    listing_params = ListingFormViewUtils.filter_additional_shipping(listing_params, listing_unit)
+    validation_result = ListingFormViewUtils.validate(listing_params, shape, listing_unit)
 
-    if unit_required?(shape) && m_unit.is_none?
-      flash[:error] = "Given unit doesn't belong to listing shape" # no need to translate, rare case
-      redirect_to new_listing_path and return
+    unless validation_result.success
+      flash[:error] = t("listings.error.something_went_wrong", error_code: validation_result.data.join(', '))
+      return redirect_to edit_listing_path
     end
 
-    update_successful = @listing.update_fields(
-      create_listing_params(params[:listing]).merge(
-      listing_shape_id: shape[:id],
+    listing_params = normalize_price_params(listing_params)
+    m_unit = select_unit(listing_unit, shape)
+
+    open_params = @listing.closed? ? {open: true} : {}
+
+    listing_params = create_listing_params(listing_params).merge(
       transaction_process_id: shape[:transaction_process_id],
       shape_name_tr_key: shape[:name_tr_key],
-      action_button_tr_key: shape[:action_button_tr_key]
-    ).merge(unit_to_listing_opts(m_unit)).except(:unit))
+      action_button_tr_key: shape[:action_button_tr_key],
+      last_modified: DateTime.now
+    ).merge(open_params).merge(unit_to_listing_opts(m_unit)).except(:unit)
+
+    update_successful = @listing.update_fields(listing_params)
 
     upsert_field_values!(@listing, params[:custom_fields])
 
@@ -313,7 +366,7 @@ class ListingsController < ApplicationController
       Delayed::Job.enqueue(ListingUpdatedJob.new(@listing.id, @current_community.id))
       redirect_to @listing
     else
-      Rails.logger.error "Errors in editing listing: #{@listing.errors.full_messages.inspect}"
+      logger.error("Errors in editing listing: #{@listing.errors.full_messages.inspect}")
       flash[:error] = t("layouts.notifications.listing_could_not_be_saved", :contact_admin_link => view_context.link_to(t("layouts.notifications.contact_admin_link_text"), new_user_feedback_path, :class => "flash-error-link")).html_safe
       redirect_to edit_listing_path(@listing)
     end
@@ -323,6 +376,7 @@ class ListingsController < ApplicationController
     process = get_transaction_process(community_id: @current_community.id, transaction_process_id: @listing.transaction_process_id)
 
     payment_gateway = MarketplaceService::Community::Query.payment_type(@current_community.id)
+    community_country_code = LocalizationUtils.valid_country_code(@current_community.country)
 
     @listing.update_attribute(:open, false)
     respond_to do |format|
@@ -330,7 +384,7 @@ class ListingsController < ApplicationController
         redirect_to @listing
       }
       format.js {
-        render :layout => false, locals: {payment_gateway: payment_gateway, process: process}
+        render :layout => false, locals: {payment_gateway: payment_gateway, process: process, country_code: community_country_code }
       }
     end
   end
@@ -343,7 +397,7 @@ class ListingsController < ApplicationController
       redirect_to homepage_index_path
     else
       flash[:warning] = "An error occured while trying to move the listing to the top of the homepage"
-      Rails.logger.error "An error occured while trying to move the listing (id=#{Maybe(@listing).id.or_else('No id available')}) to the top of the homepage"
+      logger.error("An error occured while trying to move the listing (id=#{Maybe(@listing).id.or_else('No id available')}) to the top of the homepage")
       redirect_to @listing
     end
   end
@@ -355,7 +409,7 @@ class ListingsController < ApplicationController
     if @listing.update_attribute(:updates_email_at, Time.now)
       render :nothing => true, :status => 200
     else
-      Rails.logger.error "An error occured while trying to move the listing (id=#{Maybe(@listing).id.or_else('No id available')}) to the top of the homepage"
+      logger.error("An error occured while trying to move the listing (id=#{Maybe(@listing).id.or_else('No id available')}) to the top of the homepage")
       render :nothing => true, :status => 500
     end
   end
@@ -381,27 +435,77 @@ class ListingsController < ApplicationController
 
   private
 
-  def select_unit(params, shape)
+  def select_shape(shapes, id)
+    if shapes.size == 1
+      shapes.first
+    else
+      shapes.find { |shape| shape[:id] == id }
+    end
+  end
+
+  def form_locals(shape)
+    if shape
+      process = get_transaction_process(community_id: @current_community.id, transaction_process_id: shape[:transaction_process_id])
+      unit_options = ListingViewUtils.unit_options(shape[:units], unit_from_listing(@listing))
+
+      shipping_price_additional =
+        if @listing.shipping_price_additional
+          @listing.shipping_price_additional.to_s
+        elsif @listing.shipping_price
+          @listing.shipping_price.to_s
+        else
+          0
+        end
+
+      community_country_code = LocalizationUtils.valid_country_code(@current_community.country)
+
+      commission(@current_community, process).merge({
+        shape: shape,
+        unit_options: unit_options,
+        shipping_price: Maybe(@listing).shipping_price.or_else(0).to_s,
+        shipping_enabled: @listing.require_shipping_address?,
+        pickup_enabled: @listing.pickup_enabled?,
+        shipping_price_additional: shipping_price_additional,
+        always_show_additional_shipping_price: shape[:units].length == 1 && shape[:units].first[:kind] == :quantity,
+        paypal_fees_url: PaypalHelper.fee_link(community_country_code)
+      })
+    else
+      nil
+    end
+  end
+
+  def form_content
+    @listing.category = @current_community.categories.find(params[:subcategory].blank? ? params[:category] : params[:subcategory])
+    @custom_field_questions = @listing.category.custom_fields
+    @numeric_field_ids = numeric_field_ids(@custom_field_questions)
+
+    shape = get_shape(Maybe(params)[:listing_shape].to_i.or_else(nil))
+    process = get_transaction_process(community_id: @current_community.id, transaction_process_id: shape[:transaction_process_id])
+
+    # PaymentRegistrationGuard needs this to be set before posting
+    @listing.transaction_process_id = shape[:transaction_process_id]
+    @listing.listing_shape_id = shape[:id]
+
+    payment_type = MarketplaceService::Community::Query.payment_type(@current_community.id)
+    allow_posting, error_msg = payment_setup_status(
+                     community: @current_community,
+                     user: @current_user,
+                     listing: @listing,
+                     payment_type: payment_type,
+                     process: process)
+
+    if allow_posting
+      render :partial => "listings/form/form_content", locals: form_locals(shape).merge(
+               run_js_immediately: true
+             )
+    else
+      render :partial => "listings/payout_registration_before_posting", locals: { error_msg: error_msg }
+    end
+  end
+
+  def select_unit(listing_unit, shape)
     m_unit = Maybe(shape)[:units].map { |units|
-      shape[:units].length == 1 ? shape[:units].first : parse_unit(params)
-    }.select { |unit|
-      unit_belongs_to_shape?(unit, shape)
-    }
-  end
-
-  def parse_unit(params)
-    m_unit = Maybe(params)[:listing][:unit].map { |unit_param|
-      ListingViewUtils.decode_unit(unit_param)
-    }.or_else(nil)
-  end
-
-  def unit_required?(shape)
-    !shape[:units].empty?
-  end
-
-  def unit_belongs_to_shape?(unit, shape)
-    shape[:units].any? { |shape_unit|
-      unit == shape_unit
+      units.length == 1 ? units.first : units.find { |u| u == listing_unit }
     }
   end
 
@@ -410,16 +514,23 @@ class ListingsController < ApplicationController
       {
         unit_type: unit[:type],
         quantity_selector: unit[:quantity_selector],
-        unit_tr_key: unit[:translation_key]
+        unit_tr_key: unit[:name_tr_key],
+        unit_selector_tr_key: unit[:selector_tr_key]
       }
-    }.or_else({})
+    }.or_else({
+        unit_type: nil,
+        quantity_selector: nil,
+        unit_tr_key: nil,
+        unit_selector_tr_key: nil
+    })
   end
 
   def unit_from_listing(listing)
     HashUtils.compact({
       type: Maybe(listing.unit_type).to_sym.or_else(nil),
       quantity_selector: Maybe(listing.quantity_selector).to_sym.or_else(nil),
-      translation_key: listing.unit_tr_key
+      unit_tr_key: listing.unit_tr_key,
+      unit_selector_tr_key: listing.unit_selector_tr_key
     })
   end
 
@@ -481,18 +592,20 @@ class ListingsController < ApplicationController
 
   # Ensure that only users with appropriate visibility settings can view the listing
   def ensure_authorized_to_view
-    @listing = Listing.find(params[:id])
+    # If listing is not found (in this community) the find method
+    # will throw ActiveRecord::NotFound exception, which is handled
+    # correctly in production environment (404 page)
+    @listing = @current_community.listings.find(params[:id])
 
     raise ListingDeleted if @listing.deleted?
 
     unless @listing.visible_to?(@current_user, @current_community) || (@current_user && @current_user.has_admin_rights_in?(@current_community))
-      if @listing.public?
-        # This situation occurs when the user tries to access a listing
-        # via a different community url.
-        flash[:error] = t("layouts.notifications.this_content_is_not_available_in_this_community")
-        redirect_to root and return
-      elsif @current_user
-        flash[:error] = t("layouts.notifications.you_are_not_authorized_to_view_this_content")
+      if @current_user
+        if @listing.closed?
+          flash[:error] = t("layouts.notifications.listing_closed")
+        else
+          flash[:error] = t("layouts.notifications.you_are_not_authorized_to_view_this_content")
+        end
         redirect_to root and return
       else
         session[:return_to] = request.fullpath
@@ -597,11 +710,19 @@ class ListingsController < ApplicationController
     end.compact
   end
 
-  def normalize_price_param(listing_params)
-    if listing_params[:price] then
-      listing_params.except(:price).merge(price_cents: MoneyUtil.parse_str_to_subunits(listing_params[:price], listing_params[:currency]))
-    else
-      listing_params
+  def normalize_price_params(listing_params)
+    currency = listing_params[:currency]
+    listing_params.inject({}) do |hash, (k, v)|
+      case k
+      when "price"
+        hash.merge(:price_cents =>  MoneyUtil.parse_str_to_subunits(v, currency))
+      when "shipping_price"
+        hash.merge(:shipping_price_cents =>  MoneyUtil.parse_str_to_subunits(v, currency))
+      when "shipping_price_additional"
+        hash.merge(:shipping_price_additional_cents =>  MoneyUtil.parse_str_to_subunits(v, currency))
+      else
+        hash.merge( k.to_sym => v )
+      end
     end
   end
 
@@ -638,27 +759,9 @@ class ListingsController < ApplicationController
     end
   end
 
-  def select_new_transaction_path(listing_id:, payment_gateway:, payment_process:, booking:)
-    case [payment_process, payment_gateway, booking]
-    when matches([:none])
-      reply_to_listing_path(listing_id: listing_id)
-    when matches([:preauthorize, __, true])
-      book_path(listing_id: listing_id)
-    when matches([:preauthorize, :paypal])
-      initiate_order_path(listing_id: listing_id)
-    when matches([:preauthorize, :braintree])
-      preauthorize_payment_path(:listing_id => @listing.id.to_s)
-    when matches([:postpay])
-      post_pay_listing_path(:listing_id => @listing.id.to_s)
-    else
-      params = "listing_id: #{listing_id}, payment_gateway: #{payment_gateway}, payment_process: #{payment_process}, booking: #{booking}"
-      raise ArgumentError.new("Can not find new transaction path to #{params}")
-    end
-  end
-
-  def delivery_config(require_shipping_address, pickup_enabled, shipping_price, currency)
-    shipping = { name: :shipping, price: shipping_price, default: true }
-    pickup = { name: :pickup, price: Money.new(0, currency), default: false }
+  def delivery_config(require_shipping_address, pickup_enabled, shipping_price, shipping_price_additional, currency)
+    shipping = delivery_price_hash(:shipping, shipping_price, shipping_price_additional)
+    pickup = delivery_price_hash(:pickup, Money.new(0, currency), Money.new(0, currency))
 
     case [require_shipping_address, pickup_enabled]
     when matches([true, true])
@@ -673,10 +776,14 @@ class ListingsController < ApplicationController
   end
 
   def create_listing_params(listing_params)
-    listing_params.except(:delivery_methods).tap do |l|
-      l[:require_shipping_address] = Maybe(listing_params[:delivery_methods]).map { |d| d.include?("shipping") }.or_else(false)
-      l[:pickup_enabled] = Maybe(listing_params[:delivery_methods]).map { |d| d.include?("pickup") }.or_else(false)
-    end
+    listing_params.except(:delivery_methods).merge(
+      require_shipping_address: Maybe(listing_params[:delivery_methods]).map { |d| d.include?("shipping") }.or_else(false),
+      pickup_enabled: Maybe(listing_params[:delivery_methods]).map { |d| d.include?("pickup") }.or_else(false),
+      price_cents: listing_params[:price_cents],
+      shipping_price_cents: listing_params[:shipping_price_cents],
+      shipping_price_additional_cents: listing_params[:shipping_price_additional_cents],
+      currency: listing_params[:currency]
+    )
   end
 
   def get_transaction_process(community_id:, transaction_process_id:)
@@ -734,5 +841,14 @@ class ListingsController < ApplicationController
     else
       raise ArgumentError.new(shape_res.error_msg) unless shape_res.success
     end
+  end
+
+  def delivery_price_hash(delivery_type, price, shipping_price_additional)
+      { name: delivery_type,
+        price: price,
+        shipping_price_additional: shipping_price_additional,
+        price_info: ListingViewUtils.shipping_info(delivery_type, price, shipping_price_additional),
+        default: true
+      }
   end
 end

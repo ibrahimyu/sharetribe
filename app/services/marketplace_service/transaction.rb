@@ -65,7 +65,7 @@ module MarketplaceService
       # - max_date_at (max date, e.g. booking ending)
       def preauth_expires_at(gateway_expires_at, max_date_at=nil)
         [gateway_expires_at,
-         Maybe(max_date_at).map {|d| (d + 1.day).to_time}.or_else(nil)
+         Maybe(max_date_at).map {|d| (d + 2.day).to_time(:utc)}.or_else(nil)
         ].compact.min
       end
 
@@ -89,23 +89,6 @@ module MarketplaceService
 
         payment_gateway = transaction_model.payment_gateway.to_sym
 
-        payment_total =
-          case payment_gateway
-          when :checkout, :braintree
-            # Use Maybe, since payment may not exists yet, if postpay flow
-            Maybe(transaction_model).payment.total_sum.or_else { nil }
-          when :paypal
-            paypal_payments = PaypalService::API::Api.payments
-            payment = paypal_payments.get_payment(transaction_model.community_id, transaction_model.id)
-
-            if payment[:success]
-              payment[:data][:authorization_total]
-            else
-              nil
-            end
-          end
-
-
         Transaction[EntityUtils.model_to_hash(transaction_model).merge({
           status: transaction_model.current_state,
           last_transition_at: Maybe(transaction_model.transaction_transitions.last).created_at.or_else(nil),
@@ -117,7 +100,7 @@ module MarketplaceService
           transitions: transaction_model.transaction_transitions.map { |transition|
             Transition[EntityUtils.model_to_hash(transition)]
           },
-          payment_total: payment_total,
+          payment_total: calculate_total(transaction_model),
           booking: transaction_model.booking,
           __model: transaction_model
         })]
@@ -138,6 +121,16 @@ module MarketplaceService
         transition = Entity::Transition[EntityUtils.model_to_hash(transition_model)]
         transition[:metadata] = HashUtils.symbolize_keys(transition[:metadata]) if transition[:metadata].present?
         transition
+      end
+
+      def calculate_total(transaction_model)
+        m_transaction = Maybe(transaction_model)
+
+        unit_price       = m_transaction.unit_price.or_else(0)
+        quantity         = m_transaction.listing_quantity.or_else(1)
+        shipping_price   = m_transaction.shipping_price.or_else(0)
+
+        (unit_price * quantity) + shipping_price
       end
     end
 
@@ -213,15 +206,18 @@ module MarketplaceService
 
       def transition_to(transaction_id, new_status, metadata = nil)
         new_status = new_status.to_sym
-        transaction = TransactionModel.find(transaction_id)
-        old_status = transaction.current_state.to_sym if transaction.current_state.present?
 
-        transaction_entity = Entity.transaction(transaction)
-        payment_type = transaction.payment_gateway.to_sym
+        if Query.can_transition_to?(transaction_id, new_status)
+          transaction = TransactionModel.where(id: transaction_id, deleted: false).first
+          old_status = transaction.current_state.to_sym if transaction.current_state.present?
 
-        Events.handle_transition(transaction_entity, payment_type, old_status, new_status)
+          transaction_entity = Entity.transaction(transaction)
+          payment_type = transaction.payment_gateway.to_sym
 
-        Entity.transaction(save_transition(transaction, new_status, metadata))
+          Events.handle_transition(transaction_entity, payment_type, old_status, new_status)
+
+          Entity.transaction(save_transition(transaction, new_status, metadata))
+        end
       end
 
       def save_transition(transaction, new_status, metadata = nil)
@@ -248,25 +244,32 @@ module MarketplaceService
       module_function
 
       def transaction(transaction_id)
-        Maybe(TransactionModel.where(id: transaction_id).first)
+        Maybe(TransactionModel.where(id: transaction_id, deleted: false).first)
           .map { |m| Entity.transaction(m) }
           .or_else(nil)
       end
 
-      def transaction_with_conversation(transaction_id, person_id, community_id)
-        Maybe(TransactionModel.joins(:listing)
-          .where(id: transaction_id)
+      def transaction_with_conversation(transaction_id:, person_id: nil, community_id:)
+        rel = TransactionModel.joins(:listing)
+          .where(id: transaction_id, deleted: false)
           .where(community_id: community_id)
           .includes(:booking)
-          .where("starter_id = ? OR listings.author_id = ?", person_id, person_id)
-          .first)
-          .map { |tx_model| Entity.transaction_with_conversation(tx_model, community_id) }
+
+        with_person = Maybe(person_id)
+          .map { |person_id|
+            [rel.where("starter_id = ? OR listings.author_id = ?", person_id, person_id)] }
+          .or_else { [rel] }
+          .first
+
+        Maybe(with_person.first)
+          .map { |tx_model|
+            Entity.transaction_with_conversation(tx_model, community_id) }
           .or_else(nil)
       end
 
       def transactions_for_community_sorted_by_column(community_id, sort_column, sort_direction, limit, offset)
         transactions = TransactionModel
-          .where(:community_id => community_id)
+          .where(community_id: community_id, deleted: false)
           .includes(:listing)
           .limit(limit)
           .offset(offset)
@@ -287,13 +290,15 @@ module MarketplaceService
       end
 
       def transactions_count_for_community(community_id)
-        TransactionModel.where(:community_id => community_id).count
+        TransactionModel.where(community_id: community_id, deleted: false).count
       end
 
       def can_transition_to?(transaction_id, new_status)
-        transaction = TransactionModel.find(transaction_id)
-        state_machine = TransactionProcessStateMachine.new(transaction, transition_class: TransactionTransition)
-        state_machine.can_transition_to?(new_status)
+        transaction = TransactionModel.where(id: transaction_id, deleted: false).first
+        if transaction
+          state_machine = TransactionProcessStateMachine.new(transaction, transition_class: TransactionTransition)
+          state_machine.can_transition_to?(new_status)
+        end
       end
 
       # TODO Consider removing to inbox service, since this is more like inbox than transaction stuff.
@@ -304,7 +309,7 @@ module MarketplaceService
           # Get 'last_transition_at'
           # (this is done by joining the transitions table to itself where created_at < created_at OR sort_key < sort_key, if created_at equals)
           LEFT JOIN conversations ON transactions.conversation_id = conversations.id
-          WHERE transactions.community_id = #{community_id}
+          WHERE transactions.community_id = #{community_id} AND transactions.deleted = 0
           ORDER BY
             GREATEST(COALESCE(transactions.last_transition_at, 0),
               COALESCE(conversations.last_message_at, 0)) #{sort_direction}

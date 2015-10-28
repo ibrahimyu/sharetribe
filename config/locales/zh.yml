@@ -4,7 +4,7 @@ zh:
       edit:
         edit_listing_category: "编辑分类“%{category}”"
       index:
-        listing_categories: 信息类别
+        listing_categories: 信息分类
         create_a_new_category: +添加一个新的分类
         remove_category_confirmation: "你确定要移除分类“%{category_name}”吗？"
         saving_order: 保存分类顺序
@@ -19,8 +19,8 @@ zh:
           category_parent: 父分类
           no_parent: 无上级分类
         category_transaction_types:
-          transaction_types: 交易的类型
-          transaction_types_description: 交易类型决定了类别中信息允许存在何种交易。比如，是否只能卖，或者租以及免费赠送是否允许。
+          transaction_types: 订单的类型
+          transaction_types_description: 交易类型决定了在该类别中的发布的信息的订购流程。比如，是否只能卖，或者出租以及允许免费赠送。
         buttons:
           save: 保存
           cancel: 取消
@@ -29,13 +29,13 @@ zh:
         remove_category_name: "移除分类“%{category_name}”"
         warning_remove_effects: "警告！移除分类“%{category_name}”将会有以下影响："
         warning_listing_will_be_moved:
-          other: "这个类别中有%{count}个自定义字段。它将被移到选中的类别中。"
+          other: "这个类别中有%{count}条信息。它将被移到选中的类别中。"
         warning_custom_field_will_be_moved:
           other: "这个类别中有%{count}个自定义字段。它将被移到选中的类别中。"
         warning_subcategory_will_be_removed:
-          other: "在类别中有%{count}个子类别。它将被删除。"
+          other: "在该类别中有%{count}个子类别。它将被删除。"
         warning_with_subcategories_listing_will_be_moved:
-          other: "在这个分类和子分类中有%{count}个信息。它们将被移到选中的分类中。"
+          other: "在这个分类和子分类中有%{count}条信息。它们将被移到选中的分类中。"
         warning_with_subcategories_custom_field_will_be_moved:
           other: "在这个分类和子分类中有%{count}个自定义字段。它们将被移到选中的分类中。"
         select_new_category: 为上面将要移动的项目选择一个新的类别
@@ -47,10 +47,14 @@ zh:
         community_details: 基本信息
         community_look_and_feel: 设计
         edit_community: 基本信息
+        enabled_languages: 启用的语言
+        enabled_languages_description: 这组语言可以给用户使用。默认使用第一个。
+        default_language: 默认语言
+        language_selection_disabled: "语言的选择项无法启动，因为你正在使用下面这些非官方的语言：%{languages}。请联系Sharetribe的支持团队来修改你的语言设置。"
         community_name: 集市名称
         edit_community_name_description: 你的集市名称。它将在邮件和其他不同地方显示给用户。
         community_slogan: 集市标语
-        edit_community_slogan_description: "这将显示在集市主页给所有未登录用户。%{see_how_it_looks_like}"
+        edit_community_slogan_description: "这将显示在未登录用户的集市主页。%{see_how_it_looks_like}"
         community_description: 集市描述
         edit_community_description_description: "这将显示在未登录用户的集市主页。%{see_how_it_looks_like}"
         community_search_placeholder: 搜索提示
@@ -60,7 +64,7 @@ zh:
         update_information: 保存设置
         invite_people: 邀请新用户
         edit_signup_info: 注册信息
-        edit_signup_info_description: 这段信息文字将显示在用户的注册页面。在那儿你可以提供用户注册说明，在哪儿得到邀请的信息等。默认那里没有任何说明。
+        edit_signup_info_description: 这段信息文字将显示在用户的注册页面。在那儿你可以提供用户注册说明，比如：在哪儿得到邀请的信息等。默认那里没有任何说明。
         edit_info: 编辑信息
         see_how_it_looks_like: 预览
         verification_to_post_listings_info_content: 未验证用户的信息文本
@@ -71,7 +75,7 @@ zh:
         transaction_agreement: 交易协定
         transaction_agreement_checkbox: 需要用户在交易前接受协定
         transaction_agreement_checkbox_header: 协定标签
-        transaction_agreement_checkbox_label_description: 该文本将被显示于结帐表单的检查框边上。洪湖需要勾选该框以继续交易。标签文字类似于“通过勾选该检查框我接受协议。“
+        transaction_agreement_checkbox_label_description: 该文本将被显示于结帐表单的检查框边上。用户需要勾选该框以继续交易。标签文字类似于“通过勾选该检查框表明我接受协议。“
         transaction_agreement_text_header: 协定文本
         transaction_agreement_description: "这是用户需要接受的实际协议的内容。该协议内容会在用户点击协议标签旁边的“%{read_more}”链接时展现。"
       edit_look_and_feel:
@@ -81,14 +85,14 @@ zh:
         community_cover_photo: 封面照片
         small_community_cover_photo: 小的封面照片
         favicon: 网站图标
-        favicon_info_text: Favicon将取代默认的Sharetribe标识。它的尺寸应该是32x32像素，上传的图片将被调整为这个像素。
+        favicon_info_text: Favicon将取代默认的Sharetribe标识。它的尺寸应该是32x32像素，上传的图片将被调整为这个大小。
         community_custom_color1: 主要颜色
         community_custom_color2: 第二颜色
         logo_instructions_text_with_dimensions: "封面图片尺寸必须是%{width}x%{height}像素。它将显示给使用大屏幕的用户。"
-        logo_icon_instructions_text_with_dimensions: "当人们在Facebook分享你的站点，当他们在移动设备上查看你的站点或者当他们在移动设备的主屏幕收藏你的站点时，这个方形的标识将被显示。它的尺寸必须（至少）是%{width}x%{height}像素。"
-        cover_photo_visibility: 封面照片将在主页显示给未登录用户。
+        logo_icon_instructions_text_with_dimensions: "当人们在Facebook分享你的站点，当他们在移动设备上查看你的站点或者当他们在移动设备的主屏幕收藏你的站点时，这个方形的图标将被显示。它的尺寸必须（至少）是%{width}x%{height}像素。"
+        cover_photo_visibility: 封面照片将显示在未登录用户的首页
         cover_photo_instructions_text_with_dimensions: "照片大小将调整为%{width}x%{height}像素，超过高度的图片将从中间截取。%{see_how_it_looks_like}"
-        small_cover_photo_visibility: 小的封面照片将显示在未登录用户主页的所有页面。
+        small_cover_photo_visibility: 小的封面照片将显示在除未登录用户首页的所有页面。
         small_cover_photo_instructions_text_with_dimensions: "照片大小将调整为%{width}x%{height}像素，超过高度的图片将从中间截取。"
         main_content_width: "在选择封面照片时注意页面主要内容最多是%{main_width}像素宽。记得检查你的封面照片在较小屏幕上看上去如何（比如使用较窄的浏览器窗口）。"
         custom_color1_instructions_text: "你可以通过输入十六进制色彩值改变用户接口的主体颜色。<a href=\"http://www.colorpicker.com/?colorcode=D96E21\" target=\"_blank\">ColorPicker.com</a>可以帮助你选择颜色并且复制色彩代码。"
@@ -113,18 +117,51 @@ zh:
         welcome_email_content_description: "下面的消息将在新用户加入时被发送给每个用户。你可以定制此消息以适应你的集市。通过点击“%{send_test_message_link}”你可以发送一条预览信息到你的电子邮件地址，你可以看看它在邮件客户端中的将如何被显示。"
         edit_message: 编辑消息
         send_test_message: 发送测试消息
+      outgoing_email:
+        title: 发送邮件地址
+        info: 名称和地址是用于从你的集市发送邮件给用户。
+        read_more: 了解更多关于发邮件给用户
+        sender_address: "发送者邮件地址：%{sender_address}"
+        sender_address_default: "发送者邮件地址：没有设置（使用默认地址%{sender_address}）"
+        need_to_change: "如果你需要修改邮箱地址，请%{contact_support_link}"
+        contact_support_link_text: 联系我们的支持人员
+        set_sender_address: 设置发送者邮件地址
+        sender_name_label: 名称
+        sender_name_placeholder: 发送者名称
+        sender_email_label: 电子邮件地址
+        sender_email_placeholder: sender-email@example.com
+        this_is_how_it_will_look: 这就是它会看上去的样子：
+        send_verification_button: 发送验证邮件
+        successfully_saved: 发送者的邮件地址保存成功。验证邮件将很快被送出。
+        status: "状态：%{status}"
+        status_verified: "已验证 - 在使用"
+        status_error: 出错了。请刷新这个页面。
+        status_requested: "未验证的 - 验证邮件已于%{time_ago}发送到%{email}。%{resend_link}"
+        status_expired: "邮箱%{email}验证过期了。%{resend_link}"
+        status_resent: "验证邮件重新发送到%{email}。%{resend_link}"
+        resend_link: 重新发送
+        invalid_email_error: "邮件地址%{email}格式不正确"
+        invalid_email_domain: "邮件地址%{email}来自不被支持的邮件提供商：‘%{domain}’。%{invalid_email_domain_read_more_link}"
+        invalid_email_domain_read_more_link: 通过读知识库的文章获得更多信息
+        unknown_error: 出错了
+        only_white_label_offer: "这个功能属于Sharetribe的自由品牌功能。要想启用该功能，你应该%{upgrade_pro_plan_link}"
+        upgrade_pro_plan_link: 升级到我们的专业版或者更高
+        verification_sent_from: "验证邮件已经从%{verification_sender_name}发出"
+        follow_the_instructions: 请跟随邮件中的说明来验证你的邮箱地址。
       getting_started:
         getting_started: 获取入门指南
-        welcome_to_your_marketplace: "欢迎来到你的市场，%{name}！"
-        intro: "这是配置和管理你的市场站点的快速指南。你可以查看实时站点%{live_site_link}。"
+        welcome_to_your_marketplace: "欢迎来到你的集市，%{name}！"
+        intro: "这是配置和管理你的集市站点的快速指南。你可以查看实时站点%{live_site_link}。"
         live_site_link_text: 这里
         look_and_feel: "在你将你的站点公开发布前，你也许想再配置一些东西。比如，你可能想去%{logo_link}修改封面照片和颜色以配合你的品牌的外观和感受。"
         logo_link_text: 添加你的标志
-        custom_domain: "你也许还想增加一个定制的网页地址（比如www.yourmarketplace.com）。设置它需要我们做一些手动工作，同时我们也需要为域名购买SSL证书以保证你的站点安全。由于这些原因，定制的郁闷在免费试用期不可用，所以如果需要该域名，你要订阅我们的Pro计划或更高级别的计划。如果你想要定制域名，请%{contact_support_link}。"
-        categories_and_custom_fields: "接下来需要决定用户可以发布什么样的内容到你的站点。你可以%{categories_link}，通过%{custom_fields_link}定制实际列表表单包含的内容，并在用户浏览列表时决定%{filters_link}。"
+        custom_domain: "你也许还想增加一个定制的网页地址（比如www.yourmarketplace.com）。设置它需要我们做一些手动工作，同时我们也需要为域名购买SSL证书以保证你的站点安全。由于这些原因，定制域名在免费试用期不可用，所以如果需要该域名，你要订阅我们的Pro计划或更高级别的计划。如果你想要定制域名，请%{contact_support_link}。"
+        categories_and_custom_fields: "接下来需要决定用户可以发布什么样的内容到你的站点。你可以%{categories_link}，通过%{custom_fields_link}定制实际列表表单包含的内容，并在用户浏览信息时决定%{filters_link}。"
         categories_link_text: 新增分类和子分类
         custom_fields_link_text: 配置表单字段
         filters_link_text: 何种类型的过滤器
+        order_types: "你可以在你的集市中定义订单的处理流程。你的用户可以出售，出租或者免费提供？用户可以按小时，天或者周出租？这些都可以在%{order_types_link}里面配置。"
+        order_types_link_text: 交易类型视图
         payments: "如果你希望人们通过你的集市支付他们购买的东西，从而为每笔交易收取费用，你应该%{payments_link}。"
         payments_link_text: 配置支付方式
         info_texts: "不要忘了通过定制信息页面和其他文本来告诉你的用户关于你的集市。有一些不错的地方可以参考：你的%{about_page_link}，你的%{terms_of_use_link}（你应该增加你自己的条款，或者编辑当前模板，或者创建一个全新文档），你的%{privacy_policy_link}，以及发送给每个新用户的%{welcome_email_link}。这儿还有一些你可以配置的%{instruction_texts_link}。"
@@ -133,18 +170,39 @@ zh:
         privacy_policy_link_text: 隐私策略
         welcome_email_link_text: 欢迎电子邮件
         instruction_texts_link_text: 其他的说明文本
-        social_media: "使用社交媒体是建立社区的好办法。你可以通过%{facebook_link}让人们更容易的登录你的市集，通过%{twitter_link}使得人们对你的集市产品发布推特时获得病毒式的可见性。"
+        social_media: "使用社交媒体是建立社区的好办法。你可以通过%{facebook_link}让人们更容易的登录你的市集，通过%{twitter_link}使得人们对你的集市产品发Twitter时获得病毒式的可见性。"
         facebook_link_text: 连接你的自定义Facebook应用
         twitter_link_text: 添加你的Twitter帐号
-        analytics: "访问%{analytics_link}是个好主意。方便你查看你的市场中发生的事情，比如你有多少访客等。"
+        analytics: "访问%{analytics_link}是个好主意。方便你查看你的集市中发生的事情，比如你有多少访客等。"
         analytics_link_text: "连接一个Google Analytics帐号"
-        settings: "有许多其他的设置你可以使用。比如你可以要求每个人加入你的集市钱必须从其他用户处获得邀请并且设置你的集市为私有，从而只有登录的用户才能看见内容。%{settings_link}"
-        settings_link_text: 在这里查看你的市场设置
-        final_words: "就是这些了！如果一切都准备好了，你可以开始在你的集市发送邀请%{invite_link}。你可以看到所有加入你的%{view_users_link}的用户，以及所有他们完成的交易%{view_transactions_link}。你还可以很容易的管理列表：去列表页面你将看到管理员链接以用于编辑和关闭。如果需要帮助，你可以点击%{contact_support_link} ——我们在这儿随时准备为你服务。"
+        settings: "有许多其他的设置你可以使用。比如你可以要求每个人加入你的集市前必须从其他用户处获得邀请并且设置你的集市为私有，从而只有登录的用户才能看见内容。%{settings_link}"
+        settings_link_text: 在这里查看你的集市设置
+        final_words: "就是这些了！如果一切都准备好了，你可以开始在你的集市发送邀请%{invite_link}。你可以看到所有加入你的%{view_users_link}的用户，以及所有他们完成的交易%{view_transactions_link}。你还可以很容易的管理发布的信息：去信息展示页面你将看到管理员链接以用于编辑和关闭。如果需要帮助，你可以点击%{contact_support_link} ——我们在这儿随时准备为你服务。"
         invite_link_text: 邀请用户
         view_users_link_text: 这里
         view_transactions_link_text: 这里
         contact_support_link_text: 联系我们的支持人员
+      available_languages:
+        en: 英文
+        en-AU: 英文(澳大利亚)
+        en-GB: 英文(英国)
+        fr: 法文
+        fr-CA: 法文(加拿大)
+        es: 西班牙文(智利)
+        es-ES: 西班牙文
+        pt-BR: 葡萄牙文（巴西）
+        nb: 挪威博克马尔文
+        sv: 瑞典语
+        da-DK: 丹麦语
+        fi: 芬兰文
+        ru: 俄语
+        de: 德语
+        el: 希腊文
+        nl: 荷兰文
+        tr-TR: 土耳其文
+        zh: 中文
+        ja: 日文
+        it: 意大利文
       settings:
         settings: 设置
         general: 常规
@@ -154,23 +212,32 @@ zh:
         users_can_invite_new_users: 所有用户都可以邀请新用户来到这个集市
         private: 这个集市是私有的（只有注册用户可以看到内容）
         require_verification_to_post_listings: 只有经管理员验证的用户可以发布新的信息
-        listing_preferences: 列出偏好
+        listing_preferences: 信息展示页面偏好设置
         transaction_preferences: 交易偏好
-        show_listing_publishing_date: 在列表页面的显示信息的发布日期
-        show_category_in_listing_list: 在列表视图中显示信息分类
-        hide_expiration_date: 不要求发布的信息包含过期日期
+        show_listing_publishing_date: 在信息展示页面的显示信息的发布日期
+        show_category_in_listing_list: 在信息列表视图中显示信息类型
+        hide_expiration_date: 不要求发布的信息设置过期日期
         listing_comments_in_use: 允许用户对信息发表评论（所有其他用户可见）
         email_preferences: 邮件发送偏好设置
         automatic_newsletters: 自动发送每日/每周新闻邮件给所有用户（除非用户选择不接收）
         email_admins_about_new_members: 当新用户注册时给管理员发送一封电子邮件
         google_analytics_key: "Google Analytics跟踪ID"
-        twitter_handle: 推特句柄（使用在信息页面的推特按钮）
+        twitter_handle: Twitter用户名（使用在信息页面的tweet按钮）
         update_settings: 保存设置
         automatically_confirmed: "交易在付款%{days_dropdown}天后将被自动标记为已完成。如果使用第三方支付系统，现在钱将被打入第三方系统。"
         automatically_confirmed_no_escrow: "在付款后%{days_dropdown}天内交易将被自动标记为完成。"
         automatic_newsletter_frequency: "自动发送新闻邮件：%{frequency_dropdown}"
         newsletter_daily: 每日
         newsletter_weekly: 每周
+        delete_marketplace_title: 删除集市
+        type_marketplace_domain: "在下面的输入框中填入你的集市的域名(%{domain})"
+        type_marketplace_domain_placeholder: 在这里输入你的集市域名
+        once_you_delete: 请小心。一旦删除了集市，你将再也无法访问它。
+        are_you_sure: 你确定吗？
+        i_understand_button: 我明白点击这个按钮将删除我的集市
+        last_community_updates: 请注意在删除后，你和你的集市的用户可能仍然会收到最后的集市更新邮件。
+        you_will_be_redirected_to: "当你删除了你的集市，你会被重定向到%{destination}。你将再也无法访问你的集市。"
+        delete_this_marketplace: 删除这个集市。
       manage_members:
         manage_members: 管理用户
         email: 电子邮件
@@ -181,31 +248,32 @@ zh:
         ban_user: 禁止用户
         saving_user_status: 正在保存……
         save_user_status_successful: 已保存
+        export_all_as_csv: 导出为CSV文件
         save_user_status_error: 保存失败。请刷新页面后重试。
         ban_user_confirmation: 这将会把用户从集市中删除并阻止他们使用这个帐号再次访问该站点。你确认要继续吗？
         ban_me_error: 你不能禁止自己。
       social_media:
         social_media: 社交媒体
-        twitter_handle: 推特句柄
-        twitter_handle_info_text: 当人们使用信息页面上的推特按钮时，你的集市推特帐号的用户名（如果你有的话）将被提及。
-        twitter_handle_info_text_with_instructions: "当人们使用信息页面上的推特按钮时，你的集市推特帐号的用户名（如果你有的话）将被提及。%{instructions_link}"
-        twitter_instructions_link_text: 读取更多
+        twitter_handle: Twitter用户名
+        twitter_handle_info_text: 当人们使用信息页面上的tweet按钮时，你的集市Twitter帐号的用户名（如果你有的话）将被提及。
+        twitter_handle_info_text_with_instructions: "当人们使用信息页面上的Tweet按钮时，你的集市Twitter帐号的用户名（如果你有的话）将被提及。%{instructions_link}"
+        twitter_instructions_link_text: 了解更多
         twitter_handle_placeholder: 用户名
-        invalid_twitter_handle: 推特句柄最多不能超过15个字母数字字符（字母A-Z和数字0-9）。
+        invalid_twitter_handle: Twitter用户名最多不能超过15个字母和数字（字母A-Z和数字0-9）。
         facebook_connect: Facebook
-        facebook_connect_info_text: "为了启用Facebook登录，在<a href='https://developers.facebook.com/'>Facebook开发者仪表盘</a>中为你的集市创建一个应用。在这里添加应用生成的ID和密钥。"
-        facebook_connect_info_text_with_instructions: "为了启用Facebook登录，在<a href='https://developers.facebook.com/'>Facebook开发者仪表盘</a>中为你的集市创建一个应用。在这里添加应用生成的ID和密钥。%{instructions_link}"
+        facebook_connect_info_text: "为了启用Facebook登录，在<a href='https://developers.facebook.com/'>Facebook开发者Dashboard</a>中为你的集市创建一个应用。在这里添加应用生成的ID和密钥。"
+        facebook_connect_info_text_with_instructions: "为了启用Facebook登录，在<a href='https://developers.facebook.com/'>Facebook开发者Dashboard</a>中为你的集市创建一个应用。在这里添加应用生成的ID和密钥。%{instructions_link}"
         facebook_instructions_link_text: "关于如何配置Facebook Connect请参考说明。"
         facebook_connect_id: Facebook客户号
         invalid_facebook_connect_id: 客户号仅能包含数字。
-        facebook_connect_secret: Facebook客户秘密
+        facebook_connect_secret: Facebook客户端密钥
         invalid_facebook_connect_secret: 客户端密钥仅应包含数字和字母a到f。
         save: 保存设置
       analytics:
         analytics: 分析
-        google_analytics_key: "Google Analytics追踪号"
+        google_analytics_key: "Google Analytics Tracking ID"
         google_analytics_key_info_text: "追踪你的Google Analytics帐号。"
-        google_analytics_key_info_text_with_instructions: "追踪你的Google Analytics帐号。%{instructions_link}。"
+        google_analytics_key_info_text_with_instructions: "你Google Analytics帐号的Tracking ID。%{instructions_link}。"
         google_analytics_instructions_link_text: "了解更多关于Google Analytics"
         save: 保存设置
       menu_links:
@@ -219,6 +287,7 @@ zh:
         url: 网址
         empty: 你没有更多的菜单链接
       transactions:
+        export_all_as_csv: 导出为CSV文件
         transactions: 查看交易记录
         headers:
           conversation: 会话
@@ -240,7 +309,7 @@ zh:
           canceled: 已取消
           initiated: 等待PayPal付款
           pending_ext: 等待PayPal付款
-        not_available: ~
+        not_available: 无
       braintree_payment_gateway:
         braintree_payment_gateway: Braintree支付API密钥
         environment: 环境
@@ -293,7 +362,7 @@ zh:
         text: 文本
         number: 数字
         dropdown: 下拉
-        checkbox_group: 检查框组
+        checkbox_group: 复选框
         date: 日期
     emails:
       new:
@@ -313,10 +382,92 @@ zh:
       configure: 配置
       emails_title: 电邮
       support: 支持
+      subscription: ~
+    listing_shapes:
+      index:
+        listing_shapes: 交易类型
+        description: 交易类型决定了网站上订单如何处理。通过交易类型可以决定用户可以出租或者出售，或者只是让用户发布一些公告然后通过免费的消息进行沟通。
+        read_more_about_order_types: 了解更多关于交易类型
+        add_new_shape: "添加新的交易类型： "
+        select_template: 选择样板...
+        all_categories: 全部分类
+        no_categories: 无分类
+        category_count: "%{category_count}分类"
+        header:
+          listing_shape_name: 交易类型名称
+          listing_shape_categories: 使用该交易类型的分类
+        order:
+          saving_order: 保存交易类型
+          save_order_successful: 成功保存交易类型
+          save_order_error: ""
+      templates:
+        selling_products: 出售产品
+        renting_products: 出租产品
+        offering_services: 提供服务
+        giving_things_away: 免费赠送
+        requesting: 请求
+        announcement: 发布公告
+        custom: 自定义
+      new:
+        create_listing_shape: 创建交易类型
+        create: 新建
+        cancel: 取消
+        create_success: "新的交易类型‘%{shape}’已创建"
+        create_failure: "不能创建新的交易类型。错误信息：%{error_msg}"
+      edit:
+        edit_listing_shape: "修改交易类型‘%{shape}’"
+        update: 保存
+        cancel: 取消
+        update_success: "交易类型‘%{shape}’的修改已保存"
+        update_failure: "不能保存修改。错误：%{error_msg}"
+        delete: 删除交易类型
+        confirm_delete_order_type:
+          other: "有%{count}个发布的信息跟这个交易类型有关联。如果你删除这个交易类型，这些发布的信息会被关闭。你确定要删除这个交易类型吗？"
+        can_not_delete_last: 因为这是唯一的一个交易类型，所以你不能删除这个交易类型。
+        can_not_delete_only_one_in_categories: "你不能删除这个交易类型，因为该交易类型是下面这些分类正在使用的唯一的交易类型：%{categories}"
+      listing_shape_name: 名称
+      listing_shape_name_placeholder: 例如：出售
+      action_button_label: 结账按钮标签
+      action_button_placeholder: 例如：购买
+      open_listings_warning:
+        other: "有%{count}个公开的已发布的信息与这个交易类型有关联。如果你修改下面的任何设置，那些已发布的信息会保留旧的设置。可以手工修改这些发布的信息到新的设置。如果你不希望这么保留旧的设置的发布的信息在网站上可见，你可以点击下面的按钮关闭它们。"
+      close_listings_action:
+        other: "关闭%{count}个发布的信息"
+      confirm_close_listings_action:
+        other: "你确定要关闭%{count}个发布的信息吗？"
+      successfully_closed: 成功关闭发布的信息
+      successfully_deleted: "成功删除交易类型%{order_type}"
+      pricing_and_checkout_title: 价格和结算
+      online_payments_label: 允许卖家接受在线支付
+      shipping_label: 允许卖家定义运费
+      price_label: 允许卖家给发布的信息添加价格
+      units_title: 价格单位
+      units_desc: 如果你打开了价格单位，宝贝的价格就会显示成：“每单位多少钱”。例如：“每小时$39”
+      units:
+        piece: 每个
+        hour: 每小时
+        day: 每天
+        night: 每晚
+        week: 每周
+        month: 每月
+      can_not_find: "找不到id是%{id}交易类型"
+      add_custom_unit: +添加一个自定义的价格单位
+      delete_custom_unit: 删除
+      custom_unit_form:
+        title: 新建价格单位
+        label_heading: 标签
+        selector_label_heading: 选择器标签
+        label_placeholder: 例如：“kg”，“30分钟”，“人”，“课”
+        selector_placeholder: 例如：“人数”，“公斤数”
+        per: 每
+        unit_type:
+          heading: 单位类型
+          quantity_label: "数量(每件，每公斤，每个人，每2小时..,)"
+          time_label: 时间(每30分钟，每2周，每年...)
     paypal_accounts:
       marketplace_paypal_integration: 支付偏好
       preferences_updated: 支付偏好设置更新
-      integration_info_text: Sharetribe的支付系统由PayPal提供技术支持。如果你想使用你的用户名在你的集市上付款，你必须连接你的PayPal帐号及决定最小交易规模以及对每个交易收取的费用。
+      integration_info_text: Sharetribe的支付系统由PayPal提供支持。如果你想使用你的用户名在你的集市上付款，你必须连接你的PayPal帐号及决定最小交易规模以及对每个交易收取的费用。
       read_more_about_paypal: 了解更多关于Sharetribe的支付系统
       paypal_account_email: "1. 连接你的PayPal帐号"
       paypal_account_email_completed: 已完成！
@@ -327,22 +478,22 @@ zh:
       minimum_transaction_fee_label: 最低交易费用：
       save_settings: 保存设置
       note_about_transaction_fee: "注意：交易费用包括PayPal的费用都依赖于你的货币种类和卖家的销售量。因此，费用至少是%{min_paypal_commission}。当费用从卖家收取时，PayPal会先取费用，然后剩余的费用将被汇入你的PayPal帐号。"
-      minimum_listing_price_below_tx_fee: "至少必须等于最低交易费用%{minimum_transaction_fee}。"
-      minimum_listing_price_below_min: "必须高于最低佣金%{minimum_commission}。"
+      minimum_listing_price_below_tx_fee: "最少的交易额至少等于最低交易费用%{minimum_transaction_fee}。"
+      minimum_listing_price_below_min: "最少的交易额必须高于最低佣金%{minimum_commission}。"
     transaction_types:
       sell: 出售
-      rent: 已出租
+      rent: 出租
       give: 赠送
       lend: 出借
       swap: 交换
-      service: 宝贝
+      service: 提供
       request: 请求
-      inquiry: 查询
+      inquiry: 公告
       share_for_free: 免费共享
       default_action_button_labels:
         sell: 购买
         rent: 租赁
-        request: 宝贝
+        request: 请求
         offer: 请求
         inquiry: 联系人
   common:
@@ -363,7 +514,7 @@ zh:
       lend: 出借
       receive: 免费
       rent: 出租
-      rent_out: 已出租
+      rent_out: 出租
       sell: 出售中
       offer_to_swap: 交换
       request_to_swap: 交换
@@ -392,11 +543,13 @@ zh:
     username: 用户名
     username_or_email: Email或用户名
     what_is_this: 这是什么？
-    removed_user: 用户已删除
+    removed_user: 已删除的用户
     paypal_fee_info:
       title: PayPal的支付处理费
-      body_text: ~
-      body_with_shipping_text: ~
+      body_text: "PayPal对每笔付款收取一笔处理费。该费用介于总销售费用的2%到5%之间，取决于你的月销售量和买家所在国家。总的说来，国内的购买比国际的购买的费用低，每月销售额高则可以获得费用折扣。你可以通过登录你的PayPal帐号访问%{link_to_paypal}来查看详细费用。在每次购买之后你将得到一据显示具体费用的收据。"
+      body_with_shipping_text: |-
+          PayPal对每笔付款收取一笔处理费。该费用介于总销售费用（包括运费）的2%到5%之间，取决于你的月销售量和买家所在国家。总的说来，国内的购买比国际的购买的费用低，每月销售额高则可以获得费用折扣。
+          你可以通过登录你的PayPal帐号访问%{link_to_paypal}来查看详细费用。在每次购买之后你将得到一据显示具体费用的收据。
       link_to_paypal_text: 这里
   conversations:
     accept:
@@ -417,7 +570,7 @@ zh:
       minimum_price_error_message: "价格不能低于%{amount}。"
       accept: 接受
       decline: 拒绝
-      quantity_label: ~
+      quantity_label: "数量:"
       sum_label: 小计
       service_fee_label: "%{service_name}费："
       you_will_get_label: 你将得到：
@@ -427,7 +580,7 @@ zh:
       shipping_price_label: "运费:"
     confirm:
       confirm_description: 如果你的请求被完成，你应该确认完成。然后你可以给其他人反馈。
-      cancel_description: 如果你的请求没有完成，你可以标记它为“未发生”。你仍然可以评论给其他交易方描述发生的事情。
+      cancel_description: 如果你的请求没有完成，你可以标记它为“有争议的”。你仍然可以评论给其他交易方描述发生的事情。
       cancel_payed_description: 如果你的请求被接受但是你有其他的想法，你仍然可以在付款前取消请求。
       canceling_payed_transaction: 取消交易
       confirm: 标记为完成
@@ -456,7 +609,7 @@ zh:
       canceled_offer: 宝贝已取消。
       message_from: "来自%{person}的消息"
       about_listing: "关于%{listing_title}"
-      free_message: 免费消息
+      free_message: 站内短信
     message:
       accepted_request: 已接受请求
       accepted_offer: 已接受的宝贝
@@ -467,6 +620,7 @@ zh:
       canceled_request: 已取消请求
       canceled_offer: 已取消宝贝
       paid: "支付了%{sum}"
+      payment_preauthorized: "授权支付:%{sum}"
     new:
       offer_message_form_title: "为%{person}提供%{listing}"
       request_message_form_title: "从%{person}请求%{listing}"
@@ -549,10 +703,10 @@ zh:
       request_confirmed: 已完成
       request_canceled: 已取消
       request_paid: 付款成功
-      request_preauthorized: 付款成功
+      request_preauthorized: 付款已授权
       skip_feedback: 跳过反馈
       waiting_for_listing_author_to_accept_offer: "正在等待%{listing_author_name}接受宝贝"
-      waiting_for_listing_author_to_accept_request: "正在等待%{listing_author_name}接受请求"
+      waiting_for_listing_author_to_accept_request: "正在等待%{listing_author_name}接受请求，当%{listing_author_name}接受后，你将会被扣款。"
       waiting_for_you_to_accept_request: 正在等待你接受请求
       waiting_confirmation_from_requester: "正在等待%{requester_name}标记请求为已完成"
       waiting_confirmation_from_you: 正在等待你标记请求完成
@@ -588,8 +742,8 @@ zh:
       address_locality: 城市
       address_region: 州
       date_of_birth: 生日
-      ssn: 社会保障号
-      routing_number: 银行代号
+      ssn: SSN
+      routing_number: 路由号码
       account_number: 账户号码
       save: 保存
     show:
@@ -603,8 +757,8 @@ zh:
       address_locality: 城市
       address_region: 州
       date_of_birth: 出生日期
-      ssn: 社会保障号
-      routing_number: 银行代号
+      ssn: SSN
+      routing_number: 路由号码
       account_number: 账号
   braintree_payments:
     edit:
@@ -616,13 +770,18 @@ zh:
       credit_card_expiration_date: 信用卡有效期
       confirm_payment: 确认支付
       exp: 过期：
+  feedback:
+    feedback_subject: "来自%{service_name}的新反馈"
+    feedback_body: "%{author_name_and_email}已经从%{service_name}发送了下面的反馈。"
+    unlogged_user: 未登录的用户
+    anonymous_user: 匿名用户
   preauthorize_payments:
     edit:
       confirm_payment: 确认支付
   community_memberships:
     access_denied:
       access_denied: 访问被拒绝
-      you_are_banned_in_this_community: "管理员阻止你访问%{service_name}。如果你想联系管理员，可以发送信息%{link_to_contact_page}。"
+      you_are_banned_in_this_community: "管理员阻止你访问%{service_name}。如果你想联系管理员，可以点击 %{link_to_contact_page}。"
       contact_page_link: 用户反馈
     new:
       welcome_fb_user: "%{name}，欢迎使用%{service_name}！"
@@ -646,7 +805,7 @@ zh:
       show_thread: 显示对话
     braintree_account_approved:
       account_ready: 你已经可以接收付款了
-      message: "你的付款信息以及被确认，你现在已经可以接受%{service_name}的付款了。"
+      message: "你的付款信息已经被确认，你现在已经可以在%{service_name}接收付款了。"
     confirm_reminder:
       you_have_not_yet_confirmed_or_canceled_request: "你还没有确认或者取消请求%{request_link}。如果请求已经完成，你应该确认。之后你可以评论给%{other_party_given_name}。"
       you_have_not_yet_confirmed_or_canceled_request_escrow_automatic_confirmation: "你还没有确认或者取消请求%{request_link}。只有在以下情况发生时我们才会把钱转给%{other_party_given_name}：a) 你标记请求为完成 b) 从你付款起的%{days_to_automatic_confirmation}天后。在标记请求完成后，你可以给%{other_party_given_name}评论。"
@@ -663,8 +822,8 @@ zh:
       cancel_it_link_text: 取消
     payment_settings_reminder:
       remember_to_add_payment_details: 记得添加你的付款明细以接收付款。
-      you_have_added_listing_with_payment: "你添加了一个需要付款的信息%{listing_link}。然而，你还没有添加付款详情。为了接受付款你必须添加你的付款信息。"
-      please_go_to_payment_settings: "请点击%{payment_settings_link}并填入付款信息。"
+      you_have_added_listing_with_payment: "你添加了一个需要付款的信息%{listing_link}。然而，你还没有添加你的付款详情。为了接受付款你必须添加你的付款信息。"
+      please_go_to_payment_settings: "请点击进入%{payment_settings_link}并填入付款信息。"
       payment_settings_link: 付款设置
     transaction_confirmed:
       here_is_a_message_from: "这里有一条%{other_party_given_name}发送的消息："
@@ -676,12 +835,12 @@ zh:
       give_feedback_to: "给%{other_party_given_name}反馈"
     transaction_automatically_confirmed:
       subject: 请求自动完成——记得给予评价
-      we_have_marked_request_as_confirmed: "我们已经将关于“%{request}”的请求标记为完成。自动标记完成的原因是在请求被接受后已经过了%{days_passed}天。"
+      we_have_marked_request_as_confirmed: "我们已经将关于“%{request}”的请求标记为完成。自动标记完成是因为在请求被接受后已经过了%{days_passed}天。"
     booking_transaction_automatically_confirmed:
       subject: 请求自动完成——记得给予评价
       we_have_marked_request_as_confirmed: "我们已标记请求“%{request}”完成。该请求自动完成于预订期限结束后一天。"
     automatically_confirmed_footer:
-      giving_feedback_is_good_idea: "你现在可以评价%{other_party_given_name}。给予评价这个好主意。如果一切顺利，你应该让其他人知道%{other_party_given_name}可以被信任。如果有任何问题，在评论中提到它们也是很好的。"
+      giving_feedback_is_good_idea: "你现在可以评价%{other_party_given_name}。给予评价总是一个好主意。如果一切顺利，你应该让其他人知道%{other_party_given_name}可以被信任。如果有任何问题，在评论中提到它们也是很好的。"
       give_feedback_to: "给予%{other_party_given_name}反馈"
       show_thread: 显示对话
     escrow_canceled:
@@ -692,7 +851,7 @@ zh:
     confirmation_instructions:
       confirmation_instructions_signature: "此致敬礼，<br/>%{service_name}团队"
       welcome_to_kassi: "欢迎来到%{service_name}！"
-      need_to_confirm: 你需要确认你的Email地址。
+      need_to_confirm: 请确认你的Email地址。
       confirmation_link_text: 确认我的电子邮件
       or_paste_link: 或者你可以复制以下链接到你浏览器的地址栏：
       turning_on_confirmations_in_this_community: "我们开始在%{service_name}中使用电子邮件确认。"
@@ -739,8 +898,8 @@ zh:
       you_have_a_new_message: "在%{service_name}收到一条来自%{sender_name}的新消息"
     new_payment:
       new_payment: 你收到一笔新的付款
-      price_per_unit_type: ~
-      quantity: ~
+      price_per_unit_type: "每%{unit_type}的价格"
+      quantity: "数量:"
       you_have_received_new_payment: "你已经为<b>%{listing_title}</b>支付了<b>%{payment_sum}</b>给%{payer_full_name}。这是你的收据。"
     paypal_new_payment:
       paypal_gateway_fee: PayPal的费用：
@@ -749,16 +908,16 @@ zh:
       product: 产品：
       price_payer_paid: "%{payer_full_name}支付价格："
       service_fee: "%{service_name}服务费："
-      you_will_get: 总数：
+      you_will_get: 总共：
       money_will_be_transferred: "以下两种情况发生时，钱将被转到你的帐号中：a）%{payer_name}标记请求为完成 或者b）%{payer_name}完成支付的%{automatic_confirmation_days}天后。"
     receipt_to_payer:
       receipt_of_payment: 付款收据
       you_have_made_new_payment: "你已经为<b>%{listing_title}</b> 支付了 <b>%{payment_sum}</b> 给 %{recipient_full_name}。这是付款收据。"
       product: 产品
-      price_per_unit_type: ~
-      duration: ~
-      quantity: ~
-      subtotal: ~
+      price_per_unit_type: "每%{unit_type}的价格"
+      duration: "持续时间:"
+      quantity: "数量:"
+      subtotal: 小计
       total: 总共
       price: 价格
       service_fee: 服务费
@@ -768,8 +927,8 @@ zh:
       you_can_give_feedback_to: "你还没有给%{name}反馈"
       view_feedback: 查看反馈
     new_update_to_listing:
-      listing_you_follow_has_been_updated: 以下列表已更新
-      has_updated_listing_you_follow_in_kassi: "%{author}更新了你在%{service_name}中关注的列表“%{listing}”。"
+      listing_you_follow_has_been_updated: 以下发布的信息已更新
+      has_updated_listing_you_follow_in_kassi: "%{author}更新了你在%{service_name}中关注的信息“%{listing}”。"
       view_changes: 查看变更
     community_updates:
       added_offer: "%{name_link}新增了一条信息："
@@ -792,35 +951,33 @@ zh:
       change_my_password: 修改密码
       reset_password_instructions: "<p>你声明你忘记了%{service_name}的用户名或者密码。</p><p>你的用户名是：%{username}</p><p>如果你需要重置密码，点击以下链接：%{password_reset_link}</p><br/><p>如果你没有这个要求，请忽略这封电子邮件。 你的密码将不会改变，直到你访问上面的链接并创建一个新的密码。</p>"
     testimonial_reminder:
-      feedback_is_public_and_is_shown: "评价是对其他用户公开的。其他用户可根据评价来判断 %{name} 是否值得信赖。所以，记得评价别人发起的活动，也提醒别人评价你发起的活动。你需要正面的评价来获得更多的徽章。"
+      feedback_is_public_and_is_shown: "评价是对其他用户公开的。其他用户可根据评价来判断 %{name} 是否值得信赖。所以，记得评价别人发布的信息，也提醒别人评价你发布的信息。你需要正面的评价来获得更多的徽章。"
       remember_to_give_feedback_to: "提醒：记得给%{name} 评价"
       you_have_not_given_feedback_yet: "你尚未评价%{name} 参与的活动'%{event}'。记得评价%{given_name} 在活动中的表现。"
     transaction_preauthorized:
-      subject: "%{requester}要求并支付了%{listing_title}"
-      transaction_requested_by_user: "%{requester}要求并支付了%{listing_title}"
-      you_have_days_to_accept: "你需要在%{payment_expires_in_days}天内接受或拒绝请求。如果你在该期限内不接受，请求将自动被拒绝，你不需要支付费用。"
+      subject: "%{requester}已经请求并授权支付了%{listing_title}"
+      transaction_requested_by_user: "%{requester}已经请求并授权支付了%{listing_title}"
+      you_have_time_to_accept: "你需要在%{payment_expires_in}天内接受或拒绝请求。如果在该期限内接受，你会收到付款。如果你在该期限内没有接受，请求将自动被拒绝，你将无法收到支付款项。"
       click_here_to_reply: 点击这里回应请求
     transaction_preauthorized_reminder:
       subject: "记得接受来自%{requester}的关于%{listing_title}的请求"
-      remember_to_accept: "记住接受来自%{requester}关于“%{listing_title}”信息的请求。%{requester}已经为该信息付款。你必须接受请求以接受付款。"
+      remember_to_accept: "记住接受来自%{requester}关于“%{listing_title}”信息的请求。%{requester}已经为该宝贝付款。你必须接受请求以接受付款。"
       one_day_left: 如果你不在一天内接受请求，该请求将被自动拒绝，你将无法收到支付款项。
       click_here_to_reply: 点击这里回应请求
     welcome_email:
       welcome_email_subject: "欢迎来到%{service_name}"
-      welcome_to_marketplace: "欢迎使用%{service_name}！很高兴你的加入。"
-      love_marketplace_crew: "爱你的，<br /><i>%{service_name} 工作人员</i>"
-      p_s_did_you_know: "附言 你想创建像%{service_name}一样的自己的集市网站吗？很简单，不需要任何编程经验。点击%{click_here_link}查看更多！"
-      click_here_link_text: 点击这里
+      welcome_to_marketplace: "欢迎来到%{service_name}！恭喜你注册成功。"
+      love_marketplace_crew: "爱你的，<br /><i>%{service_name}团队</i>"
       welcome_email_footer_text: "你希望从%{service_name}接收哪种类型的邮件？%{settings_link}"
       settings_link_text: 查看你的设置
       welcome_email_subject_for_marketplace_creator: 欢迎来到Sharetribe
       welcome_to_marketplace_creator: "欢迎来到Sharetribe，%{name}！"
-      congrats_for_creating_your_marketplace: 恭喜成功创建你的市场！很容易，是不是？
+      congrats_for_creating_your_marketplace: 恭喜成功创建你的集市！很容易，是不是？
       here_is_your_account_information: 这是你的帐号信息。
       your_email_address: 你用来登录的电子邮件地址：
-      your_marketplace_address: 你的市场地址：
-      your_marketplace_admin_area: 你的市场管理区域：
-      just_follow_details: 点击下列链接你将获得如何开始搭建你的市场的详细信息！
+      your_marketplace_address: 你的集市地址：
+      your_marketplace_admin_area: 你的集市的管理后台：
+      just_follow_details: 点击下列链接你将获得如何开始搭建你的集市的详细信息！
       we_will_guide_you_along_the_way: 我们将引导你走下去。
       are_you_new_to_online_marketplaces: 需要协助你的集市？没关系，我们能帮助你！我们将发送给你一系列电邮帮助你最大化利用Sharetribe并且建造一个成功的集市生意。我们将很快发送给你第一部分的内容。
       have_questions: 有问题吗？
@@ -834,7 +991,7 @@ zh:
       subject: "%{author_name}在%{service_name}发布了一则新的信息"
       has_posted_a_new_listing: "%{author_name}发布了一则新的信息："
       you_are_receiving_this_because: "你收到这个通知是由于你关注了%{author_name}。"
-      view_listing: 查看列表
+      view_listing: 查看发布的信息
   error_messages:
     listings:
       departure_time: 出发时间必需是现在起一年之内。
@@ -848,6 +1005,8 @@ zh:
     transaction_agreement:
       required_error: 你需要接受协议
     paypal:
+      buyer_cannot_pay_error: " 该支付被Paypal拒绝。请联系他们的客服获得更多信息：%{customer_service_link}"
+      pending_review_error: 支付已经提交，但是被Paypal标记为‘需要检查’。当Paypal完成检查后，该支付将会被自动授权。
       generic_error: 付款过程中出现错误。无法完成你的PayPal付款。
       cancel_error: 取消时发生错误。不能完成取消操作。
       accept_authorization_error: 尝试接受预授权的PayPal付款时出错。请重试。
@@ -857,15 +1016,15 @@ zh:
     error_404:
       if_you_believe: 如果你认为地址是正确并有效的。请完成下面的表格以便我们了解什么地址造成了错误。
       page_can_not_be_found: 页面没找到或不存在
-      page_you_requested_can_not_be_found: 你请求的页面不存在。你确定地址拼写正确？
+      page_you_requested_can_not_be_found: 你请求的页面不存在，你确定地址输入正确吗？
     error_404_title: 未找到页面
     error_410:
       page_removed: 页面已删除
       page_you_requested_has_been_removed: 你请求的页面已被删除。
-      page_removed_reason: 这种情况有几种可能的原因。比如，一个用户可能删除了他的帐号或者列表已被删除。
+      page_removed_reason: 这种情况有几种可能的原因。比如，一个用户可能删除了他的帐号或者发布的信息已被删除。
     error_410_title: 页面已删除
     error_500:
-      temporary_unavailable: 市场暂时不可用
+      temporary_unavailable: 集市暂时不可用
       unable_to_process: 服务当前无法处理你的请求。请过几分钟再试。
       we_hate_this: 我们很不高兴它的发生！我们已经收到通知并将尽快修复它。
       refer_to_error_id: "如果你想就此问题联系支持人员，请在消息中包含错误号“%{error_id}”。"
@@ -889,7 +1048,7 @@ zh:
       on_or_before: "必须在%{restriction}时或之前"
       after: "必须在%{restriction}之后"
       on_or_after: "必须在%{restriction}时或之后"
-      positive_number: ~
+      positive_number: 填入一个数字
   event_feed_events:
     accept:
       has_accepted_lend_item: "%{offerer_name} 同意将 %{listing_title} 借给 %{requester_name} %{time_ago}."
@@ -924,9 +1083,9 @@ zh:
     offers: 宝贝
     requests: 请求
     search_kassi: "搜索%{service_name}"
-    create_new_marketplace: 创建一个新的市场
+    create_new_marketplace: 创建一个新的集市
     contact_us: 联系我们
-    profile: 个人设置
+    profile: 个人主页
     invite: 邀请新成员
     login: 登录
     signup: 注册
@@ -941,7 +1100,7 @@ zh:
       add_first: 增加一个！
       but_that_is_visible_only_to_registered_members: 但只有注册用户可以查看。
       but_those_are_visible_only_to_registered_members: 但只有注册用户可以查看。
-      create_new_account_for_yourself: 创建新账户
+      create_new_account_for_yourself: 注册新用户
       examples_of_what_you_could_offer_to_others: 你能提供什么给其他人
       examples_of_what_you_could_request_to_others: 你需要什么
       favor_offer_list: 电脑帮手，衣物缝补，烘焙，自行车修理
@@ -1001,11 +1160,12 @@ zh:
       filter: 过滤
       this_is_private_community: 查看内容前需要先登录。
     invitation_form:
-      invite_your_friends: "邀请你的朋友加入%{service_name}！"
       email: 电子邮件地址
       message: 一条私人消息
       send_invitation: 发送邀请
-      add_as_many_emails_as_you_want: 添加你要邀请的人的邮件地址到下面的输入框。如果你添加多个电子邮件地址，用逗号分隔。
+      add_email_addresses_description: 添加你要邀请的人的邮件地址到下面的输入框。如果你添加多个电子邮件地址，用逗号分隔。
+      add_lots_of_email_addresses: "如果你想要发送大量的邀请，你应该使用邮件工具。查看%{this_article_link}可能会找到适合的邮件服务资源。"
+      this_article_link: 这篇文章
       invitation_emails_field_placeholder: "friend1@example.com, friend2@example.com, ..."
       invitation_message_field_placeholder: 我加入了这个很棒的集市。你也应该加入！
       errors_in_emails: 检查你新添的电邮地址是否有效。如果你添加了多个地址，确保用逗号分隔。
@@ -1032,8 +1192,10 @@ zh:
       map_button: 地图
       grid_button: 网格
       list_button: 列表
-      all_listing_types: 所有的展示方式
+      all_listing_types: 全部类型 
       all_categories: 全部分类
+    errors:
+      search_engine_not_responding: 搜索功能当前无法使用，请稍后再试。
   infos:
     about:
       default_about_text_title: 什么是Sharetribe？
@@ -1053,7 +1215,7 @@ zh:
       join_this_community: 加入集市
       read_more: 读取更多
       feedback: 给我们提供反馈？
-      default_feedback: "你碰到任何关于%{service_name}的问题了吗？有什么提高服务质量的建议吗？注意到一些可疑的内容？或者你有些什么想与我们讨论吗？告诉我们！"
+      default_feedback: "你有任何关于%{service_name}的问题吗？有什么提高服务质量的建议吗？发现了一些可疑的内容？或者你有些想法与我们讨论？在这里告诉我们！"
       feedback_forum: 反馈论坛
       feedback_handle: 反馈
       give_feedback: 联系我们
@@ -1080,25 +1242,25 @@ zh:
       how_to_use: 如何使用
       info_about_kassi: "关于%{service_name}"
       news: 新闻
-      register_details: 隐私信息
+      register_details: 隐私条款
       terms: 使用条款
     logged_in:
       admin: 后台管理
-      go_to_your_profile_page: 个人设置
+      go_to_your_profile_page: 个人主页
       hi: 你好
       login: 登录
       logout: 退出
       notifications: 通知
       requests: 好友请求
       settings: 设置
-      sign_up: 创建账户
+      sign_up: 创建新用户
     logged_in_messages_icon:
       messages: 私信
     logged_in_notifications_icon:
       notifications: 通知
     mobile_logged_in:
       admin: 后台管理
-      go_to_your_profile_page: 个人设置
+      go_to_your_profile_page: 个人主页
       hi: 你好
       login: 登录
       logout: 退出
@@ -1113,7 +1275,7 @@ zh:
       something_went_wrong: 出错了
       community_updated: 详情已更新。
       community_update_failed: 信息更新失败。
-      account_creation_succesful_you_still_need_to_confirm_your_email: 账号创建成功。下一步，你需要确认你的Email地址。
+      account_creation_succesful_you_still_need_to_confirm_your_email: 账号创建成功。下一步，请确认你的Email地址。
       community_joined_succesfully_you_still_need_to_confirm_your_email: "感谢加入%{service_name}。现在你需要确认你的电子邮件地址。"
       comment_cannot_be_empty: 评论不能为空
       comment_sent: 评论已发送
@@ -1121,7 +1283,7 @@ zh:
       additional_email_confirmed: 你输入的电子邮件已被确认。
       could_not_get_email_from_facebook: 不能从Facebook获取邮件地址，没有邮件地址则无法创建帐号。
       create_new_listing: 发布另一条消息
-      create_one_here: 在此创建
+      create_one_here: 创建新用户
       email_confirmation_sent_to_new_address: 电子邮件确认信已经送往你的新地址。
       email_not_found: "无法在%{service_name}中找到你所提供的邮箱地址。"
       error_with_session: 内容错误
@@ -1131,6 +1293,7 @@ zh:
       feedback_sent_to: "发送评价给%{target_person}"
       feedback_skipped: 跳过评价
       invitation_cannot_be_sent: 邀请未被发出
+      invitation_limit_reached: 你发送太多的邀请。已达到每日上限。
       invitation_sent: 邀请成功发出
       inviting_new_users_is_not_allowed_in_this_community: 不允许邀请新用户。
       login_again: 请重新登录。
@@ -1152,8 +1315,8 @@ zh:
       offer_canceled: 宝贝已取消
       listing_updated_successfully: 信息更新成功
       only_kassi_administrators_can_access_this_area: "只有%{service_name}管理员有权限进入此区域"
-      only_listing_author_can_close_a_listing: 仅作者可以关闭列表
-      only_listing_author_can_edit_a_listing: 仅作者可以编辑列表
+      only_listing_author_can_close_a_listing: 仅作者可以关闭发布的信息
+      only_listing_author_can_edit_a_listing: 仅作者可以编辑发布的信息
       payment_successful: 付款成功
       payment_canceled: 付款已取消
       error_in_payment: 付款错误。如果你还没有完成付款，请重试。如果已完成，请联系我们。
@@ -1186,6 +1349,7 @@ zh:
       you_are_not_allowed_to_give_feedback_on_this_transaction: 你没有对此事件发表评价的权限
       you_are_not_authorized_to_do_this: 你没有权限进行此操作
       you_are_not_authorized_to_view_this_content: 你没有查看此内容的权限
+      listing_closed: 该信息已经被关闭
       send_instructions: 几分钟内你将会收到一封电子邮件告知你重置密码。
       you_cannot_reply_to_a_closed_offer: 你不能对已关闭的宝贝发表评论
       you_cannot_reply_to_a_closed_request: 你不能回复已关闭请求
@@ -1200,6 +1364,7 @@ zh:
       you_must_log_in_to_invite_new_users: "你必须先登录才能邀请新用户到%{service_name}"
       you_must_log_in_to_send_a_comment: 你必须登录才能发表评论
       you_must_log_in_to_send_a_message: "你必须先登录%{service_name}，然后才可以向其他用户发送消息。"
+      you_must_log_in_to_do_a_transaction: "你必须先登录%{service_name}才能进行交易。"
       you_must_log_in_to_view_this_content: 你必须登录以查看内容
       you_must_log_in_to_view_this_page: 你必须登录才能查看此页面
       you_must_log_in_to_view_your_inbox: "你必须登录%{service_name}以查看你的收件箱。"
@@ -1219,7 +1384,7 @@ zh:
       email_deleted: 邮件已删除
       payment_details_add_successful: 成功添加支付信息
       payment_details_add_error: 无法添加支付信息
-      listing_author_payment_details_missing: 该信息作者没有添加他们的付款明细因此当前不能接受付款。请联系作者。
+      listing_author_payment_details_missing: 请点击下面的‘联系’按钮联系卖家。他们需要更新付款信息来接收付款。
       stylesheet_needs_recompiling: 样式表正在重新编译。请过一会重新加载页面。
     settings:
       account: 帐号
@@ -1233,15 +1398,17 @@ zh:
     comment:
       wrote: 写到
       send_private_message: "发送私人消息给%{person}"
+      delete: 删除
+      are_you_sure: 你确定要删除这条评论吗？
     comment_form:
       ask_a_question: 评论该条信息或者询问更多细节。所有其他用户都能看到你的评论。
       log_in: 登录
-      send_comment: 发送评论
+      send_comment: 发表评论
       to_send_a_comment: 以发送新的评论
       write_comment: 发表新的评论：
       you_cannot_send_a_new_comment_because_listing_is_closed: 你不能发表新的评论，因为这条信息已经关闭。
       you_must: 你必须
-      subscribe_to_comments: 若有新评论或更新，通知我
+      subscribe_to_comments: 若有新评论或更新，发邮件通知我
     edit:
       edit_listing: 编辑发布的信息
     edit_links:
@@ -1253,9 +1420,13 @@ zh:
       show_in_updates_email_loading: 加载……
       show_in_updates_email_error: 不能访问服务器。页面刷新后重试。
       show_in_updates_email_success: 这个发布的信息将被显示在下一封自动发送给用户的邮件中。
+    map:
+      open_in_google_maps: 在Google地图中打开
+    error:
+      something_went_wrong: "出错了，错误代码：%{error_code}"
     follow_links:
-      follow: 接收关于新评论的邮件
-      unfollow: 不再接收关于新评论的邮件
+      follow: 接收关于新评论的电子邮件
+      unfollow: 不再接收关于新评论的电子邮件
     form:
       custom_field_partials:
         dropdown:
@@ -1284,17 +1455,22 @@ zh:
         googlemap_updatemap: 更新地图
       images:
         image: 图片
+        best_result: "为了达到最好的效果，使用%{width}*%{height}像素的JPG, GIF或者PNG格式的图片"
         no_file_selected: 未选择文件
         remove_image: 移除图片
         select_file: 选择文件
+        add_more: +添加更多
         removing: 移除中……
         processing: 处理中……
         loading_image: 正在加载……
-        this_may_take_a_while: （这可能会花一些时间）
+        image_uploading_in_progress: 图片正在上传...
+        processing_takes_a_while: 所有的图片上传完成！图片处理需要一些时间，你可以保存信息并继续浏览。
+        this_may_take_a_while: 这只需要一小会
         percentage_loaded: "%{percentage}%"
         uploading_failed: 图片加载出错
         file_too_large: 文件太大
         accepted_formats: "图片必须是GIF,JPG或PNG格式。"
+        images_not_uploaded_confirm: 图片还没有上传完成。你真的想要跳过吗?
       location:
         location: 地点
       price:
@@ -1305,20 +1481,21 @@ zh:
         time: 小时，天，月，……
         long_time: 周，月，……
         after_service_fee_you_will_get: "在%{service_name}和付款处理费之后你将得到%{sum_with_currency}"
-        no_service_fee_you_will_get_paypal_text: ~
-        after_service_fee_you_will_get_paypal_text: ~
-        paypal_fee_info_link_text: ~
+        no_service_fee_you_will_get_paypal_text: "%{paypal_fee_info_link}会从价格中扣除"
+        after_service_fee_you_will_get_paypal_text: "%{service_name}费用（%{sum_with_currency}）和%{paypal_fee_info_link}会从价格中扣除"
+        paypal_fee_info_link_text: PayPal的支付处理费
         after_service_fee_you_will_get_vat: "在%{service_name}和付款处理费用之后你将得到大概%{sum_with_currency}（0%消费税）"
         price_excludes_vat: 价格不包含VAT。
         delivery: 配送方式
         shipping: 配送
         shipping_price: 运费
+        shipping_price_additional: 附加的物品
         pickup: 上门自提
       origin:
         location: 地点
         origin: 来源
       send_button:
-        save_listing: 保存发布的信息
+        save_listing: 发布
       share_type:
         select: 选择
         borrow: 借入
@@ -1328,7 +1505,7 @@ zh:
         offer_type: 宝贝的类型
         receive: 免费获取
         rent: 出租
-        rent_out: 已出租
+        rent_out: 出租
         request_type: 请求类型
         sell: 出售
         share_for_free: 免费共享
@@ -1343,10 +1520,6 @@ zh:
         valid_until: 截止日期
       valid_until_radio_buttons:
         for_the_time_being: 一直有效
-      visibility:
-        all_communities: 所有我的Sharetribe集市
-        this_community: "仅限%{service_name} 用户"
-        visibility: 公开度
       privacy:
         privacy: 隐私
         private: 私密的（只对登录用户可见）
@@ -1394,9 +1567,10 @@ zh:
       accept_for_frees: 免费接受
       trades: 交换
     listing_actions:
-      booking_from: 来自
+      booking_from: 从
       booking_to: 到
       how_paypal_works: PayPal如何工作
+      payment_help: 付款帮助
     new:
       post_a_new_listing: 发布信息
       listing: 信息
@@ -1405,20 +1579,20 @@ zh:
       selected_transaction_type: "信息类型：%{transaction_type}"
       select_category: 选择分类
       select_subcategory: 选择子分类
-      select_transaction_type: 选择信息类型
-      you_need_to_fill_payout_details_before_accepting: "在发布列表前你需要填写支出详情。点击%{payment_settings_link}来填写详情。"
+      select_transaction_type: 请选择交易类型
+      you_need_to_fill_payout_details_before_accepting: "在发布信息前你需要填写支出详情。点击%{payment_settings_link}来填写详情。"
       contact_admin_link_text: 联系管理员
       community_not_configured_for_payments: "%{service_name}没有配置支付方式，所以你不能发布新的信息。详情请联系%{contact_admin_link}。"
       payment_settings_link: 付款设置
       community_not_configured_for_payments_admin: "%{service_name}没有配置支付方式，所以你不能发布新的信息。点击%{payment_settings_link}填写详细付款信息。"
     quantity:
-      hour: ~
-      day: ~
-      night: ~
-      week: ~
-      month: ~
-      custom: ~
-    quantity_placeholder: ~
+      hour: "小时数:"
+      day: "天数:"
+      night: "夜晚数量:"
+      week: "周数:"
+      month: "月数:"
+      custom: "数量:"
+    quantity_placeholder: 数量
     please_comment: 评论
     reply_link:
       listing_closed: 发布的信息已关闭
@@ -1430,7 +1604,7 @@ zh:
       contact: 联系
       favor_offer: 服务提供
       favor_request: 服务请求
-      inquiry: 查询
+      inquiry: 公告
       item_offer_trade: 交换宝贝
       item_request_trade: 交换请求信息
       no_description: 该发布的信息无描述
@@ -1454,20 +1628,23 @@ zh:
       times_viewed: 浏览的次数
       processing_uploaded_image: （正在处理上传图片……）
       price_excludes_vat: （除去VAT）
-      listing_created_at: 信息已创建
+      listing_created_at: 发布时间
       price:
         per_quantity_unit: "每%{quantity_unit}"
         per_day: 每天
       delivery: 配送方式
       shipping: "运费(+%{price})"
+      shipping_no_price: 运费
+      shipping_price_additional: "运费(+%{price}, 附件的费用: +%{shipping_price_additional})"
       pickup: 自取
+      pickup_no_price: 自提
     unit_types:
-      piece: ~
-      hour: ~
-      day: ~
-      night: ~
-      week: ~
-      month: ~
+      piece: 个
+      hour: 小时
+      day: 天
+      night: 晚
+      week: 周
+      month: 月
     verification_required:
       verification_required: 要求验证
   listing_conversations:
@@ -1504,7 +1681,7 @@ zh:
       you_have_something_others_do_not: 想卖点什么？
     please_comment: 评论
   mercury:
-    content_too_long: ~
+    content_too_long: 内容太长了。
   okl:
     member_id: "会员号\n"
     member_id_or_email: 会员ID或者邮箱地址
@@ -1514,7 +1691,6 @@ zh:
       continue: 继续
       payment_receiver: 付款接收方：
       sum: 付款总金额：
-      commission_will_be_added: 将被附加10%的服务费
     form:
       total: 总共
       service_charge: 服务收费
@@ -1531,13 +1707,13 @@ zh:
         terms_link_text: Braintree使用条款
   paypal_accounts:
     payout_info_title: 支付信息
-    paypal_account_email_connected: "<del>1. 连接PayPal 帐号</del> 完成！"
-    paypal_billing_agreement_made: "<del>2. 授权%{service_name}收取交易费</del> 完成！"
+    paypal_account_email_connected: "<del>连接PayPal 帐号</del> 完成！"
+    paypal_billing_agreement_made: "<del>授权%{service_name}收取交易费</del> 完成！"
     you_are_ready_to_accept_payments: 你已准备好接受付款！
     commission: "%{commission}%"
     connected_account: "PayPal帐号“%{email}”连接成功。"
     change_account: 更改帐户
-    missing: "你有开放的信息，但是并没有连接到你的PayPal帐号，所以你将不能接受付款。请在你的%{settings_link}中连接你的PayPal帐号。"
+    missing: "你有开放的信息，但是并没有连接到你的PayPal帐号来接受付款。通过你的%{settings_link}连接你的Paypal账号并且授予%{service_name}权限来收取交易费。"
     from_your_payment_settings_link_text: 付款设置
     new:
       payout_info_you_need_to_connect: "要接受付款你需要连接你的PayPal帐号和%{service_name}。"
@@ -1551,10 +1727,10 @@ zh:
       upgrade_paypal_account: 登录你的PayPal帐号
       connect_paypal_account: 连接PayPal帐号
       paypal_account_billing_agreement: "授权%{service_name}收取交易费"
-      paypal_account_billing_agreement_info_both: ~
-      paypal_account_billing_agreement_info_fixed: ~
-      paypal_account_billing_agreement_info_relative: ~
-      paypal_info_link_text: ~
+      paypal_account_billing_agreement_info_both: "当你在%{service_name}完成一个销售后，服务费（%{commission_from_seller}的商品总价，不包括运费，最少的费用%{minimum_commission}）将从你的Paypal账号中扣除。要在%{service_name}中接受付款，你必须允许收取此费用。该费用不包括%{paypal_info_link}"
+      paypal_account_billing_agreement_info_fixed: "当你在%{service_name}完成的一个销售后，服务费%{minimum_commission}将从你的PayPal帐号中扣除。要在%{service_name}中接受付款，你必须允许收取此费用。该费用不包括%{paypal_info_link}"
+      paypal_account_billing_agreement_info_relative: "当你在%{service_name}完成一个销售后，服务费（%{commission_from_seller}的商品总价，不包括运费）将从你的Paypal账号中扣除。要在%{service_name}中接受付款，你必须允许收取此费用。该费用不包括%{paypal_info_link}"
+      paypal_info_link_text: PayPal的支付处理费
       billing_agreement_description: "授权%{service_name}收取交易费。"
       billing_agreement: 授权
       permissions_not_granted: 没有授权连接PayPal帐号。
@@ -1563,18 +1739,18 @@ zh:
       billing_agreement_canceled: 账单协议已取消
       billing_agreement_not_accepted: 你没有在PayPal接受账单协议。
       billing_agreement_wrong_account: PayPal帐号不匹配。请使用与你在第一步连接的帐号相同的PayPal帐号。
-      something_went_wrong: 出错了。请再试一次。如果这个问题仍旧存在，请联系服务支持：
+      something_went_wrong: 出错了。请再试一次。如果这个问题仍旧存在，请联系网站管理员。
       account_not_verified: 你还没有验证你的PayPal帐号。要继续请先登录paypal.com并确认你的帐号。
-      account_restricted: 你的PayPal帐号受限制且不能被连接。请登录paypal.com以了解更多或联系PayPal客户服务解决这个问题。
+      account_restricted: 你的PayPal帐号受到限制且不能被连接。请登录paypal.com以了解更多或联系PayPal的客户服务解决这个问题。
   paypal:
-    pay_with_paypal: ~
+    pay_with_paypal: 进行支付
     checkout_with_paypal: 用PayPal结帐
     cancel_succesful: PayPal付款成功取消
     transaction:
       commission_payment_name: "%{listing_title}的佣金支付"
-      commission_payment_description: "市场%{service_name}对%{listing_title}收取交易佣金。"
+      commission_payment_description: "集市%{service_name}对%{listing_title}收取交易佣金。"
     wait_while_loading: 请等待。
-    chatting_with_paypal: 我们正在与PayPal聊天。
+    chatting_with_paypal: 我们正在与PayPal通信。
   people:
     edit_links:
       activate: 激活
@@ -1592,7 +1768,7 @@ zh:
     new:
       captcha_incorrect: 验证码错误。请输入下图中显示的单词
       captcha_was_wrong: 验证码错误
-      create_new_account: 创建账户
+      create_new_account: 创建新用户
       email: 电子邮件地址
       email_is_in_use: 此邮箱已使用。
       email_is_in_use_or_not_allowed: 此Email不允许使用或已被注册。如果你无法注册，请联系我们。
@@ -1606,10 +1782,11 @@ zh:
       invalid_invitation_code: 邀请码无效。
       invitation_code: 邀请码
       not_required: ，不是必须的
+      notification_is_mandatory: "你必须挑选至少一个邮件地址用于接收通知。如果你不想收到来自%{service_name}的邮件，在你的邮件通知设置中修改。"
       organization_name: 组织名称
       password_again: 确认密码
       show_my_name_to_others: "对其他%{service_name}用户显示真实姓名"
-      sign_up: "在%{service_name}新建账户"
+      sign_up: "在%{service_name}注册"
       terms: 使用条款
       username_is_in_use: 此用户名已被使用。
       username_is_invalid: 用户名格式不正确。请使用字母，数字以及下划线。
@@ -1617,7 +1794,7 @@ zh:
       visible_to_everybody: 所有人可见
       create_account_with_facebook: 用Facebook帐号注册
       OR: 或
-      signup_with_email: 用邮件注册
+      signup_with_email: 使用你自己的邮箱注册
     not_member:
       explanation_text: "你正在浏览%{community} 社区。你试图查看另一个社区的用户资料。所以你不可以在%{community}社区查看这个用户的资料。"
       read_more_about_kassi_communities: 阅读更多关于这个网站
@@ -1637,7 +1814,7 @@ zh:
     show:
       contact: "联系%{person}"
       about_me: 关于我：
-      add_description: 分享一些关于你自己的东西
+      add_description: 更新个人资料
       add_location: 添加地点
       add_phone_number: 添加手机号码
       address: 地点：
@@ -1661,7 +1838,7 @@ zh:
       open_listing: 公开的信息
       open_listings: 公开的信息
       no_listings: 没有信息
-      no_open_listings: 非公开的信息
+      no_open_listings: 没有公开的信息
       no_reviews: 没有评论
       show_all_listings: 显示所有已发布的信息
       show_all_open_listings: 显示所有公开的信息
@@ -1689,7 +1866,7 @@ zh:
       search_verb: 搜索
   sessions:
     new:
-      create_new_account: 创建新账户
+      create_new_account: 注册新用户
       i_forgot_my_password: 忘记用户名或密码
       login: 登录
       login_to_kassi: "登录%{service_name}"
@@ -1716,9 +1893,9 @@ zh:
       change_email: 改变
       confirm_your_email: 请确认你的电子邮件
       account_confirmation_instructions: "你很快会收到一封邮件包含一个需要你点击确认刚才输入的邮件地址的链接。在确认邮件之后你就可以加入%{service_name}了。"
-      account_confirmation_instructions_title_admin: 欢迎来到你的市场！
+      account_confirmation_instructions_title_admin: 欢迎来到你的集市！
       your_marketplace_has_now_been_created: 你的集市站点已经创建。这很容易吧？接下来只要一个步骤你就可以访问你的站点了：你需要确认你的电邮地址。
-      account_confirmation_instructions_admin: 你很快会收到一封邮件要求你点击确认刚才输入的邮件地址。在确认邮件之后你就可以配置你的市场了。
+      account_confirmation_instructions_admin: 你很快会收到一封邮件要求你点击确认刚才输入的邮件地址。在确认邮件之后你就可以配置你的集市了。
   settings:
     account:
       change: 修改
@@ -1728,9 +1905,9 @@ zh:
       delete_account_confirmation_popup: 你确认要永久删除你的用户帐号及其相关数据？帐号删除无法恢复。
       email_addresses: 电子邮件地址
       new_email: 新Email地址
-      delete_all_memberships: "如果你删除你的帐号，你将不能在以下市场中使用它：%{marketplaces}"
-      delete_personal_information: 如果你删除你的帐号，你的个人信息（姓名，电话号码，地址，电邮，个人资料图片等等）都将被永久删除切不能回复。所有你创建的信息将被删除。你将不能重新激活你的帐号。
-      delete_information_others_involved: 涉及其他会员的信息（和其他人的对话，你完成的交易，你给其他人的评论等）在你删除你的帐号时是不能被删除的。然后，下次你的名字将不会出现在这些信息中。
+      delete_all_memberships: "如果你删除你的帐号，你将不能在以下集市中使用它：%{marketplaces}"
+      delete_personal_information: 如果你删除你的帐号，你的个人信息（姓名，电话号码，地址，电邮，个人资料图片等等）都将被永久删除且不能恢复。所有你创建的信息将被删除。你将不能重新激活你的帐号。
+      delete_information_others_involved: 涉及其他会员的信息（和其他人的对话，你完成的交易，你给其他人的评论等）在你删除你的帐号时是不能被删除的。不过，之后你的名字将不会出现在这些信息中。
       unfinished_transactions: 因为你有正在进行中的交易，所以你的帐号不能被删除。请在删除帐号前完成所有交易。
       new_password: 新密码
       save: 保存
@@ -1775,7 +1952,7 @@ zh:
       settings_link: 设置
       homepage_link: 主页
       unsubscribe_unsuccesful: 取消订阅出错
-      unsuccessful_unsubscribe_info_text: 原因可能是你点击的退订链接过久或已经失效。通过左边的反馈按钮联系我们进行退订或者登录并修改你的电子邮件配置。
+      unsuccessful_unsubscribe_info_text: 退订链接已经失效。登录并修改你的电子邮件订阅配置。
     profile:
       about_you: 关于你
       city: 城市
@@ -1787,15 +1964,15 @@ zh:
       phone_number: 电话号码
       profile_picture: 个人头像
       postal_code: 邮政编码
-      profile_page: 在你的个人信息页面
+      profile_page: 点击查看你的个人信息页面
       profilemap: 地图视图
       street_address: 地点
-      these_fields_are_shown_in_your: "此信息对所有%{service_name}用户可见"
+      these_fields_are_shown_in_your: "该信息对所有%{service_name}用户可见"
       visible_to_everybody: 对所有人可见
       visible_to_registered_users: （对已登录用户可见）
       default_in_listing: （只有在发布新信息时作为默认值使用）
       invisible: （不显示给其他用户）
-      image_is_processing: ~
+      image_is_processing: 你的个人头像图片正在准备。请过一会重新刷新页面。
     save_information: 保存信息
   shipping_address:
     shipping_address: 送货地址
@@ -1897,7 +2074,7 @@ zh:
     formats:
       short: "%e %b %Y  %H:%M"
       shorter: "%e %b %H:%M"
-      short_date: "%e %b %Y"
+      short_date: "%Y年%b%e日"
       sms: "%e %b %H:%M"
   timestamps:
     day_ago: "%{count} 天前"
@@ -1913,18 +2090,27 @@ zh:
     years_ago: "%{count} 年前"
     days_since:
       other: "%{count}天"
+    time_to:
+      seconds:
+        other: "%{count}秒"
+      minutes:
+        other: "%{count}分钟"
+      hours:
+        other: "%{count}小时"
+      days:
+        other: "%{count}天"
   transactions:
     initiate:
-      booked_days: ~
-      price_per_day: ~
-      quantity: ~
+      booked_days: "预订的天数:"
+      price_per_day: "每天的价格:"
+      quantity: "数量:"
       subtotal: "小结:"
       shipping-price: "运费:"
-    price_per_quantity: ~
-    price: ~
-    quantity: ~
-    unit_price: ~
-    total: ~
+    price_per_quantity: "每%{unit_type}:"
+    price: "总共:"
+    quantity: "数量:%{quantity}"
+    unit_price: "单位价格: %{unit_price}"
+    total: "总共:"
   unit:
     day: 日
     days: 天
@@ -1935,8 +2121,8 @@ zh:
         other: 用戶
       listing_conversation:
         other: 交易
-    previous_label: "&#8592;上一个"
-    next_label: "下一个 &#8594;"
+    previous_label: "&#8592;上一页"
+    next_label: "下一页 &#8594;"
     page_gap: "&hellip;"
     page_entries_info:
       single_page:
@@ -1945,5 +2131,5 @@ zh:
       single_page_html:
         zero: "没有找到%{model}"
         other: "显示 <b>所有&nbsp;%{count}个</b> %{model}"
-      multi_page: "显示 %{model} %{from} - %{to} of %{count} 的总数"
-      multi_page_html: "显示 %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> of <b>%{count}</b> 的总数"
+      multi_page: "显示 %{model} %{from} - %{to} 总共 %{count} 个"
+      multi_page_html: "显示 %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> 总共 <b>%{count}</b> 个"

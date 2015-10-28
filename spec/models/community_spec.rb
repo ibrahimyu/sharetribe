@@ -6,6 +6,7 @@
 #  id                                         :integer          not null, primary key
 #  ident                                      :string(255)
 #  domain                                     :string(255)
+#  use_domain                                 :boolean          default(FALSE), not null
 #  created_at                                 :datetime
 #  updated_at                                 :datetime
 #  settings                                   :text
@@ -52,8 +53,6 @@
 #  service_logo_style                         :string(255)      default("full-logo")
 #  available_currencies                       :text
 #  facebook_connect_enabled                   :boolean          default(TRUE)
-#  only_public_listings                       :boolean          default(TRUE)
-#  custom_email_from_address                  :string(255)
 #  vat                                        :integer
 #  commission_from_seller                     :integer
 #  minimum_price_cents                        :integer
@@ -93,6 +92,9 @@
 #  cover_photo_processing                     :boolean
 #  small_cover_photo_processing               :boolean
 #  favicon_processing                         :boolean
+#  dv_test_file_name                          :string(64)
+#  dv_test_file                               :string(64)
+#  deleted                                    :boolean
 #
 # Indexes
 #
@@ -144,7 +146,7 @@ describe Community do
         :created_at => created_at.days.ago,
         :updates_email_at => updates_email_at.days.ago,
         :listing_shape_id => 123,
-        :communities => [@community])
+        :community_id => @community.id)
     end
 
     before(:each) do

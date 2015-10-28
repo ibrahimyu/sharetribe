@@ -295,7 +295,7 @@ module TransactionHelper
         } },
         errored: ->() { {
           author: [
-            status_info(t("conversations.status.payment_errored_author", starter_name: conversation.starter.name), icon_classes: icon_for("errored"))
+            status_info(t("conversations.status.payment_errored_author", starter_name: conversation.starter.name(conversation.community)), icon_classes: icon_for("errored"))
           ],
           starter: [
             status_info(t("conversations.status.payment_errored_starter"), icon_classes: icon_for("errored"))
@@ -354,18 +354,18 @@ module TransactionHelper
       status_info(
         t("conversations.status.waiting_for_listing_author_to_deliver_listing",
           :listing_title => link_to(conversation.listing.title, conversation.listing),
-          :listing_author_name => link_to(conversation.author.name, conversation.author)
+          :listing_author_name => link_to(PersonViewUtils.person_display_name(conversation.author, conversation.community))
         ).html_safe,
         icon_classes: "ss-deliveryvan"
       )
     end
   end
 
-  def preauthorized_status(conversation)
-    if current_user?(conversation.listing.author)
-      waiting_for_current_user_to_accept_preauthorized(conversation)
+  def preauthorized_status(transaction)
+    if current_user?(transaction.listing.author)
+      waiting_for_current_user_to_accept_preauthorized(transaction)
     else
-      waiting_for_author_to_accept_preauthorized(conversation)
+      waiting_for_author_to_accept_preauthorized(transaction)
     end
   end
 
@@ -432,19 +432,19 @@ module TransactionHelper
     ])
   end
 
-  def waiting_for_current_user_to_accept_preauthorized(conversation)
+  def waiting_for_current_user_to_accept_preauthorized(transaction)
     status_links([
       {
-        link_href: accept_preauthorized_person_message_path(@current_user, :id => conversation.id),
+        link_href: accept_preauthorized_person_message_path(@current_user, :id => transaction.id),
         link_classes: "accept_preauthorized",
         link_icon_with_text_classes: icon_for("accept_preauthorized"),
-        link_text_with_icon: link_text_with_icon(conversation, "accept_preauthorized")
+        link_text_with_icon: link_text_with_icon(transaction, "accept_preauthorized")
       },
       {
-        link_href: reject_preauthorized_person_message_path(@current_user, :id => conversation.id),
+        link_href: reject_preauthorized_person_message_path(@current_user, :id => transaction.id),
         link_classes: "reject_preauthorized",
         link_icon_with_text_classes: icon_for("reject_preauthorized"),
-        link_text_with_icon: link_text_with_icon(conversation, "reject_preauthorized")
+        link_text_with_icon: link_text_with_icon(transaction, "reject_preauthorized")
       }
     ]);
   end
@@ -509,11 +509,11 @@ module TransactionHelper
     status_info(link, icon_classes: 'ss-clock')
   end
 
-  def waiting_for_author_to_accept_preauthorized(conversation)
+  def waiting_for_author_to_accept_preauthorized(transaction)
     text = t("conversations.status.waiting_for_listing_author_to_accept_request",
       :listing_author_name => link_to(
-        conversation.other_party(@current_user).given_name_or_username,
-        conversation.other_party(@current_user)
+        transaction.author.given_name_or_username,
+        transaction.author
       )
     ).html_safe
 

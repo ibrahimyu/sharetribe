@@ -59,6 +59,61 @@ describe PaypalService::DataTypes::IPN do
     "ipn_track_id"=>"d9520dcb18f6"
   }
 
+  payment_review = {
+    mc_gross: "15410.35",
+    invoice: "3876-81783-payment",
+    auth_exp: "11:20:48 Sep 28, 2015 PDT",
+    protection_eligibility: "Ineligible",
+    address_status: "confirmed",
+    item_number1: "",
+    payer_id: "MGGGS735KYJBJ",
+    tax: "0.00",
+    address_street: "14027 caminito vistana",
+    payment_date: "11:20:48 Aug 29, 2015 PDT",
+    payment_status: "Pending",
+    charset: "windows-1252",
+    address_zip: "92130",
+    mc_shipping: "59.95",
+    mc_handling: "0.00",
+    first_name: "James",
+    transaction_entity: "auth",
+    address_country_code: "US",
+    address_name: "James parker",
+    notify_version: "3.8",
+    custom: "",
+    payer_status: "unverified",
+    address_country: "United States",
+    num_cart_items: "1",
+    mc_handling1: "0.00",
+    address_city: "san diego",
+    verify_sign: "AZM038rWDSJ1dQw5ivqZtXm6LwBAAH5-bdfWUdc.afN69knyHl1DzW.n",
+    payer_email: "jparkerc@aol.com",
+    mc_shipping1: "0.00",
+    tax1: "0.00",
+    parent_txn_id: "",
+    txn_id: "1LK038829V247181R",
+    payment_type: "instant",
+    remaining_settle: "10",
+    auth_id: "1LK038829V247181R",
+    last_name: "parker",
+    address_state: "CA",
+    item_name1: "TIGER TURF Diamond Pro 80 oz. BEST PRODUCT",
+    receiver_email: "projectnewgreen@gmail.com",
+    auth_amount: "15410.35",
+    quantity1: "4160",
+    receiver_id: "QL2DC7NDULU9U",
+    pending_reason: "paymentreview",
+    txn_type: "cart",
+    mc_gross_1: "15350.40",
+    mc_currency: "USD",
+    residence_country: "US",
+    receipt_id: "1546-0244-6643-5772",
+    transaction_subject: "",
+    payment_gross: "15410.35",
+    auth_status: "Pending",
+    ipn_track_id: "73c905ac220b8"
+  }
+
   auth_created = {
     "mc_gross"=>"1.20",
     "auth_exp"=>"23:50:00 Oct 03, 2014 PDT",
@@ -101,6 +156,61 @@ describe PaypalService::DataTypes::IPN do
     "ipn_track_id"=>"35b2bed5966"
   }
 
+  auth_created_no_order = {
+    "mc_gross" => '22.00',
+    "invoice" => "1809-67207-payment",
+    "auth_exp" => "06:02:48 May 22, 2015 PDT",
+    "protection_eligibility" => "Eligible",
+    "address_status" => "unconfirmed",
+    "item_number1" => '',
+    "payer_id" => "DF12312SD",
+    "tax" => '0.00',
+    "address_street" => "Roo Raa 4 A",
+    "payment_date" => "06:02:48 Apr 22, 2015 PDT",
+    "payment_status" => "Pending",
+    "charset" => "windows-1252",
+    "address_zip" => '00730',
+    "mc_shipping" => '2.00',
+    "mc_handling" => '0.00',
+    "first_name" => "Peter",
+    "transaction_entity" => "auth",
+    "address_country_code" => "FI",
+    "address_name" => "Peter Buyer",
+    "notify_version" => '3.8',
+    "custom" => '',
+    "payer_status" => "unverified",
+    "address_country" => "Finland",
+    "num_cart_items" => '1',
+    "mc_handling1" => '0.00',
+    "address_city" => "Helsinki",
+    "verify_sign" => "AZenMl5LsTknAP1wvQY.IJnuNDytAtwfg1N7YadQOUEwMj5kFvUTqr8n",
+    "payer_email" => "peter.buyer@example.com",
+    "mc_shipping1" => '0.00',
+    "tax1" => '0.00',
+    "parent_txn_id" => '',
+    "txn_id" => "7BY45643T4272680K",
+    "payment_type" => "instant",
+    "remaining_settle" => '10',
+    "auth_id" => "7BY45643T4272680K",
+    "last_name" => "Buyer",
+    "address_state" => "N/A",
+    "item_name1" => "Awesome thingie",
+    "receiver_email" => "john.seller@example.com",
+    "auth_amount" => '22.00',
+    "quantity1" => '1',
+    "receiver_id" => "XW9NU6KNJRCWC",
+    "pending_reason" => "authorization",
+    "txn_type" => "cart",
+    "mc_gross_1" => '20.00',
+    "mc_currency" => "EUR",
+    "residence_country" => "FI",
+    "transaction_subject" => '',
+    "payment_gross" => '',
+    "auth_status" => "Pending",
+    "ipn_track_id" => "fad87dd40b82",
+    "controller" => "paypal_ipn",
+    "action" => "ipn_hook" }
+
   payment_voided = {
     "mc_gross"=>"100.00",
     "invoice"=>"2-91",
@@ -126,6 +236,53 @@ describe PaypalService::DataTypes::IPN do
     "mc_shipping1"=>"0.00",
     "tax1"=>"0.00",
     "parent_txn_id"=>"O-4XS63437S6833583E",
+    "txn_id"=>"8X37683373099502U",
+    "payment_type"=>"instant",
+    "remaining_settle"=>"10",
+    "auth_id"=>"8X37683373099502U",
+    "payer_business_name"=>"SandboxTest Account's Test Store",
+    "last_name"=>"Account",
+    "item_name1"=>"Testing",
+    "receiver_email"=>"dev+paypal-user1@sharetribe.com",
+    "auth_amount"=>"100.00",
+    "quantity1"=>"1",
+    "receiver_id"=>"URAPMR7WHFAWY",
+    "txn_type"=>"cart",
+    "mc_gross_1"=>"100.00",
+    "mc_currency"=>"GBP",
+    "residence_country"=>"GB",
+    "test_ipn"=>"1",
+    "transaction_subject"=>"",
+    "payment_gross"=>"",
+    "auth_status"=>"Voided",
+    "ipn_track_id"=>"deb829141b651"
+  }
+
+  payment_voided_no_order = {
+    "mc_gross"=>"100.00",
+    "invoice"=>"2-91",
+    "auth_exp"=>"23:50:00 Nov 06, 2014 PST",
+    "protection_eligibility"=>"Ineligible",
+    "item_number1"=>"",
+    "payer_id"=>"7LFUVCDKGARH4",
+    "tax"=>"0.00",
+    "payment_date"=>"04:15:57 Nov 03, 2014 PST",
+    "payment_status"=>"Voided",
+    "charset"=>"windows-1252",
+    "mc_shipping"=>"0.00",
+    "mc_handling"=>"0.00",
+    "first_name"=>"SandboxTest",
+    "transaction_entity"=>"auth",
+    "notify_version"=>"3.8",
+    "custom"=>"",
+    "payer_status"=>"verified",
+    "num_cart_items"=>"1",
+    "mc_handling1"=>"0.00",
+    "verify_sign"=>"AJUc1Ia4SIzAsHpmMszE5xpkoPoVAFydOpOKQmMLPy9fUgcPT8VPsa-a",
+    "payer_email"=>"dev+paypal-user2@sharetribe.com",
+    "mc_shipping1"=>"0.00",
+    "tax1"=>"0.00",
+    "parent_txn_id"=>"",
     "txn_id"=>"8X37683373099502U",
     "payment_type"=>"instant",
     "remaining_settle"=>"10",
@@ -559,20 +716,71 @@ describe PaypalService::DataTypes::IPN do
     "action" => "ipn_hook"
   }
 
+  authorization_expired_no_order = {
+    "mc_gross" => "20.00",
+    "invoice" => "2492-12344567",
+    "auth_exp" => "10:20:37 Jan 18, 2015 PST",
+    "protection_eligibility" => "Ineligible",
+    "item_number1" => "",
+    "payer_id" => "LLLLLLLLLHEUE",
+    "tax" => "0.00",
+    "payment_date" => "10:20:38 Dec 20, 2014 PST",
+    "payment_status" => "Expired",
+    "charset" => "windows-1252",
+    "mc_shipping" => "0.00",
+    "mc_handling" => "0.00",
+    "first_name" => "Test",
+    "transaction_entity" => "auth",
+    "notify_version" => "3.8",
+    "custom" => "",
+    "payer_status" => "verified",
+    "num_cart_items" => "1",
+    "mc_handling1" => "0.00",
+    "verify_sign" => "An5ns1Kso71238r129837019283712938-123iw0CAMnhqxqxIxCX",
+    "payer_email" => "test@example.com",
+    "mc_shipping1" => "0.00",
+    "tax1" => "0.00",
+    "parent_txn_id" => "",
+    "txn_id" => "1234556SNETHUSNTH",
+    "payment_type" => "instant",
+    "remaining_settle" => "10",
+    "auth_id" => "1234566ASDFASH81U",
+    "last_name" => "Tester",
+    "item_name1" => "Samurai Sword",
+    "receiver_email" => "rec@example.com",
+    "auth_amount" => "20.00",
+    "quantity1" => "1",
+    "receiver_id" => "123456RCEHSTN",
+    "txn_type" => "cart",
+    "mc_gross_1" => "20.00",
+    "mc_currency" => "USD",
+    "residence_country" => "US",
+    "transaction_subject" => "",
+    "payment_gross" => "20.00",
+    "auth_status" => "Expired",
+    "ipn_track_id" => "12ab3cdefgh8f",
+    "controller" => "paypal_ipn",
+    "action" => "ipn_hook"
+  }
+
   it "#from_params" do
     input_with_expected_type = [
       [billing_agreement_created, :billing_agreement_created],
       [payment_refunded, :payment_refunded],
       [order_created, :order_created],
+      [payment_review, :payment_review],
       [auth_created, :authorization_created],
+      [auth_created_no_order, :authorization_created],
       [payment_completed, :payment_completed],
       [payment_pending_ext, :payment_pending_ext],
       [payment_voided, :payment_voided],
+      [payment_voided_no_order, :payment_voided],
       [payment_completed_2, :payment_completed],
       [payment_refunded_2, :payment_refunded],
       [payment_denied, :payment_denied],
       [commission_paid, :commission_paid],
-      [authorization_expired, :authorization_expired]
+      [authorization_expired, :authorization_expired],
+      [authorization_expired_no_order, :authorization_expired],
     ]
 
     input_with_expected_type.each do |(input, type)|
@@ -580,4 +788,27 @@ describe PaypalService::DataTypes::IPN do
     end
   end
 
+  it "#from_params - auth_no_order" do
+    ipn_msg = PaypalService::DataTypes::IPN.from_params(auth_created_no_order)
+
+    expect(ipn_msg[:order_id]).to be_nil
+  end
+
+  it "#from_params - payment_voided_no_order" do
+    ipn_msg = PaypalService::DataTypes::IPN.from_params(payment_voided_no_order)
+
+    expect(ipn_msg[:order_id]).to be_nil
+  end
+
+  it "#from_params - authorization_expired_no_order" do
+    ipn_msg = PaypalService::DataTypes::IPN.from_params(authorization_expired_no_order)
+
+    expect(ipn_msg[:order_id]).to be_nil
+  end
+
+  it "#from_params - normalizes pending reason status for payment-review" do
+    ipn_msg = PaypalService::DataTypes::IPN.from_params(payment_review)
+
+    expect(ipn_msg[:pending_reason]).to eq("payment-review")
+  end
 end

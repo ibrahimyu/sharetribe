@@ -486,6 +486,7 @@ function initialize_listing_map(listings, community_location_lat, community_loca
   flagMarker = new google.maps.Marker();
   var myOptions = {
     zoom: 13,
+    maxZoom: 17,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
@@ -569,8 +570,12 @@ function addListingMarkers(listings, community_location_lat, community_location_
             infowindow.setMaxHeight(150);
             infowindow.setMinHeight(150);
             infowindow.open(map,marker);
-            $.get('/' + locale + '/listing_bubble/' + entry["id"], function(data) {
-              $('#map_bubble').html(data);
+            $.ajax({
+              url: '/' + locale + '/listing_bubble/' + entry.id,
+              dataType: "html",
+              success: function(data) {
+                $('#map_bubble').html(data);
+              }
             });
           }
         });

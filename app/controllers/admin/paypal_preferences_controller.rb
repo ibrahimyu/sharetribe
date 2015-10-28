@@ -23,11 +23,11 @@ class Admin::PaypalPreferencesController < ApplicationController
 
       validate do |prefs|
         if minimum_listing_price.nil? || minimum_listing_price < minimum_commission
-          prefs.errors[:minimum_listing_price] << I18n.t("admin.paypal_accounts.minimum_listing_price_below_min",
-                                                         { minimum_commission: minimum_commission })
+          prefs.errors[:base] << I18n.t("admin.paypal_accounts.minimum_listing_price_below_min",
+                                        { minimum_commission: minimum_commission })
         elsif minimum_transaction_fee && minimum_listing_price < minimum_transaction_fee
-          prefs.errors[:minimum_listing_price] << I18n.t("admin.paypal_accounts.minimum_listing_price_below_tx_fee",
-                                                         { minimum_transaction_fee: minimum_transaction_fee })
+          prefs.errors[:base] << I18n.t("admin.paypal_accounts.minimum_listing_price_below_tx_fee",
+                                        { minimum_transaction_fee: minimum_transaction_fee })
         end
       end
     end
@@ -64,7 +64,7 @@ class Admin::PaypalPreferencesController < ApplicationController
         min_commission_percentage: MIN_COMMISSION_PERCENTAGE,
         max_commission_percentage: MAX_COMMISSION_PERCENTAGE,
         currency: currency,
-        create_url: "https://www.paypal.com/#{community_country_code}/signup",
+        create_url: "https://www.paypal.com/#{community_country_code}/signup/account",
         upgrade_url: "https://www.paypal.com/#{community_country_code}/upgrade",
         display_knowledge_base_articles: APP_CONFIG.display_knowledge_base_articles,
         knowledge_base_url: APP_CONFIG.knowledge_base_url

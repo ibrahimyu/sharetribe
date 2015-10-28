@@ -5,14 +5,16 @@
 # - transaction status changes
 # - reminders
 #
+
+include ApplicationHelper
+include ListingsHelper
+
 class TransactionMailer < ActionMailer::Base
   include MailUtils
 
   default :from => APP_CONFIG.sharetribe_mail_from_address
   layout 'email'
 
-  include ApplicationHelper
-  include ListingsHelper
   include MoneyRails::ActionViewExtension # this is for humanized_money_with_symbol
 
   add_template_helper(EmailTemplateHelper)
@@ -31,7 +33,7 @@ class TransactionMailer < ActionMailer::Base
 
     # TODO Now that we have splitted "new message", we could be more specific here, and say that this message
     # is about a new transaction!
-    with_locale(recipient.locale, community.id) do
+    with_locale(recipient.locale, community.locales.map(&:to_sym), community.id) do
       premailer_mail(
         mail_params(recipient, community, t("emails.new_message.you_have_a_new_message", :sender_name => sender_name))) do |format|
         format.html {
@@ -51,19 +53,27 @@ class TransactionMailer < ActionMailer::Base
 
     recipient = transaction.author
     set_up_urls(recipient, transaction.community)
-    with_locale(recipient.locale, transaction.community.id) do
+    with_locale(recipient.locale, transaction.community.locales.map(&:to_sym), transaction.community.id) do
 
       payment_type = MarketplaceService::Community::Query.payment_type(@community.id)
       gateway_expires = MarketplaceService::Transaction::Entity.authorization_expiration_period(payment_type)
+
+      expires = Maybe(transaction).booking.end_on.map { |booking_end|
+        MarketplaceService::Transaction::Entity.preauth_expires_at(gateway_expires.days.from_now, booking_end)
+      }.or_else(gateway_expires.days.from_now)
+
+      buffer = 1.minute # Add a small buffer (it might take a couple seconds until the email is sent)
+      expires_in = TimeUtils.time_to(expires + buffer)
 
       premailer_mail(
         mail_params(
           @recipient,
           @community,
-          t("emails.transaction_preauthorized.subject", requester: transaction.starter.name, listing_title: transaction.listing.title))) do |format|
+          t("emails.transaction_preauthorized.subject", requester: transaction.starter.name(@community), listing_title: transaction.listing.title))) do |format|
         format.html {
           render locals: {
-                   payment_expires_in_days: gateway_expires
+                   payment_expires_in_unit: expires_in[:unit],
+                   payment_expires_in_count: expires_in[:count]
                  }
         }
       end
@@ -76,20 +86,20 @@ class TransactionMailer < ActionMailer::Base
 
     recipient = transaction.author
     set_up_urls(recipient, transaction.community)
-    with_locale(recipient.locale, transaction.community.id) do
+    with_locale(recipient.locale, transaction.community.locales.map(&:to_sym), transaction.community.id) do
 
       premailer_mail(
         mail_params(
           @recipient,
           @community,
-          t("emails.transaction_preauthorized_reminder.subject", requester: transaction.starter.name, listing_title: transaction.listing.title)))
+          t("emails.transaction_preauthorized_reminder.subject", requester: transaction.starter.name(@community), listing_title: transaction.listing.title)))
     end
   end
 
   def braintree_new_payment(payment, community)
     recipient = payment.recipient
     prepare_template(community, payment.recipient, "email_about_new_payments")
-    with_locale(recipient.locale, community.id) do
+    with_locale(recipient.locale, community.locales.map(&:to_sym), community.id) do
 
       service_fee = payment.total_commission
       you_get = payment.seller_gets
@@ -125,7 +135,7 @@ class TransactionMailer < ActionMailer::Base
   def braintree_receipt_to_payer(payment, community)
     recipient = payment.payer
     prepare_template(community, recipient, "email_about_new_payments")
-    with_locale(recipient.locale, community.id) do
+    with_locale(recipient.locale, community.locales.map(&:to_sym), community.id) do
 
       unit_type = Maybe(payment.transaction).select { |t| t.unit_type.present? }.map { |t| ListingViewUtils.translate_unit(t.unit_type, t.unit_tr_key) }.or_else(nil)
       duration = payment.transaction.booking.present? ? payment.transaction.booking.duration : nil
@@ -165,11 +175,12 @@ class TransactionMailer < ActionMailer::Base
     gateway_fee = transaction[:payment_gateway_fee]
 
     prepare_template(community, seller_model, "email_about_new_payments")
-    with_locale(seller_model.locale, community.id) do
+    with_locale(seller_model.locale, community.locales.map(&:to_sym), community.id) do
 
       you_get = payment_total - service_fee - gateway_fee
 
       unit_type = Maybe(transaction).select { |t| t[:unit_type].present? }.map { |t| ListingViewUtils.translate_unit(t[:unit_type], t[:unit_tr_key]) }.or_else(nil)
+      quantity_selector_label = Maybe(transaction).select { |t| t[:unit_type].present? }.map { |t| ListingViewUtils.translate_quantity(t[:unit_type], t[:unit_selector_tr_key]) }.or_else(nil)
 
       premailer_mail(:to => seller_model.confirmed_notification_emails_to,
                      :from => community_specific_sender(community),
@@ -179,6 +190,7 @@ class TransactionMailer < ActionMailer::Base
                    conversation_url: person_transaction_url(seller_model, @url_params.merge(id: transaction[:id])),
                    listing_title: transaction[:listing_title],
                    price_per_unit_title: t("emails.new_payment.price_per_unit_type", unit_type: unit_type),
+                   quantity_selector_label: quantity_selector_label,
                    listing_price: humanized_money_with_symbol(transaction[:listing_price]),
                    listing_quantity: transaction[:listing_quantity],
                    duration: transaction[:booking].present? ? transaction[:booking][:duration] : nil,
@@ -203,9 +215,10 @@ class TransactionMailer < ActionMailer::Base
     community ||= Community.find(transaction[:community_id])
 
     prepare_template(community, buyer_model, "email_about_new_payments")
-    with_locale(buyer_model.locale, community.id) do
+    with_locale(buyer_model.locale, community.locales.map(&:to_sym), community.id) do
 
       unit_type = Maybe(transaction).select { |t| t[:unit_type].present? }.map { |t| ListingViewUtils.translate_unit(t[:unit_type], t[:unit_tr_key]) }.or_else(nil)
+      quantity_selector_label = Maybe(transaction).select { |t| t[:unit_type].present? }.map { |t| ListingViewUtils.translate_quantity(t[:unit_type], t[:unit_selector_tr_key]) }.or_else(nil)
 
       premailer_mail(:to => buyer_model.confirmed_notification_emails_to,
                      :from => community_specific_sender(community),
@@ -215,6 +228,7 @@ class TransactionMailer < ActionMailer::Base
                    conversation_url: person_transaction_url(buyer_model, @url_params.merge({:id => transaction[:id]})),
                    listing_title: transaction[:listing_title],
                    price_per_unit_title: t("emails.receipt_to_payer.price_per_unit_type", unit_type: unit_type),
+                   quantity_selector_label: quantity_selector_label,
                    listing_price: humanized_money_with_symbol(transaction[:listing_price]),
                    listing_quantity: transaction[:listing_quantity],
                    duration: transaction[:booking].present? ? transaction[:booking][:duration] : nil,
